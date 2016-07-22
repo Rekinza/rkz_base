@@ -1,0 +1,282 @@
+<style>
+.return_item{
+  display: inline-block;
+  margin: 10px; 
+}
+
+.return_item_name{
+    display: inline-block;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.return_item_brand{
+    padding: 0px 28px 0;
+    font-weight: bold;
+}
+
+.return_item_image{
+    display: inline-block;
+    padding-top: 10px;
+    padding-left: 28px;
+    height: 140px;
+}
+</style>
+<div class="pickup">
+<div class="col-lg-6 col-lg-offset-3">
+  <div class="pickup-title">
+        <h1 class="pickup-h1" style="text-transform:uppercase;">Request A Return</h1>
+        <h2 class="pickup-h2">We are sorry the item was not a perfect fit for you.</h2> 
+		<h2 class="pickup-h2">Please fill the form below to initiate your returns.</h2>
+		<img src="http://www.rekinza.com/images/seller-emails/returns-requested.png" width=100%/>
+    </div>
+</div> 
+    
+<form id="return_form" method="post" action="<?php echo $this->getUrl("thredshare_returns/returns/requestreturns");?>">
+<div class="col-lg-6 col-lg-offset-3">
+<div class="pickup-box">
+<h3 class="pickup-h3"> Reason for Return </h3>
+<select class = "required "name ="reason" id = "reason">
+	<option value="" disabled="disabled" selected="selected">Reason for Return</option>
+	<option value ="fit_too_big">Fit (Too Big)</option>
+	<option value ="fit_too_small">Fit (Too Small)</option>
+	<option value ="website_mismatch">Product did not match website data</option>
+	<option value ="expecation_mismatch">Product did not match my expectation</option>
+	<option value ="incorrect_product">Incorrect product received</option>
+	<option value ="others">Others</option>
+</select>
+</div>
+<div class="pickup-box">
+<h3 class="pickup-h3"> Tell Us About You & Your Order </h3>
+<div id = "order-div">
+<input class="required" type="text" name="email_id" id="email_id" placeholder="Email ID" onchange ="show_order_id_field();"/>
+<input class="required" type="text" name ="order_number" id ="order_number" placeholder="Order ID" onkeypress='validate(event)' onchange="order_return_allow_check()" />
+</div>
+<!--<input class="required" type="text" name="items" id="items" placeholder="Item(s) to return"/> --> 
+</div>
+<div class="pickup-box">
+<h3 class="pickup-h3"> When & Where Can We Get The Item/s Picked </h3>
+<input class="required number" type="text" name="date" id="datepicker" placeholder="Pickup Date"/>
+<input class="required" type="text" name="mobile" placeholder="Mobile Phone Number" onkeypress='validate(event)'/>
+<input class="required" type="text" name="address1" placeholder="Address Line 1"/>
+<input type="text" name="address2" placeholder="Address Line 2"/>
+<input class="required" type="text" name="city" placeholder="City"/>
+<input class="required" type="text" name="state" placeholder="State"/>
+<input class="required number" type="text" name="pincode" placeholder="Pin Code"/>
+<!--<br>Pickup Start Time
+<input class="required number" type="time" name="start_time" id="start_time"/>
+<br>Pickup End Time
+<input class="required number" type="time" name="end_time" id="end_time"/>-->
+</div>
+<!--<div class="pickup-box">
+<h3 class="pickup-h3"> How would you like your refund? </h3>
+<br>Refund Mode</br>
+<select name ="refund_mode" id = "refund_mode" onChange="changeTextBox();">-->
+<!----Auto fill based on AJAX call---->
+<!--</select>
+<br>
+<input type="text" name="acc_holders_name" id ="acc_holders_name" placeholder="Account Holder's Name" hidden = "true"/>
+<input type="text" name="acc_number" id ="acc_number" placeholder="Account Number" hidden = "true" onkeypress='validate(event)'/>
+<input type="text" name="ifsc_code" id ="ifsc_code" placeholder="IFSC Code" hidden = "true"/>
+
+</div>-->
+<div class="clear"></div>
+<div class="pickup-title" style="text-align:left;font-size:14px; line-height:120%; ">
+<p>Once we receive and check the returns in our warehouse, we will credit your account with the relevant Kinza Cash. </p>
+
+<p>You can use your Kinza Cash to:</p>
+<ul style="list-style-type: square; text-indent: 10px;">
+<li>Buy something on <a href="http://www.rekinza.com/shop" target="_blank" style="color:#f05865">Rekinza</a></li>
+<li>Cash out via bank transfer</li>
+<li>Donate to our charity partner</li>
+</ul>
+<p>&nbsp;</p>
+<p >Please note that your Kinza Cash does not expire.</p>
+</div>
+<button type="button" onclick="submitReturnForm();" title="Submit" class="button" id ="return_submit"><span><span>Submit</span></span></button>
+</div>
+</form>
+</div>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script>
+
+
+function submitReturnForm(){
+isSuc=true;
+/*jQuery('.pickup .number').each(function(){
+if (!(/[0-9]+/.test(jQuery(this).val()))){
+alert(jQuery(this).attr('placeholder')+" should be a number");
+isSuc=false;
+return false;
+}
+});*/
+if (!isSuc){
+return;
+}
+jQuery('.pickup .required').each(function(){
+if (!(/.+/.test(jQuery(this).val()))){
+alert(jQuery(this).attr('placeholder')+" is required");
+isSuc=false;
+return false;
+}
+});
+if (!isSuc){
+return;
+}
+jQuery('.pickup .pincode').each(function(){
+if (!(/[0-9]{10,10}/.test(jQuery(this).val()))){
+alert("Please enter a valid pincode no.");
+isSuc=false;
+return false;
+}
+});
+if (!isSuc){
+return;
+}
+
+
+
+jQuery('#return_form').submit();
+
+}
+function DisableSunday(date) {
+ 
+  var day = date.getDay();
+ // If day == 0 then it is Sunday
+ if (day == 0) {
+ 
+ return [false] ; 
+ 
+ } else { 
+ 
+ return [true] ;
+ }
+  
+}
+
+jQuery(document).ready(function(){
+jQuery('#datepicker').datepicker({
+	beforeShowDay: DisableSunday,
+	minDate:new Date((new Date()).getTime()+2*86400000)
+	});
+});
+
+/*************Display order ID field if email ID is not null******************/
+function show_order_id_field()
+{
+	
+	var email_input = document.getElementById('email_id').value;
+	
+	strlen = email_input.length;
+		
+	if (Number(strlen) > 0)
+	{
+		if(jQuery("#order_number").val())
+		{
+			order_return_allow_check();
+		}
+
+	}
+}
+
+/*************Check if order ID filled is valid******************/
+function order_return_allow_check()
+{
+	jQuery.ajax({
+	type:'POST',
+	
+	url:"/backend/returns/returns_order_id_validate.php",
+	data:
+	{
+		'order_number':jQuery('#order_number').val(),
+		'email_id':jQuery('#email_id').val()
+	},
+	async: false,
+	
+	success:function(message)
+	{
+		//else
+		//{					
+			var parentdiv = document.getElementById("order-div");
+			if(isJson(message))
+			{
+				document.getElementById('return_submit').hidden = false; //Submit button to be disabled	
+				var json_data = JSON.parse(message);
+				console.log(json_data.count);
+				var count = json_data.count;
+				for(i = 0; i<count; i++)
+				{
+					var newdiv = document.createElement("div");
+					newdiv.className = "return_item";
+
+					var element0 = document.createElement("input");
+					element0.type = "checkbox";
+					element0.name = "p_sku[]";
+					element0.className = "required";
+					element0.value = json_data.product_skus[i];
+
+					newdiv.appendChild(element0);
+
+					var element1 = document.createElement("div");
+					//element1.type = "text";
+	            	element1.name = "p_name[]";
+	            	element1.className = "return_item_name";
+	            	element1.innerHTML = json_data.product_names[i];
+	            	
+	            	newdiv.appendChild(element1);
+
+	            	var element2 = document.createElement("div");
+					//element2.type = "text";
+	            	element2.name = "p_brand[]";
+	            	element2.className = "return_item_brand";
+	            	element2.innerHTML = json_data.product_brands[i];
+
+	            	newdiv.appendChild(element2);
+					
+	            	var element3 = document.createElement("img");
+	            	element3.className = "return_item_image";
+	            	element3.src = json_data.product_imgs[i];                  
+
+	            	newdiv.appendChild(element3);
+
+					parentdiv.appendChild(newdiv); 
+				}
+		
+			} //end of if
+			else     // This will be called in all cases where return is not possible
+			{
+				alert(message);
+				document.getElementById('return_submit').hidden = true;
+			}
+		//}
+	}
+	});
+
+}
+
+/********************* Validate numeric entry in form field*********************/
+function validate(evt) 
+{
+	var theEvent = evt || window.event;
+	var key = theEvent.keyCode || theEvent.which;
+	key = String.fromCharCode( key );
+	var regex = /[0-9]|\./;
+	if( !regex.test(key) ) 
+	{
+		theEvent.returnValue = false;
+		if(theEvent.preventDefault) theEvent.preventDefault();
+	}
+}
+	
+function isJson(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}	
+	
+</script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>

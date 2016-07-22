@@ -1,0 +1,225 @@
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('lotusbreath/onestepcheckout/mage/opcheckout.js') ?>"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('lotusbreath/onestepcheckout/opcheckout_override_mage.js') ?>"></script>
+<?php
+$isAllowComment = Mage::getStoreConfig('lotusbreath_onestepcheckout/general/allowcomment');
+$isNewsletter = Mage::getStoreConfig('lotusbreath_onestepcheckout/general/allowsubscribe');
+if ($isNewsletter){
+    if(Mage::getSingleton('customer/session')->isLoggedIn()){
+        $subscriber = Mage::getModel('newsletter/subscriber')->loadByEmail(
+            Mage::getSingleton('customer/session')->getCustomer()->getEmail());
+        if($subscriber && $subscriber->getId())
+        {
+            $isNewsletter = false;
+        }
+
+    }
+}
+$discountpos = Mage::getStoreConfig('lotusbreath_onestepcheckout/layout/discountpos');
+$commentpos = Mage::getStoreConfig('lotusbreath_onestepcheckout/layout/commentpos');
+
+?>
+<script id="loader-template" type="text/x-handlebars-template">
+    <div class="osc-loader" id="osc-loader">
+        <div class="osc-loader-background"></div>
+        <div class="loading-mask" data-role="loader">
+            <div class="loader">
+                <img alt="{{imgAlt}}" src="{{icon}}">
+                <p>{{loaderText}}</p>
+            </div>
+        </div>
+    </div>
+</script>
+<script>
+    var loaderJson = {
+        imgAlt: '<?php echo $this->__("Please wait...");?>',
+        icon: '<?php echo $this->getSkinUrl('lotusbreath/onestepcheckout/images/ajax-loader_3.gif');?>',
+        loaderText: '<?php echo $this->__("Please wait...");?>'
+    };
+</script>
+<div class="lt-checkoutpage" id="checkoutSteps">
+    <?php echo $this->getChildHtml("loginform");?>
+
+    <form id="checkout_form" name="checkout_form">
+        <div class="grid">
+            <?php if ($pageTitle = Mage::getStoreConfig('lotusbreath_onestepcheckout/content/pagetitle')):?>
+            <div class="page-title"><h1><?php echo $pageTitle;?></h1></div>
+            <?php endif;?>
+            <?php if ($pageDescription = Mage::getStoreConfig('lotusbreath_onestepcheckout/content/pagedescription')):?>
+                <p class="page-description"><?php echo $pageDescription;?></p>
+            <?php endif;?>
+            <div class="accordion" id="accordion-checkout">
+                <div class="four columns accordion-group">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-checkout" href="#customer">
+                        <div class="accordion-heading">
+                            <h3 class="ptitle">
+                                <?php echo $this->__("Login / Guest Checkout"); ?>
+                            </h3>
+                        </div>
+                    </a>
+                    <div id="customer" class="accordion-body collapse in">
+                        <div class="accordion-inner">
+                            <?php if (!Mage::helper('customer')->isLoggedIn()) : ?>
+                            
+                            <!--div class="accordion-toggle login_button" data-toggle="collapse" data-parent="#accordion-checkout" href="#billing"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-checkout" href="#customer"--><div onclick="guest()" class="login_button guest-checkout" style="color:#ffffff;">Continue as Guest</div><!--/a></div-->
+
+                            <a href="javascript:void(0);" id="loginFrmDlgO" class="login_link"> <div class="login_button">Log In </div> <div class="helptext">(I already have an account)</div></a>
+                           
+                            <!-- Social Login -->
+                            <?php echo $this->getLayout()->createBlock('inchoo_socialconnect/google_button')->setTemplate("inchoo/socialconnect/google/button.phtml")->toHtml();
+                                echo $this->getLayout()->createBlock('inchoo_socialconnect/facebook_button')->setTemplate("inchoo/socialconnect/facebook/button.phtml")->toHtml();
+                            ?>
+                            
+                            <?php endif;?>
+                            <?php if (Mage::getStoreConfig('lotusbreath_onestepcheckout/content/display_bottom_static_block')): ?>
+                                <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('onestepcheckout_top_block')->toHtml(); ?>
+                            <?php endif;?>
+                        </div>
+                    </div>
+                </div>
+
+            
+                <div class="four columns accordion-group">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-checkout" href="#billing">
+                        <div class="accordion-heading">
+                            <h3 class="ptitle">
+                                <?php if ($billingHeader = Mage::getStoreConfig('lotusbreath_onestepcheckout/content/billing_header')):?>
+                                    <?php echo $billingHeader;?>
+                                <?php else:?>
+                                    <?php echo $this->__("Billing Information"); ?>
+                                <?php endif;?>
+                            </h3>
+                        </div>
+                    </a>
+                    <?php if (!Mage::helper('customer')->isLoggedIn()) : ?>
+                        <div id="billing" class="accordion-body collapse">
+                    <?php else: ?>
+                        <div id="billing" class="accordion-body collapse in">
+                    <?php endif; ?>
+                            <div class="accordion-inner">
+                                <?php echo $this->getChildHtml('billing'); ?>
+                                <div id="shipping-area" style="display: none;">
+                                    <h3 class="ptitle">
+                                        <?php if ($shippingHeader = Mage::getStoreConfig('lotusbreath_onestepcheckout/content/shipping_address_header')):?>
+                                            <?php echo $shippingHeader;?>
+                                        <?php else:?>
+                                            <?php echo $this->__("Shipping Information");?>
+                                        <?php endif;?>
+                                    </h3>
+                                    <?php echo $this->getChildHtml('shipping'); ?>
+                                </div>
+                                <!-- <div class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-checkout" href="#payment"><div class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-checkout" href="#billing"> --><div onclick="billing()" class="continue_button">Continue</div><!-- /div>
+                                </div> -->
+                            </div>
+                        </div>
+                 <div class="four columns accordion-group">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-checkout" href="#payment">
+                        <!--<?php if(!$this->getQuote()->isVirtual()):?>
+                        <h3 class="ptitle">
+                            <?php if ($shippingMethodHeader = Mage::getStoreConfig('lotusbreath_onestepcheckout/content/shipping_method_header')):?>
+                                <?php echo $shippingMethodHeader;?>
+                            <?php else:?>
+                                2. <?php echo $this->__("Shipping Method"); ?>
+                            <?php endif;?>
+                        </h3>
+                        <div id="shipping_partial">
+                            <?php echo $this->getChildHtml('shipping_method'); ?>
+                        </div>
+                        <?php endif; ?>-->
+                        <div class="accordion-heading">
+                            <h3 class="ptitle">
+                                <?php if ($paymentMethodHeader = Mage::getStoreConfig('lotusbreath_onestepcheckout/content/payment_method_header')):?>
+                                    <?php echo $paymentMethodHeader;?>
+                                <?php else:?>
+                                    <?php echo $this->__("Payment Method");?>
+                                <?php endif;?>
+
+                            </h3>
+                        </div>
+                    </a>
+                     <div id="payment" class="accordion-body collapse">
+                        <div class="accordion-inner">
+                            <div id="payment_partial">
+                                <?php echo $this->getChildHtml('payment'); ?>
+                                <?php echo $this->getChildHtml('coupon'); ?>
+                                <!-- <div class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-checkout" href="#payment"><div class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-checkout" href="#review"> --><div onclick="payment()" class="continue_button">Continue</div><!-- </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="four columns accordion-group" >
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-checkout" href="#review">
+                    <?php if (false) :?>
+                        <h3 class="ptitle">
+                           <?php echo $this->__("Additional Information"); ?>
+                        </h3>
+                        <?php endif;?>
+                        <div class="accordion-heading">
+                            <h3 class="ptitle">
+                                <?php if ($reviewOrderHeader = Mage::getStoreConfig('lotusbreath_onestepcheckout/content/review_header')):?>
+                                    <?php echo $reviewOrderHeader;?>
+                                <?php else:?>
+                                    4. <?php echo $this->__("Review Order"); ?>
+                                <?php endif;?>
+
+                            </h3>
+                        </div>
+                    </a>
+                    <div id="review" class="accordion-body collapse">
+                        <div class="accordion-inner">
+                            <div id="review_partial">
+                                <?php echo $this->getData("reviewHtml"); ?>
+                                <?php echo $this->getChildHtml('review'); ?>
+                            </div>
+
+                            <?php if( $isAllowComment && $commentpos == 'below_review' ):?>
+                                <div id="comment-patial">
+                                    <!--h3 class="ptitle"><?php echo $this->__("Comment");?></h3-->
+                                    <ul class="form-list">
+                                        <li class="fields">
+                                            <div class="input-box">
+                                                <textarea name="order_comment" placeholder="<?php echo $this->__("Special Instructions");?>" class="input-text"></textarea>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            <?php endif;?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <?php if (Mage::getStoreConfig('lotusbreath_onestepcheckout/content/display_bottom_static_block')): ?>
+                <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('onestepcheckout_bottom_block')->toHtml(); ?>
+            <?php endif;?>
+        </div>
+    </form>
+</div>
+
+<script type = "text/javascript">
+
+function guest()
+{
+    var customer = document.getElementById("customer");
+    var billing = document.getElementById("billing");
+    customer.className = "accordion-body";
+    customer.className += " collapse";
+    billing.className += " in";
+}
+function billing()
+{
+    var payment = document.getElementById("payment");
+    var billing = document.getElementById("billing");
+    billing.className = "accordion-body";
+    billing.className += " collapse";
+    payment.className += " in";
+}
+function payment()
+{
+    var payment = document.getElementById("payment");
+    var review = document.getElementById("review");
+    payment.className = "accordion-body";
+    payment.className += " collapse";
+    review.className += " in";
+}
+</script>

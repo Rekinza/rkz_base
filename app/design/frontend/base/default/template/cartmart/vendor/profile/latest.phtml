@@ -1,0 +1,210 @@
+<?php
+/**
+ * Openwriter Cartmart
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Team
+ * that is bundled with this package of Openwriter.
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento COMMUNITY edition
+ * Contact us Support does not guarantee correct work of this package
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * =================================================================
+ * 
+ * @category    Openwriter
+ * @package     Openwriter_Cartmart
+**/
+?>
+<div class="tab-Option">
+    <ul>
+        <li id="tab-click1">Latest Products Added</li>
+        <li id="tab-click2">Followers</li>
+        <li id="tab-click3">Following</li>
+    </ul>
+</div>
+<div id="tabOpen1">
+
+	<?php $_productCollection = $this->getItems() ?>
+	<?php $_collectionSize = $_productCollection->count(); ?>
+
+	
+<?php 
+$_helper = $this->helper('catalog/output');
+if ($_collectionSize>0):
+?>
+   <?php // $_columnCount = $this->getColumnCount(); ?>
+            <div class="products-grid">
+                <div class="row">
+                <?php $i=0;
+                foreach ($_productCollection as $_product) :
+                    $is_new = Mage::helper('oxynic')->isNew($_product);
+                    $is_special = Mage::helper('oxynic')->isSpecial($_product);
+                    ?>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 item">
+                        <div class="product-image">
+                            <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>">
+                                <img id="product-collection-image-<?php echo $_product->getId(); ?>" src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(185,268); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
+                            </a>
+                            <?php
+                            if ($is_new && !$is_special) {
+                                echo "<span class='new-product'>".$this->__('New with tag')."</span>";
+                            }
+                            if ($is_new && $is_special) {
+                                echo "<span class='new-product new-product-sale'>".$this->__('New with tag')."</span>";
+                            }
+                            if ($is_special) {
+                                echo "<span class='sale-product'>".$this->__('Sale')."</span>";
+                            } ?>
+							<?php if (Mage::helper('core')->isModuleEnabled('ET_Ajax') && Mage::helper('ajax')->isQuickviewEnabled()) : ?>
+								<div class="item-quickview">
+									<a href="<?php echo Mage::helper('ajax')->getQuickviewUrl($_product); ?>"><?php echo $this->__('Quick View');?></a>
+								</div>
+							<?php endif; ?>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">
+                                <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true); ?>">
+                                    <?php echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?>
+                                </a>
+                            </div>
+							<span class="manufacturer"><?php echo $_product->getAttributeText('brands');?></span>
+							<span class="product-size" style="display:block;"><?php echo $this->__('Size: ') ?><?php echo $_product->getAttributeText('size');?></span>
+							<?php
+                            // Provides extra blocks on which to hang some features for products in the list
+                            // Features providing UI elements targeting this block will display directly below the product name
+                            if ($this->getChild('name.after')) {
+                                $_nameAfterChildren = $this->getChild('name.after')->getSortedChildren();
+                                foreach ($_nameAfterChildren as $_nameAfterChildName) {
+                                    $_nameAfterChild = $this->getChild('name.after')->getChild($_nameAfterChildName);
+                                    $_nameAfterChild->setProduct($_product);
+                                    echo $_nameAfterChild->toHtml();
+                                }
+                            }
+                            ?>
+							<?php echo $this->getReviewsSummaryHtml($_product, 'short', true); ?>
+                            
+                            <?php echo $this->getPriceHtml($_product, true, '_listing_grid'); ?>
+
+                            <div class="item-cwc-wrap">
+                                <div class="item-cwc-inner">
+                                    <?php if ($_product->isSaleable()) : ?>
+                                        <div class="item-addcart">
+                                            <button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
+                                        </div>
+                                    <?php else: ?>
+                                        <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+                                    <?php endif; ?>
+    
+                                    <?php if ($this->helper('wishlist')->isAllow()) : ?>
+                                        <div class="item-wishlist">
+                                            <a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>" class="link-wishlist" title="<?php echo $this->__('Add to Wishlist') ?>"><?php echo $this->__('Add to Wishlist') ?></a>
+                                        </div>
+                                    <?php endif; ?>
+                                    
+                                    <?php if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
+                                        <div class="item-compare">
+                                            <a href="<?php echo $_compareUrl ?>" class="link-compare" title="<?php echo $this->__('Add to Compare') ?>"><?php echo $this->__('Add to Compare') ?></a>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+							
+                        </div>
+                    </div>
+                    <?php endforeach ?>
+                </div>
+            </div>
+            
+    
+            <div class="toolbar-bottom">
+           <a class="next_page_url" href="<?php echo $this->getNextPageUrl();?>"></a>
+            </div>
+<?php else:?>
+      <a class="next_page_url" href="-1"></a>
+<div class="empty">No products added yet.</div>
+<?php endif;?>
+<div id="scrolling_loder">
+<span class="loader_img"><img src="http://www.rekinza.com/skin/frontend/et_oxynic/default/images/loading.gif"></span>
+<span>Loading More Products</span>
+</div>
+</div>
+<div id="tabOpen2">
+    <?php
+	$followers=$this->getFollowers();
+	foreach ($followers as $follower):
+	$favorite=json_decode($follower['favourite']);
+	?>
+	
+	<div id="user_profile">
+        <div id="user_image">
+      <img src="<?php echo Mage::getBaseUrl();?>media/cartmart/vendor/vendor/images/<?php echo $follower['image'];?>">
+        </div>
+        <div id="user_detail">
+            <h3 id="vendor_name"><b><a href="<?php echo Mage::getBaseUrl();?>cartmart/vendor/profile/id/<?php echo $follower['id'];?>/"><?php echo $follower['shop_name'];?></a></b></h3>
+			<div class="follower"><?php count($favorite)>1?count($favorite)." followers":count($favorite)." follower";?></div>
+                        <div>
+                <button type="button" title="Follow" class="button" onclick="setLocation('<?php echo Mage::getBaseUrl();?>cartmart/favourite/add/id/<?php echo $follower['id']?>/');">
+                    <span><span>Follow</span></span>
+                </button>
+            </div>
+        </div>
+              
+        <div class="clear"></div>
+    </div>
+	<?php endforeach;?>
+    
+</div>
+<div id="tabOpen3">
+ <?php
+	$followers=$this->getFollowing();
+	foreach ($followers as $follower):
+	$favorite=json_decode($follower['favourite']);
+	?>
+	
+	<div id="user_profile">
+        <div id="user_image">
+      <img src="<?php echo Mage::getBaseUrl();?>media/cartmart/vendor/vendor/images/<?php echo $follower['image'];?>">
+        </div>
+        <div id="user_detail">
+            <h3 id="vendor_name"><b><a href="<?php echo Mage::getBaseUrl();?>cartmart/vendor/profile/id/<?php echo $follower['id'];?>/"><?php echo $follower['shop_name'];?></a></b></h3>
+			<div class="follower"><?php count($favorite)>1?count($favorite)." followers":count($favorite)." follower";?></div>
+                        <div>
+                <button type="button" title="Follow" class="button" onclick="setLocation('<?php echo Mage::getBaseUrl();?>cartmart/favourite/add/id/<?php echo $follower['id']?>/');">
+                    <span><span>Follow</span></span>
+                </button>
+            </div>
+        </div>
+              
+        <div class="clear"></div>
+    </div>
+	<?php endforeach;?>
+  
+    
+</div>
+
+<script type="text/javascript">
+   jQuery('document').ready(function(){
+    jQuery('#tabOpen3').hide();
+    jQuery('#tabOpen2').hide();
+    jQuery('#tab-click1').click(function(){
+        jQuery('#tabOpen3').hide();
+        jQuery('#tabOpen2').hide();
+        jQuery('#tabOpen1').show();
+    });
+    jQuery('#tab-click2').click(function(){
+        jQuery('#tabOpen3').hide();
+        jQuery('#tabOpen1').hide();
+        jQuery('#tabOpen2').show();
+    });
+    jQuery('#tab-click3').click(function(){
+        jQuery('#tabOpen3').show();
+        jQuery('#tabOpen1').hide();
+        jQuery('#tabOpen2').hide();
+    });
+   });
+    
+</script>
+

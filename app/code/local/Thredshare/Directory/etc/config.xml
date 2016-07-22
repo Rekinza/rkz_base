@@ -1,0 +1,18 @@
+<config>
+    <modules>
+        <Thredshare_Directory>
+            <version>0.1.0</version>
+        </Thredshare_Directory>
+    </modules>
+    <global>
+     
+        <models>
+            <directory>
+                <rewrite>
+                    <currency>Thredshare_Directory_Model_Currency</currency>
+                </rewrite>
+            </directory>
+            
+        </models>
+    </global>
+</config>

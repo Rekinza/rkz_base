@@ -1,0 +1,267 @@
+<?php
+/**
+ * @package ET_Slider
+ * @version 1.0.4
+ * @copyright Copyright (c) 2014 EcomTheme. (http://www.ecomtheme.com)
+ * @license http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+$group = $this->getGroup();
+if (!$group->getId()) return;
+$slides = $this->getSlides($group->getId());
+
+if ( $count = count($slides) ):
+    
+    $block_id = $this->getBlockId();
+    $block_title = $this->getBlockTitle();
+    
+    $_caption_transitions = 'var _CaptionTransitions = {};';
+    $_slide_transitions = 'var _SlideshowTransitions = [];';
+
+    $sf = uniqid();
+    if (!($slider_id = $group->getCssId())){
+        $slider_id = 'slider_container_'.$sf;
+    }
+    $slides_container_id = 'slides_container_'.$sf;
+    
+    $inline_style = array('display: inline-block;');
+    if ($group->getCssPosition()){
+        $inline_style[] = 'position:'.$group->getCssPosition().';';
+    }
+    if ($slider_width = $group->getCssWidth()){
+        $inline_style[] = 'width:'.$slider_width.';';
+
+    }
+    if ($slider_height = $group->getCssHeight()){
+        $inline_style[] = 'height:'.$slider_height.';';
+    }
+    if (count($inline_style)){
+        $inline_style = 'style="'.implode('', $inline_style).'"';
+    }
+?>
+<div class="block-slider">
+    <?php if ($block_title) : ?>
+    <div class="block-title">
+        <strong>
+            <span><?php echo Mage::helper('core')->escapeHtml($block_title); ?></span>
+        </strong>
+    </div>
+    <?php endif; ?>
+    
+    <div class="block-content">
+        <div id="<?php echo $slider_id; ?>" style="position: relative; width: 100%; overflow: hidden;">
+            <div style="position: relative; left: 50%; width: 2468px; text-align: center; margin-left: -1234px;">
+          
+            <?php
+            // slider container
+            echo '<div class="et-slider-container slider-group-'.$group->getId().'" id="'.$slides_container_id.'" '.$inline_style.'>';
+            
+            if ( $group->getLoadingScreen() ){
+            ?>
+                <div data-u="loading" class="loading-screen">
+                    <div class="transparency"></div>
+                    <div class="loading-mask"></div>
+                </div>
+            <?php
+            }
+            
+                // slides
+                echo '<div data-u="slides" class="et-slider-slides"  '.$inline_style.'>';
+                foreach ( $slides as $slide ):
+                    // start slide
+                    echo '<div>';
+                
+                    if ( $slide_transition = $slide->getSlideTransition() ){
+                        $slide_transition_code = ET_Slider_Model_System_Config_Source_Transition_Slide::__($slide_transition);
+                        $_slide_transitions .= '_SlideshowTransitions.push('.$slide_transition_code.');';
+                    }
+            
+                    if ( $slide_image = $slide->getSlideImage() ){
+                        if ( $slide->getSlideImageLazyload() ){
+                            echo '<img data-u="image" data-src2="'.Mage::getBaseUrl('media').$slide_image.'" alt=""/>';
+                        } else {
+                            echo '<img data-u="image" src="'.Mage::getBaseUrl('media').$slide_image.'"  alt=""/>';
+                        }
+                    }
+                    
+                    if ( $slide_content = $slide->getDescription() ){
+                        if ( strpos($slide_content, '{{') !== false ){
+                            echo Mage::helper('cms')->getBlockTemplateProcessor()->filter($slide_content);
+                        } else {
+                            echo $slide_content;
+                        }
+                    }
+                    
+                    if ($captions = $this->getCaptions( $slide->id )){
+                        foreach ($captions as $caption){
+                            echo '<div data-u="caption" ';
+                            if ( $play_in = $caption->getPlayIn() ) {
+                                $play_in_code = ET_Slider_Model_System_Config_Source_Transition_Caption::__($play_in);
+                                echo 'data-t="'.$play_in.'" ';
+                                $_caption_transitions .= '_CaptionTransitions["'.$play_in.'"] = '.$play_in_code.';';
+                            }
+                            if ( $play_out = $caption->getPlayOut() ) {
+                                $play_out_code = ET_Slider_Model_System_Config_Source_Transition_Caption::__($play_out);
+                                echo 'data-t2="'.$play_out.'" ';
+                                $_caption_transitions .= '_CaptionTransitions["'.$play_out.'"] = '.$play_out_code.';';
+                            }
+                            if ( $caption->getDelay() ){
+                                echo 'data-d="'.$caption->getDelay().'" ';
+                            }
+                            if ( $caption->getPlayInDur() ){
+                                echo 'data-du="'.$caption->getPlayInDur().'" ';
+                            }
+                            if ( $caption->getPlayOutDur() ){
+                                echo 'data-du2="'.$caption->getPlayOutDur().'" ';
+                            }
+                            $caption_inline_style = array();
+                            if ( $caption->getCssPosition() ){
+                                $caption_inline_style[] = 'position:'.$caption->getCssPosition().';';
+                            }
+                            if ( $caption->getCssTop() ){
+                                $caption_inline_style[] = 'top:'.$caption->getCssTop().';';
+                            }
+                            if ( $caption->getCssLeft() ){
+                                $caption_inline_style[] = 'left:'.$caption->getCssLeft().';';
+                            }
+                            if ( $caption->getCssWidth() ){
+                                $caption_inline_style[] = 'width:'.$caption->getCssWidth().';';
+                            }
+                            if ( $caption->getCssHeight() ){
+                                $caption_inline_style[] = 'height:'.$caption->getCssHeight().';';
+                            }
+                            if ( count($caption_inline_style) ){
+                                echo ' style="'.implode('', $caption_inline_style).'"';
+                            }
+                            
+                            if ( $caption->getCssClassname() ){
+                                echo ' class="'.$caption->getCssClassname().'"';
+                            }
+                            
+                            echo '>'; // end of open tag
+                            
+                            if ( $caption_image = $caption->getCaptionImage() ){
+                                echo '<img class="img-responsive" src="'.Mage::getBaseUrl('media').$caption_image.'" alt="'.$caption->getTitle().'" />';
+                            }
+                            if ( $caption_content = $caption->getDescription() ){
+                                if ( strpos($caption_content, '{{') !== false ){
+                                    echo Mage::helper('cms')->getBlockTemplateProcessor()->filter($caption_content);
+                                } else {
+                                    echo $caption_content;
+                                }
+                            }
+                            echo '</div>';
+                        }
+                    } else {}
+                    
+                    // end slide
+                    echo '</div>';
+                endforeach;
+                echo '</div>'; // end slides
+                ?>
+                <ul class="et-slider-nav" data-u="navigator">
+                    <li data-u="prototype"><span class="dot"></span></li>
+                </ul>
+                
+                <?php
+            echo '</div>';
+            ?>
+            </div>
+            
+            <span data-u="arrowleft"  id="et-slider-prev" class="prev"></span>
+            <span data-u="arrowright" id="et-slider-next" class="next"></span>
+        </div>
+    <script type="text/javascript">
+    jQuery(function($){
+        <?php echo $_caption_transitions; ?>
+        <?php echo $_slide_transitions; ?>
+        var <?php echo $slides_container_id; ?> = new $JssorSlider$('<?php echo $slides_container_id; ?>', {
+            $FillMode: <?php echo round($group->fill_mode)%5; ?>,
+            $AutoPlay: <?php echo $group->auto_play ? 'true' : 'false'; ?>,
+            $AutoPlayInterval$: <?php echo intval($group->auto_play_interval); ?>,
+            $UISearchMode: 0,
+            $DragOrientation: 1,
+            
+            $SlideshowOptions: {
+                $Class: $JssorSlideshowRunner$,
+                $Transitions: _SlideshowTransitions,
+                $TransitionsOrder: 1,
+                $ShowLink: true
+            },
+            $CaptionSliderOptions:{
+                $Class: $JssorCaptionSlider$,
+                $CaptionTransitions: _CaptionTransitions,
+                $PlayInMode: 1,
+                $PlayOutMode: 3
+            },
+            $BulletNavigatorOptions: {
+                $Class: $JssorBulletNavigator$,
+                $ChanceToShow: 2,
+                $AutoCenter: 1,
+                $Steps: 1,
+                $Lanes: 1,
+                $SpacingX: 32,
+                $SpacingY: 32,
+                $Orientation: 1
+            },
+            $ArrowNavigatorOptions: {
+                $Class: $JssorArrowNavigator$,
+                $ChanceToShow: 2,
+                $AutoCenter: 2,
+                $Steps: 1
+            }
+        });
+        $('#<?php echo $slider_id; ?>').on('click', '[data-u="arrowleft"]', function(){
+            <?php echo $slides_container_id; ?>.$Prev();
+        });
+        $('#<?php echo $slider_id; ?>').on('click', '[data-u="arrowright"]', function(){
+            <?php echo $slides_container_id; ?>.$Next();
+        });
+        
+        var resto = null, makeSliderFit = function(){
+            if (resto) {
+                clearTimeout(resto);
+                resto = null;
+            }
+            try{
+                var slider_out = $('#<?php echo $slider_id; ?>');
+                var slider_cont = $('#<?php echo $slides_container_id; ?>');
+
+                var  ow = slider_out.outerWidth(), ow0 = slider_out.data('ow0');
+                if (typeof ow0 == 'undefined') {
+                    slider_out.data('ow0', ow);
+                } else {
+                    if (ow0 == ow){
+                        return;
+                    }
+                    slider_out.data('ow0', ow);
+                }
+
+                var basewidth = 1440;
+                if (ow > basewidth){
+                    var toHeight = 480;
+                } else {
+                    var toHeight = 480 * ow / basewidth;
+                }
+                var oh = slider_cont.data('oh');
+                if (typeof oh == 'undefined'){
+                    slider_cont.data('oh', toHeight);
+                } else {
+                    if (oh == toHeight){
+                        return;
+                    }
+                    slider_cont.data('oh', toHeight);
+                }
+                <?php echo $slides_container_id; ?>.$ScaleHeight(toHeight);
+            } catch(e){ }
+        };
+        makeSliderFit();
+        $Jssor$.$AddEvent(window, "load", makeSliderFit);
+        if (!navigator.userAgent.match(/(iPhone|iPod|iPad|BlackBerry|IEMobile)/)) {
+            $Jssor$.$AddEvent(window, "resize", $Jssor$.$WindowResizeFilter(window, makeSliderFit));
+        }
+    });
+    </script>
+    </div>
+</div>
+<?php endif; ?>

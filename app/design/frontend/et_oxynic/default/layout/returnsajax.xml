@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+    <layout version="0.1.0">
+        <returns_returns_returnsajax>
+            <reference name="content">
+                <block type="returnsajax/returnsajax" name="returnsajax" template="returnsajax/returnsajax.phtml" />
+            </reference>
+        </returns_returns_returnsajax>
+    </layout>

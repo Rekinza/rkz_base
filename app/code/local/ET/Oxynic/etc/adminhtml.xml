@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<config>
+	<menu>
+		<et>
+			<title>ET Oxynic Settings</title>
+			<sort_order>1001</sort_order>
+			<children>
+				<!-- elements -->
+				<oxynic>
+					<title>ET Oxynic Theme</title>
+					<sort_order>99999</sort_order>
+					<action>adminhtml/system_config/edit/section/et_oxynic_configs/</action>
+					
+					<children>
+						<ajax>
+							<title>ET Ajax</title>
+							<sort_order>9911</sort_order>
+							<action>adminhtml/system_config/edit/section/et_ajax_configs/</action>
+						</ajax>
+						<carousel>
+							<title>ET Carousel</title>
+							<sort_order>9922</sort_order>
+							<action>adminhtml/system_config/edit/section/et_carousel_configs/</action>
+						</carousel>
+						
+						<filter>
+							<title>ET Filter</title>
+							<sort_order>9944</sort_order>
+							<action>adminhtml/system_config/edit/section/et_filter_configs/</action>
+						</filter>
+						<megamenu>
+							<title>ET Megamenu</title>
+							<sort_order>9955</sort_order>
+							<action>adminhtml/system_config/edit/section/et_megamenu_configs/</action>
+						</megamenu>
+						<products>
+							<title>ET Products</title>
+							<sort_order>9966</sort_order>
+							<action>adminhtml/system_config/edit/section/et_products_configs/</action>
+						</products>
+						<slider>
+							<title>ET Slider</title>
+							<sort_order>9977</sort_order>
+							<action>adminhtml/system_config/edit/section/et_slider_configs/</action>
+						</slider>
+						
+					</children>
+				</oxynic>
+			</children>
+		</et>
+	</menu>
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					<system>
+						<children>
+							<config>
+								<children>
+									<et_oxynic_configs translate="title" module="oxynic">
+										<title>ET Oxynic Settings</title>
+									</et_oxynic_configs>
+								</children>
+							</config>
+						</children>
+					</system>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>

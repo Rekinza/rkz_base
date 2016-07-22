@@ -1,0 +1,43 @@
+#search_mini_form{
+	float: right;
+	z-index: 1;
+	.form-search{
+		position: relative;
+        border: 1px solid @border-color;	       
+		label{
+			display: none;
+		}
+		input{
+			box-shadow: none;
+			width: 349px;
+			font-size: 92.86%;
+			height: 38px;
+			border: none;
+			border-right: 1px solid @border-color;		
+			border-radius: 0;
+			float: left;
+			padding: 10px 15px;
+		}
+		button{
+			width: 52px;
+			height: 38px;		
+			background-color: #fff;
+			font-family: FontAwesome;
+			font-size: 14px;
+			color: #666;
+			padding: 13px 0;
+			span{
+				width: 36px;
+				height: 36px;
+				font-size: 0;
+			}
+			&:hover{				
+				color: @theme-color;
+			}
+		}
+		&:hover{
+			cursor: pointer;
+			display: block;
+		}
+	}
+}

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<widgets>
+    <sociallogin_auth type="sociallogin/auth" translate="name description" module="sociallogin">
+        <name>Social Login</name>
+        <description type="desc">Adds Social Login interface to the page.</description>
+        <parameters>
+            <label_text>
+                <required>0</required>
+                <visible>1</visible>
+                <label>Label Text</label>
+                <description>The text to display before Provider Icons. Defaults to 'Social Login'</description>
+                <type>text</type>
+            </label_text>
+           </parameters>
+    </sociallogin_auth>
+    <sociallogin_horizontalsharing type="sociallogin/horizontalsharing" translate="name description" module="sociallogin">
+        <name>Social Sharing - Horizontal</name>
+        <description type="desc">Adds Social Sharing interface (horizontal theme) to the page.</description>
+		<parameters>
+            <label_text>
+                <required>0</required>
+                <visible>1</visible>
+                <label>Label Text</label>
+                <description>The text to display before Sharing interface.</description>
+                <type>text</type>
+            </label_text>
+        </parameters>
+    </sociallogin_horizontalsharing>
+    <sociallogin_verticalsharing type="sociallogin/verticalsharing" translate="name description" module="sociallogin">
+        <name>Social Sharing - Vertical</name>
+        <description type="desc">Adds Social Sharing interface (vertical theme) to the page.</description>
+    </sociallogin_verticalsharing>
+</widgets>

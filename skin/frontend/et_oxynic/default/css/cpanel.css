@@ -1,0 +1,106 @@
+#theme_setting_panel{
+	display: block;
+	position: fixed;
+	z-index: 9999;
+	top: 15%;
+	left: -260px;
+	width: 260px;
+	box-shadow: none;
+	/*transition: left 1000ms ease-in-out 0;*/
+	background: #ffffff;
+}
+#theme_setting_panel .toggle{
+	position: absolute;
+	left: 100%;
+	top: 50px;
+	float: left;
+	z-index: 9998;
+}
+#theme_setting_panel .toggle label{
+	display: block;
+	width: 40px;
+	height: 123px;
+	background: url(../images/toggler.png) left center no-repeat;
+	cursor: pointer;
+}
+#theme_setting_panel_toggler{
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: none;
+}
+#theme_setting_panel_toggler:checked+#theme_setting_panel{
+	left: 0;
+	box-shadow: 1px 0px 6px rgba(0,0,0,0.2);
+	border: 1px solid #E7E7E7;
+	border-radius: 0 5px 5px 0;
+}
+
+#theme_setting_panel .head{
+	text-transform: uppercase;
+	font-size: 18px;
+	padding: 10px 20px;
+	margin: 0 0 10px;
+	border-bottom: 1px solid #e6e6e6;
+}
+#theme_setting_panel .body{
+	margin-bottom: 20px;
+}
+#theme_setting_panel .body .form-group{
+	border-bottom: 1px solid #e6e6e6;
+	padding: 0 20px 10px;
+	margin-bottom: 10px;
+}
+#theme_setting_panel .body .form-group.on{
+	display: block;
+}
+#theme_setting_panel .body .form-group.off{
+	display: none;
+}
+
+#theme_setting_panel .color-cell{
+	display: inline-block;
+	margin-right: 10px;
+	margin-bottom: 0;
+	width: 44px;
+	height: 26px;
+	cursor: pointer;
+}
+#theme_setting_panel .color-cell[data-color="default"]{
+	background-color: #46bb7d;
+	border-color: #46bb7d;
+}
+#theme_setting_panel .color-cell[data-color="blue"]{
+	background-color: #468ad6;
+	border-color: #468ad6;
+}
+#theme_setting_panel .color-cell[data-color="green"]{
+	background-color: #97c644;
+	border-color: #97c644;
+}
+#theme_setting_panel .color-cell[data-color="yellow"]{
+	background-color: #eea72a;
+	border-color: #eea72a;
+}
+#theme_setting_panel .color-cell:hover,
+#theme_setting_panel .color-cell.sel{
+	border:1px solid #686868;
+}
+#theme_setting_panel .color-cell:last-child{
+	margin-right: 0;
+}
+
+#theme_setting_panel .actions{
+	padding: 0 20px 10px;
+	margin-bottom: 10px;
+}
+
+#theme_setting_panel .setting_messages{
+	display: block;
+	padding: 0 20px;
+}
+.btn-default,
+.btn-default:hover,
+.btn-default:focus{
+	outline: none !important;
+}

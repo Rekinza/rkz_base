@@ -1,0 +1,382 @@
+<?xml version="1.0"?>
+<config>
+	<tabs>
+		<et_modules_tab>
+			<label>Ecomtheme.com</label>
+			<sort_order>256</sort_order>
+		</et_modules_tab>
+	</tabs>
+	<sections>
+		<et_oxynic_configs translate="label" module="oxynic">
+			<label>ET Oxynic Theme</label>
+			<tab>et_modules_tab</tab>
+			<frontend_type>text</frontend_type>
+			<sort_order>10011</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+			
+				<general translate="label">
+					<label>General Settings</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>10</sort_order>
+					<expanded>1</expanded>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<theme_color translate="label">
+                            <label>Theme Color</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>oxynic/system_config_source_colors</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </theme_color>
+                        
+                        <theme_layout translate="label">
+                            <label>Theme Layout</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>oxynic/system_config_source_layouts</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </theme_layout>
+                        
+                        <theme_responsive translate="label">
+							<label>Theme Responsive</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>25</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</theme_responsive>
+                            
+					</fields>
+				</general>
+				
+				<colors translate="label">
+					<label>Font, Colors and Background</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>20</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					
+					<fields>
+						<font_family translate="label">
+							<label>Font Family</label>
+							<frontend_type>select</frontend_type>
+							<source_model>oxynic/system_config_source_fontFamilies</source_model>
+							<sort_order>5</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</font_family>
+						<font_size translate="label">
+							<label>Font Size</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>10</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</font_size>
+						
+						<use_google_font>
+							<label>Use Google Webfont</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+		            		<sort_order>15</sort_order>
+		            		<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</use_google_font>
+						<google_font translate="label">
+							<label>Google Font</label>
+							<frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><use_google_font>1</use_google_font></depends>
+						</google_font>	
+						<apply_googlefont_to translate="label">
+							<label>Apply Google Font To</label>
+							<frontend_type>textarea</frontend_type>
+							<sort_order>25</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>CSS Selector</comment>
+							<depends><use_google_font>1</use_google_font></depends>
+						</apply_googlefont_to>										
+																							
+						<link_color>
+							<label>Link Color</label>
+							<frontend_type>text</frontend_type>
+							<validate>color</validate>
+		            		<sort_order>30</sort_order>
+		            		<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</link_color>
+						<link_hover_color>
+							<label>Link Hover Color</label>
+							<frontend_type>text</frontend_type>
+							<validate>color</validate>
+		            		<sort_order>35</sort_order>
+		            		<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</link_hover_color>
+						<text_color>
+							<label>Text Color</label>
+							<frontend_type>text</frontend_type>
+							<validate>color</validate>
+		            		<sort_order>40</sort_order>
+		            		<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</text_color>
+						<background_color>
+							<label>Background Color</label>
+							<frontend_type>text</frontend_type>
+							<validate>color</validate>
+		            		<sort_order>45</sort_order>
+		            		<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</background_color>
+						
+						<background_style translate="label">
+							<label>Background Style</label>
+							<frontend_type>select</frontend_type>
+							<source_model>oxynic/system_config_source_bgStyle</source_model>
+							<sort_order>50</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</background_style>
+						
+						<background_pattern>
+							<label>Background Pattern</label>
+							<frontend_model>oxynic/adminhtml_system_config_form_field_imageSelect</frontend_model>
+							<source_model>oxynic/system_config_source_pattern</source_model>
+		            		<sort_order>55</sort_order>
+		            		<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><background_style>pattern</background_style></depends>
+						</background_pattern>
+						
+						<background_image translate="label">
+							<label>Background Image</label>
+							<frontend_type>image</frontend_type>
+							<backend_model>adminhtml/system_config_backend_image</backend_model>
+							<upload_dir config="system/filesystem/media" scope_info="1">pattern</upload_dir>
+							<base_url type="media" scope_info="1">pattern</base_url>
+							<sort_order>65</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><background_style>image</background_style></depends>
+						</background_image>
+						
+						<background_repeat translate="label">
+							<label>Background Repeat</label>
+							<frontend_type>select</frontend_type>
+							<source_model>oxynic/system_config_source_cssRepeat</source_model>
+							<sort_order>70</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><background_style>image</background_style></depends>
+						</background_repeat>
+						<background_position translate="label">
+							<label>Background Position</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>75</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><background_style>image</background_style></depends>
+						</background_position>	
+						
+					</fields>
+				</colors>
+				
+				<menus translate="label">
+					<label>Top Navigation</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>30</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					
+					<fields>
+						<use_megamenu>
+							<label>Use Megamenu</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </use_megamenu>
+						<menu_mobile>
+							<label>Responsive Menu</label>
+							<frontend_type>select</frontend_type>
+							<source_model>oxynic/system_config_source_menu</source_model>
+							<sort_order>20</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</menu_mobile>
+						<!-- <menu_fixed_on_top>
+							<label>Top Fixed</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+						</menu_fixed_on_top> -->
+					</fields>
+				</menus>
+				
+				<product translate="label">
+					<label>Product Details</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>40</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					
+					<fields>
+						<show_related_products translate="label">
+							<label>Show Related Products</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>5</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</show_related_products>	
+						<show_upsell_products translate="label">
+							<label>Show Up-Sell Products</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>10</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</show_upsell_products>
+						
+						<custom_tab>
+							<label>Custom Tab</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+						</custom_tab>
+						<custom_tab_name>
+							<label>Custom Tab Name</label>
+							<frontend_type>text</frontend_type>
+		            		<sort_order>20</sort_order>
+		            		<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends>
+								<custom_tab>1</custom_tab>
+							</depends>
+						</custom_tab_name>
+						<custom_tab_content translate="label">
+		            		<label>Custom Tab Content</label>
+		            		<frontend_type>editor</frontend_type>
+							<frontend_model>oxynic/adminhtml_system_config_form_field_editor</frontend_model>
+		            		<sort_order>25</sort_order>
+		            		<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><custom_tab>1</custom_tab></depends>
+						</custom_tab_content>
+					</fields>
+				</product>
+				
+				<advanced translate="label">
+					<label>Advanced</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>50</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					
+					<fields>
+						<show_cpanel>
+							<label>Show Cpanel</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+						</show_cpanel>
+						<live_less_compile translate="label">
+                            <label>LESS Compile</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </live_less_compile>
+                        
+						<show_add2cart>
+							<label>Show Add to Cart</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+						</show_add2cart>
+						<show_add2wishlist>
+							<label>Show Add to Wishlist</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+						</show_add2wishlist>
+						<show_add2compare>
+							<label>Show Add to Compare</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+						</show_add2compare>
+						<show_quickview>
+							<label>Show Quickview Button</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+						</show_quickview>
+						
+					</fields>
+				</advanced>
+			</groups>
+		</et_oxynic_configs>
+	</sections>
+</config>

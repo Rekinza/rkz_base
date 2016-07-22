@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Thredshare_Order>
+			<version>1.0.0</version>
+		</Thredshare_Order>
+	</modules>
+
+	<global>
+        <events>
+            <sales_order_status_after>
+                <observers>
+                    <Thredshare_Order_Model_Observer>
+                        <type>singleton</type>
+                        <class>Thredshare_Order_Model_Observer</class>
+                        <method>updateVendorPoints</method>
+                    </Thredshare_Order_Model_Observer>
+                </observers>
+            </sales_order_status_after>
+        </events>
+		 <models>
+          <sales>
+              <rewrite>
+                  <order>Thredshare_Order_Model_Order</order>
+              </rewrite>
+          </sales>
+       </models>
+    </global>
+</config>

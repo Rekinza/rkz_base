@@ -1,0 +1,93 @@
+<?php
+/**
+ * @package ET_Ajax
+ * @version 1.0.4
+ * @copyright Copyright (c) 2014 EcomTheme. (http://www.ecomtheme.com)
+ * @license http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+?>
+
+<div class="block-header-cart">
+    <?php
+	 $_cartQty = $this->getSummaryCount();
+	if ( !$_cartQty ){
+		$_cartQty = 0;
+	}
+	  ?>
+	 <div class="header-cart-title">
+	 	<!--i class="fa fa-shopping-cart"></i>
+		<span class="badge"></span-->
+		<span class="glyphicon glyphicon-shopping-cart" style="color:#323232;font-size:28px;margin-top:2px;"></span>
+		<?php if ($_cartQty >0) :?>
+			<div class="ajax-cart-count"><?php echo $_cartQty ?></div>
+		<?php endif; ?>
+	 </div>
+     <div class="header-cart-content">
+	    <!--div class="remain_cart" id="minicart">
+		    <div class="minicartInner"-->
+		    <?php if($_cartQty && $this->isPossibleOnepageCheckout()): ?>
+		    
+		    <?php endif ?>
+		    <?php $_items = $this->getRecentItems() ?>
+		    <?php if(count($_items)): ?>
+			<ul class="mini-products-list">
+			<?php foreach($_items as $_item): ?>
+				<?php echo $this->getItemHtml($_item) ?>
+			<?php endforeach; ?>
+			</ul>
+			<div class="summary">
+				<div class="summary-inner">
+					<?php if ($_cartQty==1): ?>
+					<p class="amount"><?php echo $this->__('1 item') ?></p>
+					<?php else:?>
+					<p class="amount"><?php echo $this->__('%s items',$_cartQty) ?></p>
+					<?php endif?>
+					<p class="subtotal">
+						<?php if ($this->canApplyMsrp()): ?>
+							<span class="map-cart-sidebar-total"><?php echo $this->__('ORDER TOTAL WILL BE DISPLAYED BEFORE YOU SUBMIT THE ORDER');?></span>
+						<?php else: ?>
+							<span class="label"><?php echo $this->__('Subtotal:') ?></span> <?php echo Mage::helper('checkout')->formatPrice($this->getSubtotal()) ?>
+							<?php if ($_subtotalInclTax = $this->getSubtotalInclTax()): ?>
+								<br />(<?php echo Mage::helper('checkout')->formatPrice($_subtotalInclTax) ?> <?php echo Mage::helper('tax')->getIncExcText(true) ?>)
+							<?php endif; ?>
+						<?php endif; ?>
+					</p>
+				</div>
+			</div>
+			<script type="text/javascript">decorateList('cart-sidebar', 'none-recursive')</script>
+			<div class="actions">
+		        <?php echo $this->getChildHtml('extra_actions') ?>
+		        <button type="button" style="margin-bottom:4px;" title="<?php echo $this->__('View Bag') ?>" class="button viewcart" onclick="setLocation('<?php echo $this->getUrl('checkout/cart')?>')"><span><span><?php echo $this->__('View Bag') ?></span></span></button>
+		        <button type="button" title="<?php echo $this->__('Checkout') ?>" class="button checkoutcart" onclick="setLocation('<?php echo $this->getCheckoutUrl() ?>')"><span><span><?php echo $this->__('Checkout') ?></span></span></button>
+		    </div>
+		    <?php else: ?>
+		        <p class="empty"><?php echo $this->__('You have no items in your shopping cart.') ?></p>
+		    <?php endif ?>
+		    <!--/div>
+	    </div-->
+	</div>
+</div>
+
+<!--script for analytic.js event trigger minicart -->
+<script type="text/javascript">
+
+jQuery(".header-cart-title").unbind().click(function() {
+	console.log("clicked header cart");
+	ga('send', 'event', 'header cart', 'header cart click',{'nonInteraction': 1}); 
+});
+jQuery(".viewcart").unbind().click(function() {
+	console.log("clickedviewcart");
+	ga('send', 'event', 'mini cart', 'view cart',{'nonInteraction': 1}); 
+
+});
+
+jQuery(".checkoutcart").unbind().click(function() {
+	console.log("clickedcartcheckout");
+	ga('send', 'event', 'mini cart', 'checkout',{'nonInteraction': 1}); 
+
+});
+
+</script>
+
+<!--script end -->

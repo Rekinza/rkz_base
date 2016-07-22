@@ -1,0 +1,755 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * Magmodules.eu - http://www.magmodules.eu - info@magmodules.eu
+ * =============================================================
+ * NOTICE OF LICENSE [Single domain license]
+ * This source file is subject to the EULA that is
+ * available through the world-wide-web at:
+ * http://www.magmodules.eu/license-agreement/
+ * =============================================================
+ * @category    Magmodules
+ * @package     Magmodules_Googleshopping
+ * @author      Magmodules <info@magmodules.eu>
+ * @copyright   Copyright (c) 2015 (http://www.magmodules.eu)
+ * @license     http://www.magmodules.eu/license-agreement/  
+ * =============================================================
+ */
+ -->
+<config>
+	<tabs>
+		<magmodules translate="label" module="googleshopping">
+			<label>Magmodules</label>
+			<sort_order>200</sort_order>
+		</magmodules>
+	</tabs>
+	<sections>
+		<googleshopping translate="label" module="googleshopping">
+			<label>Google Shopping</label>
+			<tab>magmodules</tab>
+			<frontend_type>text</frontend_type>
+			<sort_order>21</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>		
+				<info>
+					<frontend_model>googleshopping/adminhtml_widget_info_info</frontend_model>
+					<sort_order>1</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+				</info>						
+				<general translate="label" module="googleshopping">				
+					<label>Licence</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>2</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>0</show_in_website>
+					<show_in_store>0</show_in_store>
+		            <expanded>1</expanded>					
+					<comment>
+  					 <![CDATA[
+						<script>
+						function showLicenseImg(message) {
+							if (Prototype.Browser.IE) {
+								$('googleshopping_general_license_key').next('p').outerHTML = message;
+							} else {
+								$('googleshopping_general_license_key').next('p').innerHTML = message;
+							}
+						}
+						Event.observe(window, 'load', function() {
+							if ($('row_googleshopping_general_server')) {
+								$('row_googleshopping_general_server').hide();
+							}
+							if ($('googleshopping_general_servername')) {
+								$('googleshopping_general_servername').style.backgroundColor='#f0f0f0';
+								$('googleshopping_general_servername').disable();
+							}									
+						showLicenseImg('<a href="http://www.magmodules.eu/" target="_blank"><img src="//www.magmodules.eu/license/?check='+$('googleshopping_general_server').value+'" border="0" style="margin-top: 4px;"/></a>');
+						});
+						</script>
+						<p>
+							<b>License Keys</b>:
+							You can find your license key on your order conformation mail or login to you account at <a href="http://www.magmodules.eu/customer/account/">Magmodules.eu</a><br/>
+							Need development license keys? Please go to <a href="http://www.magmodules.eu/customer/account/">My License Keys</a> in our store to generate a development license key.<br/><br/>
+						</p>						
+                    ]]>								
+					</comment>					
+					<fields>
+                        <servername translate="label">
+                            <label>Server Name</label>
+                            <frontend_type>text</frontend_type>
+                            <backend_model>googleshopping/system_config_model_servername</backend_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </servername>
+                        <license_key translate="label">
+                            <label>License Key</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Enter your license key here</comment>
+                        </license_key>
+                        <server translate="label">
+                            <label/>
+                            <frontend_type>hidden</frontend_type>
+                            <backend_model>googleshopping/system_config_model_license</backend_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </server>                                           
+                        <enabled translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <backend_model>googleshopping/system_config_model_enable</backend_model>                            
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <tooltip>A valid license key is required in order to enable the module.</tooltip>
+                        </enabled>                        
+					</fields>
+				</general>			
+				<data translate="label" module="googleshopping">
+					<label>Google Shopping - Data</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>3</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+		            <expanded>1</expanded>		
+					<fields>
+                       <note translate="label">
+                            <label><![CDATA[This section lists all the available attributes for the Google Shopping Feed. Some attributes are required for all products and some are required for certain product types such as apparel, others are recommended. To avoid errors in the Google Shopping feed please make sure that you provide  all recommended attributes.]]></label>
+                            <frontend_model>googleshopping/adminhtml_system_config_form_field_note</frontend_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                            
+                        </note> 
+						<heading_description translate="label">
+                            <label>Data: Id, Name &amp; Description</label>
+                            <frontend_model>magmodules_core/system_config_form_field_heading</frontend_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </heading_description>    
+						<id translate="label">
+							<label>ID Attribute</label>
+							<frontend_type>select</frontend_type>
+							<source_model>googleshopping/adminhtml_system_config_source_productid</source_model>
+							<sort_order>11</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</id>
+						<name translate="label">
+							<label>Name Attribute</label>
+							<frontend_type>select</frontend_type>
+							<source_model>googleshopping/adminhtml_system_config_source_varcharattribute</source_model>
+							<sort_order>12</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</name>
+						<description translate="label">
+							<label>Description Attribute</label>
+							<frontend_type>select</frontend_type>
+							<source_model>googleshopping/adminhtml_system_config_source_textattribute</source_model>
+							<sort_order>13</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</description>
+						<condition_heading translate="label">
+                            <label>Data: Condition</label>
+                            <frontend_model>magmodules_core/system_config_form_field_heading</frontend_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                            
+                        </condition_heading>    
+						<condition_note translate="label">
+                            <label><![CDATA[The condition is an required field for the feed. Only three options are available: New, Refurbished & Used. Please select the default condition of your products, when you change the condition on product-level in the Google Shopping Tab the product-condition will be overwritten.<br><br>]]></label>
+                            <frontend_model>googleshopping/adminhtml_system_config_form_field_note</frontend_model>
+                            <sort_order>21</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                            
+                        </condition_note>                          
+						<condition_default translate="label">
+							<label>Default Condition</label>
+							<frontend_type>select</frontend_type>
+							<source_model>googleshopping/adminhtml_system_config_source_condition</source_model>
+							<sort_order>24</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</condition_default>				
+						<gtin_heading translate="label">
+                            <label>Data: GTIN</label>
+                            <frontend_model>magmodules_core/system_config_form_field_heading</frontend_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </gtin_heading>    
+						<gtin_note translate="label">
+                            <label><![CDATA[Use the GTIN/Barcode attribute to submit Global Trade Item Numbers (GTINs) in one of the following formats: UPC (in North America), EAN (in Europe), JAN (in Japan) or ISBN (for books). Please select the attribute that provide these GTINs (for eg. SKU).<br><br>]]></label>
+                            <frontend_model>googleshopping/adminhtml_system_config_form_field_note</frontend_model>
+                            <sort_order>31</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                            
+                        </gtin_note>  
+						<gtin_attribute translate="label">
+							<label>Attribute</label>
+							<frontend_type>select</frontend_type>
+							<source_model>googleshopping/adminhtml_system_config_source_textattribute</source_model>
+							<sort_order>32</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</gtin_attribute>						                            						                                                                                  
+                       <brand_heading translate="label">
+                            <label>Data: Brand</label>
+                            <frontend_model>magmodules_core/system_config_form_field_heading</frontend_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </brand_heading>    
+						<brand_note translate="label">
+                            <label><![CDATA[Required according to the Unique Product Identifier Rules for all target countries except for Austria, Belgium, Canada, Denmark, India, Mexico, Norway, Poland, Russia, Sweden, and Turkey. This attribute is recommended for Austria, Belgium, Canada, Denmark, India, Mexico, Norway, Poland, Russia, Sweden, and Turkey.<br><strong>Note:</strong> Don't provide your store name as the brand unless you manufacture the product.<br><br>]]></label>
+                            <frontend_model>googleshopping/adminhtml_system_config_form_field_note</frontend_model>
+                            <sort_order>41</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                            
+                        </brand_note>  
+						<brand_attribute translate="label">
+							<label>Attribute</label>
+							<frontend_type>select</frontend_type>
+							<source_model>googleshopping/adminhtml_system_config_source_selectattribute</source_model>
+							<sort_order>42</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</brand_attribute>	
+						<mpn_heading translate="label">
+                            <label>Data: MPN</label>
+                            <frontend_model>magmodules_core/system_config_form_field_heading</frontend_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </mpn_heading>                        
+						<mpn_note translate="label">
+                            <label><![CDATA[The Manufacturer Part Number is used to reference and identify a product using a manufacturer specific naming other than GTIN. MPNs are assigned by a manufacturer. MPNs should typically be specific to a single unique product. For example, different colors of a product should have different MPNs.<br><br>]]></label>
+                            <frontend_model>googleshopping/adminhtml_system_config_form_field_note</frontend_model>
+                            <sort_order>51</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                            
+                        </mpn_note>                             
+						<mpn_attribute translate="label">
+							<label>Attribute</label>
+							<frontend_type>select</frontend_type>
+							<source_model>googleshopping/adminhtml_system_config_source_textattribute</source_model>
+							<sort_order>52</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</mpn_attribute>	
+						<category_heading translate="label">
+                            <label>Data: Category</label>
+                            <frontend_model>magmodules_core/system_config_form_field_heading</frontend_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                            
+                        </category_heading>    
+						<category_note translate="label">
+                            <label><![CDATA[Products are categorized in Google Shopping according to the Google product taxonomy. While Google can't guarantee that a product will show in a particular category, you can increase the chances that your products will be included in the most relevant categories by sending them highly structured information for your items.<br>Click <a href="https://support.google.com/merchants/answer/160081" target="_blank">here</a> to read more about the Google product Taxonomy inlcuding the different categories.<br><br>]]></label>
+                            <frontend_model>googleshopping/adminhtml_system_config_form_field_note</frontend_model>
+                            <sort_order>61</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                            
+                        </category_note>                          
+						<category_fixed translate="label">
+							<label>Default Category</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>62</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</category_fixed>															
+					</fields>                        
+				</data>						
+				<advanced translate="label" module="googleshopping">
+					<label>Google Shopping - Advanced Options</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>5</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+		            <expanded>1</expanded>		
+					<fields>
+						<tax_heading translate="label">
+                            <label>Tax Customization</label>
+                            <frontend_model>magmodules_core/system_config_form_field_heading</frontend_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tax_heading>  				
+						<tax_note translate="label">
+                            <label><![CDATA[By default prices are shown incl. Tax so only change this option if necessary.<br>If the feed export is without tax it's possible to add it with this option.<br>]]></label>
+                            <frontend_model>googleshopping/adminhtml_system_config_form_field_note</frontend_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                            
+                        </tax_note> 
+						<force_tax translate="label">
+                            <label>Force Tax Usage</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>googleshopping/source_tax</source_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </force_tax>
+						<add_tax translate="label">
+                            <label>Manually Add Tax</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </add_tax>
+						<tax_percentage translate="label">
+							<label>Percentage</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>5</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment><![CDATA[When the tax percentage is 21% use 21.]]></comment>															
+							<depends><add_tax>1</add_tax></depends>
+						</tax_percentage> 						
+						<price_heading translate="label">
+                            <label>Price Rules</label>
+                            <frontend_model>magmodules_core/system_config_form_field_heading</frontend_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </price_heading>  				
+						<price_note translate="label">
+                            <label><![CDATA[Select if you want to check all the products for special prices based on category price rules.<br>This can have some impact on the speed of the generation of the feed if there are many catalog price rules enabled.]]></label>
+                            <frontend_model>googleshopping/adminhtml_system_config_form_field_note</frontend_model>
+                            <sort_order>11</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                            
+                        </price_note> 
+						<price_rules translate="label">
+                            <label>Use catalog price rules</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>12</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </price_rules>                         
+						<identifier_heading translate="label">
+                            <label>Identifier Exists</label>
+                            <frontend_model>magmodules_core/system_config_form_field_heading</frontend_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </identifier_heading>  				
+						<identifier_note translate="label">
+                            <label><![CDATA[This new attribute was created for shops that offer custom goods without an identifier like GTIN or MPN.<br>Custom goods are hand knitted sweaters or antique furniture or vintage items. The ‘Identifier Exists’ field can be used to indicate<br>that an identifier does not exist for certain products: Identifier exists = false. Not required for regular goods.]]></label>
+                            <frontend_model>googleshopping/adminhtml_system_config_form_field_note</frontend_model>
+                            <sort_order>21</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                            
+                        </identifier_note> 
+						<identifier translate="label">
+                            <label>Use Identifier</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>googleshopping/adminhtml_system_config_source_identifier</source_model>
+                            <sort_order>22</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </identifier>                        					
+						<producttype_heading translate="label">
+                            <label>Product Type</label>
+                            <frontend_model>magmodules_core/system_config_form_field_heading</frontend_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </producttype_heading>  				
+						<producttype_note translate="label">
+                            <label><![CDATA[The ‘product type’ attribute also indicates the category of the product being sold.<br>However, unlike the ‘Google product category’ attribute, this refers to your own classification of the item.<br>Moreover, you can include more than one ‘product type’ attribute in your feed, if products apply to more than one category.<br>To determine the correct ‘product type’ Attribute, expand or browse the Google taxonomy (i.e. use one of the Google taxonomy values) or use your own categories.]]></label>
+                            <frontend_model>googleshopping/adminhtml_system_config_form_field_note</frontend_model>
+                            <sort_order>31</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                            
+                        </producttype_note> 
+						<producttype translate="label">
+                            <label>Use Product Type</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>32</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </producttype>                        
+						<extra_heading translate="label">
+                            <label>Extra Fields</label>
+                            <frontend_model>magmodules_core/system_config_form_field_heading</frontend_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </extra_heading>
+						<extra_note translate="label">
+                            <label><![CDATA[You can add custom-fields to your feed when needed. Please make sure that your using the latest Google Custom Fields standards To prevent error messages in the feed.<br>The guidelines for the custom-fields can be found right <a href="https://support.google.com/merchants/answer/188494" target="_blank">here.</a>]]></label>
+                            <frontend_model>googleshopping/adminhtml_system_config_form_field_note</frontend_model>
+                            <sort_order>51</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                            
+                        </extra_note>                                                 
+						<extra>
+							<label>Extra Fields</label>
+                            <frontend_model>googleshopping/adminhtml_config_form_field_extra</frontend_model>
+                            <backend_model>googleshopping/system_config_backend_design_extra</backend_model>                            
+                            <sort_order>52</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+						</extra>
+						<shipping_heading translate="label">
+                            <label>Shipping</label>
+                            <frontend_model>magmodules_core/system_config_form_field_heading</frontend_model>
+                            <sort_order>53</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </shipping_heading>
+						<shipping_note translate="label">
+                            <label><![CDATA[We recommend that you configure the shipping costs at your Google Merchant but in some cases you want to add them into the feed.]]></label>
+                            <frontend_model>googleshopping/adminhtml_system_config_form_field_note</frontend_model>
+                            <sort_order>54</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                            
+                        </shipping_note>                                                 
+						<shipping>
+							<label>Shipping Prices</label>
+                            <frontend_model>googleshopping/adminhtml_config_form_field_shipping</frontend_model>
+                            <backend_model>googleshopping/system_config_backend_design_shipping</backend_model>                            
+                            <sort_order>55</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+						</shipping>
+						<weight_heading translate="label">
+                            <label>Weight</label>
+                            <frontend_model>magmodules_core/system_config_form_field_heading</frontend_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </weight_heading>
+						<weight_note translate="label">
+                            <label><![CDATA[This is the weight of the product used to calculate the shipping cost of the item. If you have specified a global shipping method that is dependent on shipping weight (Merchant Dashboard), this attribute will be used to calculate the shipping cost of the item automatically.]]></label>
+                            <frontend_model>googleshopping/adminhtml_system_config_form_field_note</frontend_model>
+                            <sort_order>61</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                            
+                        </weight_note>                               
+						<weight translate="label">
+                            <label>Include Weight Field</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>62</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </weight>
+						<weight_units translate="label">
+							<label>Weight Units</label>
+							<frontend_type>select</frontend_type>
+							<source_model>googleshopping/adminhtml_system_config_source_weight</source_model>
+							<sort_order>63</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><weight>1</weight></depends>							
+						</weight_units>		                        	
+					</fields>
+				</advanced>	                                                                       
+				<filter translate="label" module="googleshopping">
+					<label>Google Shopping - Filter Conditions</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>6</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+		            <expanded>1</expanded>										
+					<fields>
+                       <note translate="label">
+                            <label><![CDATA[This option allows you to include/exclude product from the Google Shopping Feed. To exclude certain products from the Google Shopping feed you easily select yes in the Google Shopping tab on your product configuration page.<br>]]></label>
+                            <frontend_model>googleshopping/adminhtml_system_config_form_field_note</frontend_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                            
+                        </note> 				
+						<visibility_heading translate="label">
+                            <label>Only add products with the following visibility</label>
+                            <frontend_model>magmodules_core/system_config_form_field_heading</frontend_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </visibility_heading>      
+						<visibility_inc translate="label">
+							<label>Visibility</label>
+							<frontend_type>multiselect</frontend_type>
+							<source_model>googleshopping/adminhtml_system_config_source_visibility</source_model>
+							<sort_order>11</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>Include products with this visibility</comment>							
+						</visibility_inc>  
+						<category_heading translate="label">
+                            <label>Filter by Category</label>
+                            <frontend_model>magmodules_core/system_config_form_field_heading</frontend_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </category_heading>      
+                        <category_enabled translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>21</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </category_enabled>    
+						<category_type translate="label">
+							<label>Type of filter</label>
+							<frontend_type>select</frontend_type>
+							<source_model>googleshopping/adminhtml_system_config_source_categorytype</source_model>
+							<sort_order>22</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><category_enabled>1</category_enabled></depends>
+						</category_type>		
+						<categories translate="label">
+							<label>Category</label>
+							<frontend_type>multiselect</frontend_type>
+							<source_model>googleshopping/adminhtml_system_config_source_category</source_model>
+							<sort_order>23</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><category_enabled>1</category_enabled></depends>
+						</categories>  						                                                                              
+					</fields>                        
+				</filter>									
+				<generate translate="label" module="googleshopping">
+					<label>Google Shopping - Generation Settings</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>8</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+		            <expanded>1</expanded>										
+					<fields>                          
+                       <note translate="label">
+                            <label><![CDATA[Each store view will have their own Google Shopping feed, you can easily activate or de-activate the Google Shopping feed generation on store level or automatically generate the Google Shopping feed. In case your not using the cron job functionality it's possible to generate the Google Shopping feed manually.]]></label>
+                            <frontend_model>googleshopping/adminhtml_system_config_form_field_note</frontend_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                            
+                        </note> 
+						<exclude_heading translate="label">
+                            <label>Feed Generation</label>
+                            <frontend_model>magmodules_core/system_config_form_field_heading</frontend_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+						</exclude_heading>  
+						<enabled translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>11</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+						<filename translate="label">
+							<label>Filename</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>12</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment><![CDATA[google-shopping.xml]]></comment>															
+						</filename>  
+						<limit translate="label">
+							<label>Limit</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>13</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment><![CDATA[Set limit for testing, use 0 for all products]]></comment>															
+						</limit> 								 
+						<generate translate="label">
+							<label>Generate</label>
+                            <frontend_type>button</frontend_type>
+							<frontend_model>googleshopping/adminhtml_render_button</frontend_model>
+							<sort_order>14</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>																
+							<comment><![CDATA[Make sure you <strong><u>save the configuration first</u></strong> before generating a feed!</strong>]]></comment>
+						</generate>   
+						<mpn_heading translate="label">
+                            <label>Cron</label>
+                            <frontend_model>magmodules_core/system_config_form_field_heading</frontend_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+						</mpn_heading>   
+						<cron translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>21</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </cron>                        						                        
+                        <time translate="label">
+                            <label>Start Time</label>
+                            <frontend_type>time</frontend_type>
+                            <sort_order>22</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </time>
+                        <frequency translate="label">
+                            <label>Frequency</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_cron_frequency</source_model>
+                            <backend_model>googleshopping/adminhtml_system_config_backend_googleshopping_cron</backend_model>
+                            <sort_order>23</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </frequency>                                                                                
+						<feeds_heading translate="label">
+                            <label>Generated Feeds</label>
+                            <frontend_model>magmodules_core/system_config_form_field_heading</frontend_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </feeds_heading>   
+						<feeds_text translate="label">
+							<label>Text</label>
+                            <frontend_model>googleshopping/adminhtml_system_config_form_field_feeds</frontend_model>
+							<sort_order>31</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</feeds_text>	
+					</fields>                        
+				</generate>					                        					
+			</groups>			
+		</googleshopping>
+		<magmodules_core>
+			<groups>			
+				<uninstall translate="label" module="googleshopping">
+					<label>Google Shopping - Attribute Status</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>75</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+		            <expanded>1</expanded>										
+					<fields>   				
+                       <note translate="label">
+                            <label><![CDATA[Google Shopping Extension heeft een aantal attributen aangemaakt bla bla hier een overzicht en de status. U kunt hier de attribtuen verwijderen of installeren. ]]></label>
+                            <frontend_model>googleshopping/adminhtml_system_config_form_field_note</frontend_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                            
+                        </note> 
+						<installation_status translate="label">
+							<label>Installation Status</label>
+                            <frontend_type>text</frontend_type>
+							<frontend_model>googleshopping/adminhtml_render_status</frontend_model>
+							<sort_order>2</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>																
+						</installation_status>
+						<attributes_install translate="label">
+							<label>Create attributes</label>
+                            <frontend_type>text</frontend_type>
+							<frontend_model>googleshopping/adminhtml_render_installattributes</frontend_model>
+							<sort_order>3</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>																
+						</attributes_install>  
+						<attributes_remove translate="label">
+							<label>Remove attributes</label>
+                            <frontend_type>text</frontend_type>
+							<frontend_model>googleshopping/adminhtml_render_removeattributes</frontend_model>
+							<sort_order>4</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>																
+						</attributes_remove>  												                        
+					</fields>
+				</uninstall>
+			</groups>
+		</magmodules_core>	
+	</sections>
+</config>

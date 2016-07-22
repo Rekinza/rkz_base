@@ -1,0 +1,28 @@
+<?php
+/**
+ * @package ET_Ajax
+ * @version 1.0.4
+ * @copyright Copyright (c) 2014 EcomTheme. (http://www.ecomtheme.com)
+ * @license http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+?>
+<button onclick="setLocation('<?php echo $this->getUrl('checkout/cart'); ?>');" class="shopmore button" id ="view_bag" title="<?php echo $this->__('View Bag');?>" type="button" style="background:#ffffff; border:1px solid #323232; color:#323232;"><span><span><?php echo $this->__('View Bag');?></span></span></button>
+<button onclick="setLocation('<?php echo $this->getUrl('onestepcheckout'); ?>');" class="gotocart button" id ="go_to_cart" title="<?php echo $this->__('Proceed to Checkout');?>" type="button"><span><span><?php echo $this->__('Checkout Now');?></span></span></button>
+<!--script for analytic.js event trigger from product page -->
+<script type="text/javascript">
+
+jQuery("#view_bag").unbind().click(function() {
+	console.log("clicked view bag");
+	ga('send', 'event', 'add to cart popup', 'view bag click',{'nonInteraction': 1}); 
+
+});
+
+jQuery("#go_to_cart").unbind().click(function() {
+	console.log("clickedcartcheckout");
+	ga('send', 'event', 'add to cart popup', 'checkout now click',{'nonInteraction': 1}); 
+
+});
+
+</script>
+
+<!--script end -->

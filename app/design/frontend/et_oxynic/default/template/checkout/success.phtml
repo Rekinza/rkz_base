@@ -1,0 +1,322 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2014 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<div class="page-title">
+    <h1><?php echo $this->__('Your order has been received.') ?></h1>
+</div>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<h2 class="sub-title"><?php echo $this->__('Thank you for your purchase!') ?></h2>
+
+<?php if ($this->getOrderId()):?>
+  <!-- Ecommerce Tracking Code Start -->
+  <?php $orderid = Mage::getSingleton('checkout/session')->getLastRealOrderId(); ?>
+<?php $order = Mage::getSingleton('sales/order')->loadByIncrementId($orderid); ?>
+<?php //$ordersubtotal = $order->getSubtotal(); ?>
+<?php $ordershipping = $order->getShippingAmount(); ?>
+<?php $ordertax = $order->getTaxAmount(); ?>
+<?php $ordergrandtotal = $order->getGrandTotal(); ?>
+<?php /* $addrid = $order->getShippingAddressId(); 
+		mage::log($addrid); 
+		$newaddr = Mage::getModel('sales/order_address')->load($addrid);
+		$addrcity = $newaddr['city']; 
+		$addrregion = $newaddr['region']; */
+?>
+                
+<?php $_items = $order->getAllItems(); ?>
+<?php $trans = array(); ?>
+<?php $items = array(); ?>
+
+
+<?php $trans['id'] = $orderid; ?>
+<?php $trans['affiliation'] = 'Rekinza'; ?>
+<?php $trans['revenue'] = $ordergrandtotal;?>
+<?php $trans['shipping'] = $ordershipping; ?>
+<?php $trans['tax'] = $ordertax; ?>
+
+<?php $i=0; ?>
+
+  <?php foreach($_items as $item):?>
+
+    <?php $itemname = $item->getName(); ?>
+    <?php $itemprice = $item->getPrice(); ?>
+    <?php $itemsku = $item->getSku(); ?>
+    <?php $itemid = $item->getProductId(); ?>
+    <?php $size = $item->getAttributeText('size'); ?>
+    <?php $itemqty = $item->getQtyOrdered(); ?>
+	<?php $items[$i] = array(); ?>
+	<?php $items[$i]['sku'] = $itemsku; ?>
+	<?php $items[$i]['name'] = $itemname; ?>
+	<?php $items[$i]['price'] = $itemprice;?>
+	<?php $items[$i]['category'] = 'clothes'; ?>
+	<?php $items[$i]['quantity'] = '1'; ?>
+      
+  <?php $i++; ?>
+  
+  <?php endforeach; ?>
+  
+ <?php
+//Function to return the JavaScript representation of a TransactionData object.
+function getTransactionJs(&$trans) {
+  return <<<HTML
+  ga('ecommerce:addTransaction', {
+  'id': '{$trans['id']}',
+  'affiliation': '{$trans['affiliation']}',
+  'revenue': '{$trans['revenue']}',
+  'shipping': '{$trans['shipping']}',
+  'tax': '{$trans['tax']}'
+});
+HTML;
+}
+
+// Function to return the JavaScript representation of an ItemData object.
+function getItemJs(&$transId, &$item) {
+  return <<<HTML
+ga('ecommerce:addItem', {
+  'id': '$transId',
+  'name': '{$item['name']}',
+  'sku': '{$item['sku']}',
+  'category': '{$item['category']}',
+  'price': '{$item['price']}',
+  'quantity': '{$item['quantity']}'
+});
+HTML;
+}
+
+
+?>
+
+<!-- Begin HTML -->
+<script>
+ga('require', 'ecommerce');
+
+<?php
+echo getTransactionJs($trans);
+
+foreach ($items as &$item) {
+  echo getItemJs($trans['id'], $item);
+}
+
+?>
+//console.log("in the ecommerce script");
+//console.log(var item);
+ga('ecommerce:send');
+</script>
+<!-- Ecommerce Tracking Code Ends -->
+<?php if ($this->getCanViewOrder()) :?>
+    <p><?php echo $this->__('Your order # is: %s.', sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getViewOrderUrl()), $this->escapeHtml($this->getOrderId()))) ?></p>
+<?php  else :?>
+    <p><?php echo $this->__('Your order # is: %s.', $this->escapeHtml($this->getOrderId())) ?></p>
+<?php endif;?>
+    <p><?php echo $this->__('You will receive an order confirmation email with details of your order and a link to track its progress.') ?></p>
+<?php if ($this->getCanViewOrder() && $this->getCanPrintOrder()) :?>
+    <p>
+        <?php echo $this->__('Click <a href="%s" onclick="this.target=\'_blank\'">here to print</a> a copy of your order confirmation.', $this->getPrintUrl()) ?>
+        <?php echo $this->getChildHtml() ?>
+    </p>
+<?php endif;?>
+<?php endif;?>
+
+<?php if ($this->getAgreementRefId()): ?>
+    <p><?php echo $this->__('Your billing agreement # is: %s.', sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getAgreementUrl()), $this->escapeHtml($this->getAgreementRefId())))?></p>
+<?php endif;?>
+
+<?php if ($profiles = $this->getRecurringProfiles()):?>
+<p><?php echo $this->__('Your recurring payment profiles:'); ?></p>
+<ul class="disc">
+<?php foreach($profiles as $profile):?>
+<?php $profileIdHtml = ($this->getCanViewProfiles() ? sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getProfileUrl($profile)), $this->escapeHtml($this->getObjectData($profile, 'reference_id'))) : $this->escapeHtml($this->getObjectData($profile, 'reference_id')));?>
+    <li><?php echo $this->__('Payment profile # %s: "%s".', $profileIdHtml, $this->escapeHtml($this->getObjectData($profile, 'schedule_description')))?></li>
+<?php endforeach;?>
+</ul>
+<?php endif;?>
+
+<?php
+
+if($order->getCustomerIsGuest())
+{
+   $customer = Mage::getModel('customer/customer');
+	
+	$websiteId = Mage::app()->getWebsite()->getId();
+	
+    if ($websiteId) 
+	{
+        $customer->setWebsiteId($websiteId);
+    }
+	$email_id = $order->getCustomerEmail();
+    $customer->loadByEmail($email_id);
+    
+	if ($customer->getId()) 
+	{
+        //Do nothing;
+    }
+	else   // Create new account for customer
+	{
+			$store = Mage::app()->getStore();
+			//$storeId = $store->getId();
+			
+			require_once __DIR__ ."/../../../../../../../backend/utils/order_confirmation/php-passgen-master/PasswordGenerator.php";
+			$password = PasswordGenerator::getAlphaNumericPassword(6);
+			
+			$first_name = $order->getBillingAddress()->getFirstname();
+
+			$customer = Mage::getModel("customer/customer");
+			$customer   ->setWebsiteId($websiteId)
+						->setStore($store)
+						->setFirstname($first_name)
+						->setLastname($order->getBillingAddress()->getLastname())
+						->setEmail($order->getCustomerEmail())
+						->setPassword($password);
+			 
+			try{
+				$customer->save();
+				$session = Mage::getSingleton('customer/session');
+				//$customer->sendNewAccountEmail('confirmation',$session->getBeforeAuthUrl(),$storeId); //send confirmation email to customer?
+				//$session->logout();
+
+				$storeId = $customer->getSendemailStoreId();
+				//$customer->setConfirmation(1); //confirmation needed to register?
+				$customer->save(); //yes, this is also needed
+				$customer->sendNewAccountEmail('confirmation',$session->getBeforeAuthUrl(),$storeId); //send confirmation email to customer?
+				$session->logout();
+				
+			}
+			catch (Exception $e) { 
+				Zend_Debug::dump($e->getMessage());
+			}
+			
+			//Save the address in customer account
+			
+			$address = Mage::getModel("customer/address");
+			$address->setCustomerId($customer->getId())
+					->setFirstname($order->getBillingAddress()->getFirstname())
+					->setLastname($order->getBillingAddress()->getLastname())
+					->setCountryId('IN')
+					->setRegionId($order->getBillingAddress()->getRegionId()) //state/province, only needed if the country is USA
+					->setPostcode($order->getBillingAddress()->getPostcode())
+					->setCity($order->getBillingAddress()->getCity())
+					->setTelephone($order->getBillingAddress()->getTelephone())
+					->setStreet($order->getBillingAddress()->getData('street'))
+					->setIsDefaultBilling('1')
+					->setIsDefaultShipping('1')
+					->setSaveInAddressBook('1');
+			 
+			try{
+				$address->save();
+			}
+			catch (Exception $e) {
+				Zend_Debug::dump($e->getMessage());
+			}
+			
+			$customer = Mage::getModel("customer/customer"); 
+			$customer->setWebsiteId(Mage::app()->getStore()->getWebsiteId());
+			$customer->loadByEmail($email_id);
+			
+			$customer_id = $customer->getId(); 
+			
+			$order->setCustomerId($customer_id);
+			
+			$order->setCustomerIsGuest(0);
+	
+			$order->setCustomerGroupId(1);
+	
+			$order->save();
+			
+			echo "A new account with your shipping address has been created for you. Please check your email to confirm your account.";
+		
+	}
+
+}
+
+?>
+
+<div class="buttons-set">
+    <button type="button" class="button" title="<?php echo $this->__('Continue Shopping') ?>" onclick="window.location='<?php echo $this->getUrl() ?>'"><span><span><?php echo $this->__('Continue Shopping') ?></span></span></button>
+</div>
+
+<!--Referral Candy Tracking Code....Stuti-->
+<script type='text/javascript'>
+/*!function(d,s) {
+  var rc = d.location.protocol + "//go.referralcandy.com/purchase/mfscj6l7iobho38hfsnllswkh.js";
+  var js = d.createElement(s);
+  js.src = rc;
+  var fjs = d.getElementsByTagName(s)[0];
+  fjs.parentNode.insertBefore(js,fjs);
+}(document,"script");
+*/
+</script>
+
+
+<!-----Facebook Tracking Code....Rishiraj---->
+<?php
+//Get Order Number & Order Total
+$order = Mage::getModel('sales/order')->loadByIncrementId(Mage::getSingleton('checkout/session')->getLastRealOrderId());
+$amount =  number_format($ordergrandtotal,2);
+?>
+
+<!-- Facebook Conversion Code for Checkouts - Rekinza 1 -->
+<script>(function() {
+var _fbq = window._fbq || (window._fbq = []);
+if (!_fbq.loaded) {
+var fbds = document.createElement('script');
+fbds.async = true;
+fbds.src = '//connect.facebook.net/en_US/fbds.js';
+var s = document.getElementsByTagName('script')[0];
+s.parentNode.insertBefore(fbds, s);
+_fbq.loaded = true;
+}
+})();
+window._fbq = window._fbq || [];
+window._fbq.push(['track', '6031043897931', {'value':<?php echo $amount;?>,'currency':'INR'}]);
+
+</script>
+
+<!-- Google Code for Conversion Report Conversion Page -->
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 948788859;
+var google_conversion_language = "en";
+var google_conversion_format = "3";
+var google_conversion_color = "ffffff";
+var google_conversion_label = "3fOTCMHV814Q-7y1xAM";
+if (<?php echo $amount?>) {
+    var google_conversion_value = <?php echo $amount?>;
+}
+var google_remarketing_only = false;
+/* ]]> */
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/948788859/?value=<?php echo $amount?>&amp;label=3fOTCMHV814Q-7y1xAM&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+
+<!-- Google Code for Conversion Report Conversion Page Ends here -->
+
+<noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?ev=6031043897931&amp;cd[value]=0.00&amp;cd[currency]=INR&amp;noscript=1" /></noscript>
+
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>

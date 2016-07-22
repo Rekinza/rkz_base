@@ -1,0 +1,163 @@
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>
+<div class="first-sentence"><span class="highlight">Accepted Brand</span> List</div>
+<form action='' method='post'>
+	<p><input type='text' name='search_brand' id ='search_brand' value='' class='auto' id="search_brand" placeholder="Search Brand"></input></p>
+</form>
+
+<div>
+<?php
+$brands = $this->getAllBrands();
+
+$arraysize = sizeof($brands);
+
+$index = 0;
+
+$first_alphabet_of_prev_brand = '';
+
+$alphabet_index = 0;
+
+?>
+<table>
+<?php
+while ($index < $arraysize)
+{
+	
+	$first_alphabet = substr($brands[$index]['entity_name'],0,1);
+
+	/***Checks to see if new alphabet ***/
+	if( (strcasecmp($first_alphabet,$first_alphabet_of_prev_brand)== 0) || ($first_alphabet_of_prev_brand =='') || (is_numeric(substr($first_alphabet, 0, 1)) == TRUE	) )
+	{	
+		?>
+			<?php 
+			if(fmod($alphabet_index,4)==0){         /****Only 4 items in a row****/
+				if($alphabet_index != 0)
+				{
+					?>
+					</tr>   <!----Close the row of previous list of 4 items---->
+					<?php
+				}    
+				?>    <!---Begin the row--->
+				<tr class="border-needed" colspan=4><td><strong><?php echo $brands[$index]['entity_name']; ?></strong></td>
+
+				<?php
+			}
+			else              
+			{
+				?>
+				<td><strong><?php echo $brands[$index]['entity_name']; ?></strong></td>
+				<?php
+			}
+			$alphabet_index++;
+	}
+	else
+	{
+		$alphabet_index = 0;
+		?>
+
+		</table>
+		<br></br>
+		<table>	
+			<span><h3><?php echo $first_alphabet; ?></h3></span>
+			<tr colspan=4><td><strong><?php echo $brands[$index]['entity_name']; ?></strong></td>
+		<?php
+		$alphabet_index++;
+	}
+	$first_alphabet_of_prev_brand = $first_alphabet;
+	
+	$index++;
+	
+}
+?>
+</table>
+</div>
+
+<style>
+.first-sentence{
+	margin-top: 32px;
+	margin-bottom: 32px;
+	font-size: 32px;
+}
+h3{
+	font-size: 24px;
+	text-align: center;
+	color: #323232;
+	font-weight: 900;
+	line-height: 2em;
+	background: #efefef
+}
+.search_text{
+	margin: 40px auto 20px;
+    font-size: 20px;
+    font-weight: 900;
+    text-align: center;
+    text-transform: uppercase;
+}
+#search_brand{
+	width:100%;
+	font-size: 16px;
+	margin-bottom: 40px;
+}
+table{
+	width:100%;
+	font-family: lato-light;
+}
+td{
+	width:25%;
+	font-size: 16px;
+	padding: 10px;
+	line-height: 2em;
+	font-family: lato-light;
+}
+
+.ui-autocomplete {
+    position: absolute;
+    z-index: 1000;
+    cursor: default;
+    padding: 0;
+    margin-top: 2px;
+    list-style: none;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    line-height: 1.2em;
+    font-weight: bold;
+    -webkit-border-radius: 5px;
+       -moz-border-radius: 5px;
+            border-radius: 5px;
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+       -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+.ui-autocomplete > li {
+  padding: 3px 20px;
+}
+.ui-autocomplete > li.ui-state-focus {
+  background-color: #DDD;
+}
+.ui-helper-hidden-accessible {
+  display: none;
+}
+@media(max-width: 767px){
+	.border-needed{
+		border-top: 1px solid #bdbdbd;
+	}
+	td{
+		font-size: 12px;
+	}
+}
+</style>
+
+<script>
+
+/*************Fill brand using autofill******************/
+$(function() {
+    
+    //autocomplete
+    $(".auto").autocomplete({
+        source: "/backend/utils/brands/brands_search_list.php",
+        minLength: 1
+    });                
+
+});
+</script>

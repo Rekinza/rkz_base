@@ -1,0 +1,15 @@
+<?php 
+//determine if account is already a seller
+if (Mage::getSingleton("customer/session")->isLoggedIn()){
+$email=Mage::getSingleton("customer/session")->getCustomer()->getEmail();
+$is_vendor=Mage::getModel("vendor/info")->isVendor($email);
+if (!$is_vendor){
+?>
+<div class="seller_banner">
+<button type="button" title="Add to Cart" class="button btn-cart" onclick="javascript:window.location.href='<?php echo Mage::getBaseUrl();?>/thredshare_vendor/vendor/newvendor'"><span><span>Become A Seller</span></span></button>
+</div>
+<?php
+}
+}
+
+?>

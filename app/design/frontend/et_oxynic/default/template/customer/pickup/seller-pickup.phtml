@@ -1,0 +1,74 @@
+<div class="pickup">
+  <div class="page-title">
+        <h1>Request PickUp</h1>
+    </div>
+<form id="pick_out_form" method="post" action="<?php echo $this->getUrl("thredshare_pickup/pickup/requestpickup");?>">
+<div class="col-lg-4">
+<input class="required" type="text" name="name" placeholder="Enter Name"/>
+<input class="required" type="text" name="address1" placeholder="Enter Address Line1"/>
+<input  type="text" name="address2" placeholder="Enter Address Line2"/>
+</div>
+<div class="col-lg-4">
+<input class="required mobile" type="text" name="mobile_no" placeholder="Enter Mobile No"/>
+<input class="required number" type="text" name="pincode" placeholder="pincode"/>
+<input class="required" type="text" name="city" placeholder="Enter City"/>
+<input class="required" type="text" name="state" placeholder="Enter State"/>
+</div>
+<div class="col-lg-4">
+<input class="required number" type="text" name="date" id="datepicker" placeholder="Enter PickUp Date"/>
+<br>Pickup Start Time
+<input class="required number" type="time" name="start_time" id="start_time"/>
+<br>Pickup End Time
+<input class="required number" type="time" name="end_time" id="end_time"/>
+<input class="required number" type="text" name="amount" id="amount" placeholder="Approx Value Of Items"/>
+<input class="required number" type="text" name="item_count" id="item_count" placeholder="No. Of Items"/>
+</div>
+<div class="clear"></div>
+<button type="button" onclick="submitPickUpForm();" title="Submit" class="button"><span><span>Submit</span></span></button>
+
+</form>
+</div>
+<script>
+
+function submitPickUpForm(){
+isSuc=true;
+jQuery('.pickup .number').each(function(){
+if (!(/[0-9]+/.test(jQuery(this).val()))){
+alert(jQuery(this).attr('placeholder')+" should be a number");
+isSuc=false;
+return false;
+}
+});
+if (!isSuc){
+return;
+}
+jQuery('.pickup .required').each(function(){
+if (!(/.+/.test(jQuery(this).val()))){
+alert(jQuery(this).attr('placeholder')+" is required");
+isSuc=false;
+return false;
+}
+});
+if (!isSuc){
+return;
+}
+jQuery('.pickup .mobile').each(function(){
+if (!(/[0-9]{10,10}/.test(jQuery(this).val()))){
+alert("Please enter a valid mobile no.");
+isSuc=false;
+return false;
+}
+});
+if (!isSuc){
+return;
+}
+
+jQuery('#pick_out_form').submit();
+
+}
+jQuery(document).ready(function(){
+jQuery('#datepicker').datepicker({minDate:new Date((new Date()).getTime()+3*86400000)});
+});
+</script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>

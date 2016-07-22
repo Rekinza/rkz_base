@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Thredshare_Stylesister>
+			<version>1.0.0</version>
+		</Thredshare_Stylesister>
+	</modules>
+
+	<frontend>
+		<routers>
+			<thredshare_stylesister> <!-- this is the xml file in the main etc thing. "thredhsare_stylesister.xml" -->
+				<use>standard</use>
+				<args>
+					<module>Thredshare_Stylesister</module>
+					<frontName>thredshare_stylesister</frontName> 
+				</args>
+			</thredshare_stylesister>
+			
+		</routers>
+	</frontend>
+	<global>
+<!--this events tag made by me on 19/11/2015 -->
+    <events>
+    <forstylesister>
+      <observers>
+        <thredshare_stylesister_model_observer>
+          <type>singleton</type>
+          <class>Thredshare_Stylesister_Model_Observer</class>
+          <method>fss</method>
+        </thredshare_stylesister_model_observer>
+      </observers>
+    </forstylesister>
+  </events>   
+	<models>
+        <thredshare_stylesister>
+            <class>Thredshare_Stylesister_Model</class>
+            <resourceModel>thredshare_stylesister_resource</resourceModel> 
+            <!--the contents of this tag will fetch
+             the contents of the tag defined INSIDE of it, i.e, it will refer now to the tag, "thredhsarE_stylesister_resource" -->
+        </thredshare_stylesister>
+
+         <thredshare_stylesister_resource>
+            <class>Thredshare_Stylesister_Model_Resource</class>
+            <entities>
+                <stylesister>
+                    <table>kinzasister_customer_mapping</table>
+                </stylesister>
+            </entities>
+        </thredshare_stylesister_resource>
+    </models>
+
+
+    <resources>
+        <thredshare_stylesister_setup>
+            <setup>
+                <module>Thredshare_Stylesister</module>
+                <class>Thredshare_Stylesister_Model_Resource_Setup</class>
+            </setup>
+        </thredshare_stylesister_setup>
+    </resources>
+</global>
+</config>	

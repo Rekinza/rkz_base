@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Msg_Msg91>
+            <version>0.1.7</version>
+        </Msg_Msg91>
+    </modules>
+    <frontend>
+        <routers>
+            <msg91>
+                <use>standard</use>
+                <args>
+                    <module>Msg_Msg91</module>
+                    <frontName>msg91</frontName>
+                </args>
+            </msg91>
+        </routers>
+    </frontend>
+    <admin>
+        <routers>
+            <msg91>
+                 <use>admin</use>
+                 <args>
+                     <module>Msg_Msg91</module>
+                     <frontName>msg91</frontName>
+                 </args>
+             </msg91>
+        </routers>
+    </admin> 
+    <global>
+        <models>
+            <msg91>
+                <class>Msg_Msg91_Model</class>
+                <resourceModel>msg91_mysql4</resourceModel>
+            </msg91>
+            <msg91_mysql4>
+                <class>Msg_Msg91_Model_Mysql4</class>
+                <entities>
+                    <log>
+                        <table>msg_msg91_log</table>
+                    </log>
+                       <customnotification>
+                        <table>msg91_customer</table>
+                    </customnotification>
+                        <notificationlog>
+                         <table>msg_msg91_notificationlog</table>
+                    </notificationlog>
+                </entities>
+            </msg91_mysql4>
+        </models>
+ 
+        <resources>
+            <msg91_setup>
+                <setup>
+                    <module>Msg_Msg91</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </msg91_setup>
+            <msg91_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </msg91_write>
+            <msg91_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </msg91_read>
+        </resources>
+ 
+        <blocks>
+            <msg91>
+                <class>Msg_Msg91_Block</class>
+            </msg91>
+        </blocks>
+        <helpers>
+            <msg91>
+                <class>Msg_Msg91_Helper</class>
+            </msg91>
+        </helpers>
+        <events>
+            <checkout_onepage_controller_success_action>
+                <observers>
+                    <Msg_Msg91_Order_Placed>
+                        <type>singleton</type>
+                        <class>Msg_Msg91_Model_Observer</class>
+                        <method>msg91WhenOrderPlaced</method>
+                    </Msg_Msg91_Order_Placed>
+                </observers>
+            </checkout_onepage_controller_success_action>
+            <sales_order_invoice_save_after>
+                <observers>
+                    <Msg_Msg91_Invoice_Placed>
+                        <type>singleton</type>
+                        <class>Msg_Msg91_Model_Observer</class>
+                        <method>msg91WhenInvoicePlaced</method>
+                    </Msg_Msg91_Invoice_Placed>
+                </observers>
+            </sales_order_invoice_save_after>
+            <sales_order_shipment_save_after>
+                <observers>
+                    <Msg_Msg91_Shipment_Created>
+                        <type>singleton</type>
+                        <class>Msg_Msg91_Model_Observer</class>
+                        <method>msg91WhenShipmentCreated</method>
+                    </Msg_Msg91_Shipment_Created>
+                </observers>
+            </sales_order_shipment_save_after>
+            <sales_order_save_after>
+                <observers>
+                    <Msg_Msg91_Order_Canceled>
+                        <type>singleton</type>
+                        <class>Msg_Msg91_Model_Observer</class>
+                        <method>msg91WhenOrderCanceled</method>
+                    </Msg_Msg91_Order_Canceled>
+                </observers>
+            </sales_order_save_after>
+            <controller_action_postdispatch_customer_account_createpost>
+                 <observers>
+                    <Msg_Msg91_Registration_Success>
+                        <type>singleton</type>
+                        <class>Msg_Msg91_Model_Observer</class>
+                        <method>smsWhenRegistrationSuccess</method>
+                    </Msg_Msg91_Registration_Success>
+                </observers>
+            </controller_action_postdispatch_customer_account_createpost>
+            <controller_action_postdispatch_customer_account_forgotpasswordpost>
+                   <observers>
+                    <Msg_Msg91_Forgotpassword_Request>
+                        <type>singleton</type>
+                        <class>Msg_Msg91_Model_Observer</class>
+                        <method>smsWhenForgotpasswordRequest</method>
+                    </Msg_Msg91_Forgotpassword_Request>
+                </observers>
+                   </controller_action_postdispatch_customer_account_forgotpasswordpost>
+            <controller_action_postdispatch_customer_account_editPost>
+                   <observers>
+                    <Msg_Msg91_Account_Edit>
+                        <type>singleton</type>
+                        <class>Msg_Msg91_Model_Observer</class>
+                        <method>smsWhenEditAccount</method>
+                    </Msg_Msg91_Account_Edit>
+                </observers>
+             </controller_action_postdispatch_customer_account_editPost>
+            <customer_save_before>
+                   <observers>
+                    <Msg_Msg91_Customer_Change_Password>
+                        <type>singleton</type>
+                        <class>Msg_Msg91_Model_Observer</class>
+                        <method>smsWhenChangePassword</method>
+                    </Msg_Msg91_Customer_Change_Password>
+                </observers>
+            </customer_save_before>
+             <controller_action_postdispatch_tag_index_save>
+                   <observers>
+                    <Msg_Msg91_Tag_Save>
+                        <type>singleton</type>
+                        <class>Msg_Msg91_Model_Observer</class>
+                        <method>smsWhenAddTag</method>
+                    </Msg_Msg91_Tag_Save>
+                </observers>
+             </controller_action_postdispatch_tag_index_save>
+            <controller_action_postdispatch_newsletter_manage_save>
+                   <observers>
+                    <Msg_Msg91_Newsletter_Subscribe>
+                        <type>singleton</type>
+                        <class>Msg_Msg91_Model_Observer</class>
+                        <method>smsWhenNewsletterSave</method>
+                    </Msg_Msg91_Newsletter_Subscribe>
+                </observers>
+             </controller_action_postdispatch_newsletter_manage_save>
+              <review_save_after>
+                   <observers>
+                    <Msg_Msg91_Review_Save>
+                        <type>singleton</type>
+                        <class>Msg_Msg91_Model_Observer</class>
+                        <method>smsWhenReviewSave</method>
+                    </Msg_Msg91_Review_Save>
+                </observers>
+             </review_save_after>
+              <tag_save_after>
+                   <observers>
+                    <Msg_Msg91_Tag_Approve>
+                        <type>singleton</type>
+                        <class>Msg_Msg91_Model_Observer</class>
+                        <method>smsWhenTagApprove</method>
+                    </Msg_Msg91_Tag_Approve>
+                </observers>
+             </tag_save_after>
+              <adminhtml_controller_salesrule_prepare_save>
+                <observers>
+                    <Msg_Msg91_Coupon_Save>
+                        <type>singleton</type>
+                        <class>Msg_Msg91_Model_Observer</class>
+                        <method>smsWhenCouponSave</method>
+                    </Msg_Msg91_Coupon_Save>
+                </observers>
+              </adminhtml_controller_salesrule_prepare_save>
+               <cataloginventory_stock_item_save_commit_after>
+            <observers>
+                <msg91_stockupdate>
+                    <class>Msg_Msg91_Model_Observer</class>
+                    <method>catalogInventorySave</method>
+                </msg91_stockupdate>
+            </observers>
+        </cataloginventory_stock_item_save_commit_after>
+        </events>
+    </global>
+ 
+    <adminhtml>
+        <layout>
+            <updates>
+                <msg91>
+                    <file>msg91.xml</file>
+                </msg91>
+            </updates>
+        </layout>
+           <menu>
+	    <Msg_Msg91 translate="title">
+		<title>MSG91</title>
+		<sort_order>500</sort_order>
+		<children>
+			    <configuration translate="title" module="msg91">
+				<title>Configuration</title>
+				<action>adminhtml/system_config/edit/section/msg91_section/</action>
+                                 <sort_order>100</sort_order>
+			    </configuration>
+                            <log translate="title" module="msg91">
+				<title>Log</title>
+				<action>adminhtml/log/index</action>
+                                <sort_order>200</sort_order>
+			    </log>
+                             <customnotification translate="title" module="msg91">
+                        <title>Custom Notifications</title>
+                        <action>adminhtml/customnotification</action>
+                        <sort_order>300</sort_order>
+                    </customnotification>
+                              <notificationlog translate="title" module="msg91">
+                        <title>Custom Notifications Log</title>
+                        <action>adminhtml/notificationlog</action>
+                        <sort_order>400</sort_order>
+                    </notificationlog>
+                <testmessage translate="title" module="msg91">
+                    <title>Test Message</title>
+                    <action>adminhtml/testmessage</action>
+                    <sort_order>500</sort_order>
+	         </testmessage>
+			</children>
+	    </Msg_Msg91>
+	</menu>
+<acl>
+            <resources>
+                <all>
+    <title>Allow Everything</title>
+		</all>
+                <admin>
+                    <children>                        
+                     <Msg_Msg91 translate="title">
+                        <title>MSG91</title>
+                                <sort_order>500</sort_order>
+                        <children>
+                             <configuration translate="title" module="msg91">
+                                <title>Configuration</title>
+                                <sort_order>100</sort_order>
+                            </configuration>
+                            <log translate="title" module="msg91">
+                                <title>Log</title>
+                                    <sort_order>200</sort_order>
+                            </log>
+                                 <customnotification translate="title" module="msg91">
+                                <title>Custom Notifications</title>
+                                   <sort_order>300</sort_order>
+                                   </customnotification>
+                            <notificationlog translate="title" module="msg91">
+                            <title>Custom Notifications Log</title>
+                               <sort_order>400</sort_order>
+                            </notificationlog>
+                            <testmessage translate="title" module="msg91">
+                                <title>Test Message</title>
+                                                   <action>adminhtml/msg91/testmessage</action>
+
+                                <sort_order>500</sort_order>
+                            </testmessage>
+                            </children>
+                          </Msg_Msg91>
+                     
+                      <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <msg91_section translate="title" module="msg91">
+                                            <title>Msg MSG91</title>
+                                            <sort_order>100</sort_order>
+                                        </msg91_section>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+             </resources>
+        </acl>
+    </adminhtml>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <msg91 before="Mage_Adminhtml">Msg_Msg91_Adminhtml</msg91>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <default>
+        <msg91_section>
+            <template_configuration>
+                <chars_per_message>314</chars_per_message>
+            </template_configuration>
+        </msg91_section>
+    </default>
+</config>

@@ -1,0 +1,257 @@
+<?php
+
+$customer=Mage::getModel("customer/session");
+if (!$customer->isLoggedIn()){
+die();
+}
+else{
+$customer=$customer->getCustomer();
+$vendor=Mage::getModel("vendor/info")->getVendor($customer->getEmail());
+if (!$vendor){
+$vendor=new Varien_Object();
+}
+}
+?>
+<div class="new_vendor">
+<form id="new_vendor_form" enctype="multipart/form-data" action="<?php echo Mage::getBaseUrl();?>/thredshare_vendor/vendor/submitvendor" method="post">
+<div class="store_name">
+<label>Enter store name (required)</label>
+<p></p>
+<p> As a seller you get your own shop. Have fun naming the shop. (eg. Shopaholic123, Pink Lover, etc.)</p>
+<input type="text" name='store_name' value="<?php echo $vendor->getShopName();?>"/>
+</div>
+<div>
+<label>
+<?php if ($vendor->getImage()):?>
+<span><img class="ini_image" src="<?php echo Mage::getBaseUrl()."media/cartmart/vendor/vendor/images/".$vendor->getImage();?>" style="width: 50px;
+height: 50px;" /></span>
+<?php endif;?>
+Enter store image (optional)</label>
+<input type="file" name='store_image' />
+</div>
+<div class="store_name">
+	<label>Favourite brands (optional)</label>
+	 <select  name='store_brand' >
+		<option value=""></option>
+	</select>
+	<select  name='store_brand2' >
+		<option value=""></option>
+	</select>
+	<select  name='store_brand3' >
+		<option value=""></option>
+	</select>
+</div>
+<button type="button" onclick="validateit();">Submit</button>
+</form>
+</div>
+<script>
+var brands=[
+'7 for all Mankind',
+'Abercrombie and Fitch',
+'Abu Jani Sandeep Khosla',
+'Adolfo Dominguez',
+'Aldo',
+'Alexander McQueen',
+'Alexander Wang',
+'All Saints',
+'Alviero Martini',
+'AM:PM',
+'American Apparel',
+'American Eagle outfiters',
+'Anamika Khanna',
+'Aneesh Agrawaal',
+'Anita Dongre',
+'Anjalee and Arjun Kapoor',
+'Anju Modi',
+'Ann Taylor',
+'Anya Hindmarch',
+'Armani Collezioni',
+'Armani Exchange',
+'Armani Jeans',
+'Arpita Mehta',
+'Balenciaga',
+'Bally',
+'Banana Republic',
+'BCBG',
+'Bebe',
+'Bershka',
+'Bottega Veneta',
+'Brian Atwood',
+'Brooks Brothers',
+'Burberry',
+'Bvlgari',
+'Cache',
+'Calvin Klein',
+'Canali',
+'Carolina Herrera',
+'Cartier',
+'Celine',
+'Chanel',
+'Charles and Keith',
+'Chloe',
+'Chopard',
+'Christian Dior',
+'Christian Louboutin',
+'Club Monaco',
+'Coach',
+'Coast',
+'Coccinelle',
+'Cole Haan',
+'D&G',
+'Diesel',
+'DKNY X Cara',
+'DKNY',
+'Dolce and Gabbana',
+'Donna Karan',
+'Dorothy Perkins',
+'Dune',
+'Dunhill',
+'DVF',
+'Eddie Bauer',
+'Elie Tahari',
+'Emilio Pucci',
+'Emporio Armani Swiss',
+'Emporio Armani',
+'Ermenegildo Zegna',
+'Espirit',
+'ETRO',
+'Express',
+'FCUK',
+'Fendi',
+'Forever New',
+'Frank Layman',
+'Furla',
+'Gaurav Gupta',
+'Gauri & Nainika',
+'Giorgio Armani',
+'Givenchy',
+'Gucci',
+'Guess',
+'Hackett',
+'Hermes',
+'Herve Leger',
+'Hollister',
+'Hugo Boss',
+'Hunter',
+'Issey Miyake',
+'J Brand Fashion',
+'J Brand',
+'J Crew',
+'Jean Paul Gaultier',
+'Jenny Peckham',
+'Jessica Howard',
+'Jigsaw',
+'Jimmy Choo',
+'JJ Valaya',
+'Karen Millen',
+'Kate Spade',
+'Kenneth Cole',
+'Kenzo',
+'L.K. Bennett',
+'Lacoste',
+'Lanvin',
+'Laura Petites',
+'Levis',
+'Loewe',
+'Loft',
+'Louis Vuitton',
+'Lulu Guinness',
+'Madewell',
+'Manav Gangvani',
+'Mango',
+'Manish Arora',
+'Manish Malhotra',
+'Manolo Blahnik',
+'Marc Jacobs',
+'Marks and Spencer',
+'Max Mara',
+'Michael Kors',
+'Miss Selfridge',
+'Missoni',
+'Miu Miu',
+'Monisha Jaising',
+'Moschino Cheap & Chic',
+'Moschino',
+'Mulberry',
+'Namrata Joshipura',
+'Neeta Bhargava',
+'New York and Company',
+'Next',
+'Nidhi Tholia',
+'Nine West',
+'Oasis',
+'Oscar de la Renta',
+'Paul + Shark',
+'Paul Mainline',
+'Paul Smith Black',
+'Paul Smith Paul',
+'Paul Smith',
+'Pink',
+'Polo Ralph Lauren',
+'Prada',
+'Promod',
+'Rag & Bone',
+'Rajesh Pratap Singh',
+'Ranna Gill',
+'Reiss',
+'Ridhi Mehra',
+'Ritu Kumar',
+'Roberto Cavalli',
+'Rohit Bal',
+'Rohit Gandhi / Rahul Khanna',
+'Roxy',
+'Rupert Sanderson',
+'Russell and Bromley',
+'Sabyasachi',
+'Saint Laurent',
+'Salvatore Ferragamo',
+'Sergio Rossi',
+'Shantanu & Nikhil',
+'Sisley',
+'Stella McCartney',
+'Steve Madden',
+'Stuart Weitzman',
+'Sunit Verma',
+'Superdry',
+'T.M. Lewin',
+'Talbots',
+'Tarun Tahiliani',
+'Ted Baker',
+'The limited',
+'Theory',
+'TODs',
+'Tommy Hilfiger',
+'Top Shop',
+'Tory Burch',
+'Tresmode',
+'True Religion',
+'Uniqlo',
+'United Colors of Benetton',
+'Urban Outfiters',
+'US Polo Assn',
+'Valentino',
+'Varun Bahl',
+'Versace',
+'Victoria Beckham',
+'Vikram Phadnis',
+'Vivienne Westwood',
+'Walter Steiger',
+'Warehouse',
+'Whistles',
+'White House Black',
+'Zara',
+];
+for (var i=0;i<brands.length;i++){
+jQuery('select[name="store_brand"]').append("<option value='"+brands[i]+"'>"+brands[i]+"</option>");
+jQuery('select[name="store_brand2"]').append("<option value='"+brands[i]+"'>"+brands[i]+"</option>");
+jQuery('select[name="store_brand3"]').append("<option value='"+brands[i]+"'>"+brands[i]+"</option>");
+}
+function validateit(){
+
+if (!jQuery('input[name="store_name"]').val().trim()){
+alert("Shop Name cannot be empty");
+return;
+}
+jQuery('#new_vendor_form').submit();
+}
+</script>

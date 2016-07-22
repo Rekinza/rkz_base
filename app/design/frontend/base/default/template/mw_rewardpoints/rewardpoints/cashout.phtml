@@ -1,0 +1,214 @@
+<div class="page-title page-head">
+        <h1>Kinza CashOut</h1>
+</div>
+
+<p>Thanks for sending your clothes to reKinza! As an alternative to Kinza Cash,
+you can receive your payout through the options below or donate it to our
+charity partner</p>
+<form id="cashout-form" action="<?php echo $this->getUrl("rewardpoints/rewardpoints/fetchcash");?>" method="post">
+<input type="hidden"  name="cashout_type" value="bank-transfer"/>
+<input type="text" class="amount" name="amount" placeholder="Enter amount to cash out" style="width: 300px;
+height: 25px;
+font-size: 20px;
+margin-left: 10px;
+margin-bottom: 10px;
+padding: 20px;
+margin-top: 20px;"/> 
+<div class="action-bar">
+<div class="bar selected col-lg-3" data="bank-transfer"><div>Bank Transfer</div></div>
+<div class="bar col-lg-3" data="cheque"><div>Cheque</div></div>
+<!-- 
+<div class="bar col-lg-3" data="sms"><div>Money Through SMS</div></div>
+ -->
+<div class="bar col-lg-3" data="charity"><div>Donate to Charity</div></div>
+</div>
+<div class="clear"></div>
+<div class="subbar bank-transfer selected">
+<div class="col-lg-4">
+<div>
+<label style="
+    margin-right: 10px;
+"><span class="required_star">*</span>Name:&nbsp;</label>
+<input type="text" class=" required" name="name" placeholder="Name" />
+</div>
+<div>
+<label style="
+    margin-right: 10px;
+"><span class="required_star">*</span>Account No.:&nbsp;</label>
+<input type="text" class="required number" name="account" placeholder="A/C Number" />
+</div>
+</div>
+
+<div class="col-lg-4">
+<div>
+<label style="
+    margin-right: 10px;
+"><span class="required_star">*</span>Bank Name:&nbsp;</label>
+<input type="text" class=" required" name="bank_name" placeholder="Bank Name" />
+</div>
+<div><label style="
+    margin-right: 10px;
+"><span class="required_star">*</span>Branch Name:&nbsp;</label>
+<input type="text" class=" required" name="branch_name" placeholder="Branch Name" />
+</div>
+</div>
+<div class="col-lg-4">
+<div><label style="
+    margin-right: 10px;
+"><span class="required_star">*</span>Account Type:&nbsp;</label>
+<select type="text" class=" required" name="account_type" placeholder="Account Type" >
+<option value="Saving Account">Saving Account</option>
+<option value="Current Account">Current Account</option>
+</select>
+</div>
+<div>
+<label style="
+    margin-right: 10px;
+"><span class="required_star">*</span>IFSC Code:&nbsp;</label>
+<input type="text" class=" required" name="ifsc" placeholder="IFSC Code" />
+</div>
+</div>
+<div class="clear"></div>
+</div>
+<div class="subbar cheque">
+<div class="col-lg-4">
+<div>
+<label style="
+    margin-right: 10px;
+"><span class="required_star">*</span>Name:&nbsp;</label>
+<input type="text" name="name_ch" class=" required " placeholder="Name" />
+</div>
+<div>
+<label style="
+    margin-right: 10px;
+"><span class="required_star">*</span>Address :&nbsp;</label>
+<input type="text" class=" required" name="address1" placeholder="Address Line 1" />
+<input type="text" name="address2" placeholder="Address Line 2" />
+</div>
+
+</div>
+<div class="col-lg-4">
+<div>
+<label style="
+    margin-right: 10px;
+"><span class="required_star">*</span>City:&nbsp;</label>
+<input type="text" class=" required" name="city" placeholder="City" />
+</div>
+<div>
+<label style="
+    margin-right: 10px;
+"><span class="required_star">*</span>Pincode:&nbsp;</label>
+<input type="text" class=" required number" name="pincode" placeholder="pincode" />
+</div>
+<div>
+<label style="
+    margin-right: 10px;
+"><span class="required_star">*</span>Mobile:&nbsp;</label>
+<input type="text"  class=" required mobile" name="mobileno" placeholder="mobileno" />
+</div>
+</div>
+<div class="col-lg-4">
+<div>
+<label style="
+    margin-right: 10px;
+"><span class="required_star">*</span>IFSC Code:&nbsp;</label>
+<input type="text " class=" required " name="ifsc_ch" placeholder="IFSC Code" />
+</div>
+<div>
+<label style="
+    margin-right: 10px;
+"><span class="required_star">*</span>Cheque No:&nbsp;</label>
+<input type="text" name="cheque" class=" required " placeholder="Cheque No" />
+</div>
+</div>
+<div class="clear"></div>
+</div>
+
+<div class="subbar sms">
+<div class="col-lg-4">
+<div>
+<label style="
+    margin-right: 10px;
+"><span class="required_star">*</span>Name:&nbsp;</label>
+<input type="text " name="name_sms" class=" required " placeholder="Name" />
+</div>
+</div>
+
+<div class="col-lg-4">
+<div>
+<label style="
+    margin-right: 10px;
+"><span class="required_star">*</span>Mobile:&nbsp;</label>
+<input type="text" class=" required mobile_sms" name="mobile" placeholder="Mobile No" />
+</div>
+</div>
+<div class="clear"></div>
+</div>
+<div class="subbar charity">
+reKinza is proud to be supporting <span class="highlight">Prayas.</span> Now you can donate your
+Kinza Cash to help provide for women and youth at shelter homes
+<div class="col-lg-4">
+<div>
+<label style="
+    margin-right: 10px;
+"><span class="required_star">*</span>Name:&nbsp;</label>
+<input type="text" name="name_cha" class=" required " placeholder="Enter Name" style="margin:10px 0px 10px 0px;" />
+</div>
+</div>
+<br/>
+<p class="clear">(A certificate in this name, acknowledging the donation, will be emailed to you by Prayas.)</p>
+<div class="clear"></div>
+</div>
+<button type="button" onclick="submitCashOutForm();" title="Submit" class="button"><span><span>Submit</span></span></button>
+</form>
+<script>
+
+jQuery('.bar').click(function(){
+jQuery('.bar.selected').removeClass('selected');
+jQuery(this).addClass('selected');
+jQuery('.subbar.selected').removeClass('selected');
+jQuery('.subbar.'+jQuery(this).attr('data')).addClass('selected');
+jQuery('input[name="cashout_type"]').val(jQuery(this).attr('data'));
+});
+
+function submitCashOutForm(){
+isSuc=true;
+jQuery('.subbar.selected .number').each(function(){
+if (!(/[0-9]+/.test(jQuery(this).val()))){
+alert(jQuery(this).attr('placeholder')+" should be a number");
+isSuc=false;
+return false;
+}
+});
+if (!isSuc){
+return;
+}
+jQuery('.subbar.selected .required').each(function(){
+if (!(/.+/.test(jQuery(this).val()))){
+alert(jQuery(this).attr('placeholder')+" is required");
+isSuc=false;
+return false;
+}
+});
+if (!isSuc){
+return;
+}
+jQuery('.subbar.selected .mobile').each(function(){
+if (!(/[0-9]{10,10}/.test(jQuery(this).val()))){
+alert("Please enter a valid mobile no.");
+isSuc=false;
+return false;
+}
+});
+if (!isSuc){
+return;
+}
+if (!(/[0-9]+/.test(jQuery('#cashout-form .amount').val())) || !jQuery('#cashout-form .amount').val()){
+alert("Please enter amount");
+return;
+}
+jQuery('#cashout-form').submit();
+}
+
+</script>
+ 

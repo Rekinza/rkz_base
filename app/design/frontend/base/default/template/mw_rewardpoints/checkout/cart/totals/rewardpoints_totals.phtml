@@ -1,0 +1,16 @@
+<?php 
+	  $quote = Mage::getSingleton('checkout/session')->getQuote();
+	  $rewardpoints = $quote->getMwRewardpoint();
+	  $reward_point_sell_product = $quote->getMwRewardpointSellProduct();
+	  $total_reward_point = $rewardpoints + $reward_point_sell_product;
+	  $store_id = Mage::app()->getStore()->getId();
+?>
+
+<?php if($total_reward_point):?>
+<tr>
+    <td colspan="1" class="a-right"><?php echo Mage::helper('rewardpoints')->__('Kinzacash Redeemed')?></td>
+    <td class="a-right" style="">
+        <span class="price"><?php echo"Rs ".$total_reward_point;?></span>
+	</td>
+</tr>
+<?php endif;?>

@@ -1,0 +1,245 @@
+
+.footer-container{
+	margin-top: 40px;
+	color: #ccc;
+	a{
+		color: #ccc;
+		&:hover{
+			color: @theme-color;
+		}
+	}
+	.footer{
+		p{
+			margin-top: 14px;
+		}
+		background: #101114;		
+		.block-title-footer,
+		.block .block-title{
+			font-family: @google-font-title;
+			text-transform: uppercase;
+			border-bottom: 1px solid #363636;
+			line-height: normal;
+			color: #fff;
+			font-size: 100%;
+			padding: 0;
+			padding-bottom: 15px;
+			margin: 0;
+			margin-bottom: 10px;
+			position: relative;
+			font-weight: bold;
+			&:before{
+				position: absolute;
+				content: "";
+				bottom: -1px;
+				left: 0;
+				width: 60px;
+				height: 2px;
+				background: @theme-color;
+			}
+		}
+		.block .block-title{
+			&:before{
+				width: 0;
+			}
+			strong{
+				float: none;
+				border: none;
+				padding: 0;
+				background: transparent;
+				font-weight: normal;
+				font-size: 100%;
+				span{
+					color: #fff;
+				}
+			}
+		}
+		.block-content-footer{
+			list-style: none;
+			li{
+				display: inline-block;
+				width: 100%;
+				margin: 5px 0;
+			}
+		}
+		.block-aboutus{
+			.block-content-footer{
+			list-style: none;
+			float: left;
+		    margin: 5px 0 20px;
+		    width: 100%;
+				li{
+					margin: 2px 0;
+					position: relative;
+					padding-left: 30px;
+					&:before{
+						content: "";
+						background-image: url(../../images/icon-address.png);
+						width: 14px;
+						height: 15px;
+						background-position: 0 0;
+						position: absolute;
+						top: 3px;
+						left: 0;
+					}
+					&.phone:before{
+						background-position: 0 -22px;
+					}
+					&.email:before{
+						background-position: 0 -49px;
+					}
+					&.open:before{
+						background-position: 0 -72px;
+					}
+					span{
+						color: #fff;
+					}
+				}
+			}			
+		}
+		.block-tags{
+			margin: 0;
+			.block-content{
+				display: block;
+				margin-top: 18px;
+			}
+			.tags-list{
+				border: none;
+				color: #fff;
+				padding: 0;
+				margin: 0;
+				li{
+					background: #999999;
+					padding: 4px 7px;
+					height: 30px;
+					margin: 0 2px 2px 0;
+					float: left;
+					&:hover{
+						background: @theme-color;
+					}
+					a{
+						color: #fff;
+						font-size: 100% !important;
+						line-height: 100%;
+					}
+				}
+			}
+			.actions{
+				display: none;
+			}
+		}
+		.block-newsletter-footer{
+			#newsletter-validate-detail{
+				position: relative;
+				float: left;
+				width: 100%;
+				margin-right:15px;
+				margin-bottom: 15px;
+				.input-box{
+					width: 100%;
+					input{
+						border: none;
+						padding: 10px 50px 10px 10px;
+						height: 39px;
+						width: 100%;
+						border-radius: 0;
+					}
+				}
+				button{
+					background: #000;
+					border: none;
+					width: 38px;
+					height: 39px;
+					position: absolute;
+					top: 0;
+					right: 0;
+					padding: 0;
+					&:before{
+						background-image: url(../../images/icon-newletter.png);
+						width: 15px;
+						height: 16px;
+						background-position: 0 0;
+						position: absolute;
+						top: 11px;
+						left: 11px;
+						content: "";
+					}
+					&:hover{
+						background: @theme-color;
+					}
+				}
+			}
+			.socials-wrap{
+				float: left;
+				width: 100%;
+				span{
+					color: #fff;
+					display: block;
+					margin-bottom: 12px;
+					font-weight: bold;
+				}
+				ul{
+					list-style: none;
+					li{
+						border: 2px solid #ccc;
+						float: left;
+						margin-right: 10px;
+						width: 36px;
+						height: 36px;
+						text-align: center;
+						&:hover{
+							background: @theme-color;
+							border: 2px solid transparent;
+						}
+						a{
+							font-size: 0;
+							color: #fff;
+							&:before{
+								content: attr(data-icon);
+							    font-family: 'Socialico';
+							    font-size: 21px;
+							    font-weight: normal;
+							    line-height: 34px;
+							    display: inline-block;
+							}
+						}
+					}
+				}
+			}
+
+		}
+		.footer-top{
+			padding: 37px 0 30px 0;
+		}
+		.footer-under{
+			background: #0a0b0d;
+			padding: 15px 0;
+			ul{
+				list-style: none;
+				li{
+					float: left;
+				}
+			}
+			.block-payment{
+				float: left;
+				text-align: right;
+				width: 100%;
+				ul{
+					float: right;
+				}
+				&:hover{
+					li{
+						.opacity(0.7);
+						&:hover{
+							opacity: 1;
+						}
+					}
+				}
+				li{
+					margin-left: 5px;
+				}
+
+			}
+		}
+	}
+}
+

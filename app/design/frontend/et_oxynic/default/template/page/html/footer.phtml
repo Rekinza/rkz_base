@@ -1,0 +1,136 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2014 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+
+<div class="footer-container">
+    <div class="footer">
+	
+		<div class="footer-top">
+			<div class="container">
+				<div class="row">
+					
+					<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+						<div class="row">
+							<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('block-infomations')->toHtml(); ?>
+							<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('block-custommers-support')->toHtml(); ?>
+							<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('block-custom-link')->toHtml(); ?>
+							<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('footer-affiliates')->toHtml(); ?>
+						</div>						
+					</div>					
+					<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+						<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('block-newsletter-footer')->toHtml(); ?>
+					</div>
+				</div>
+			</div>		
+		</div>
+		
+		<?php /*<div class="footer-under">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-7 col-md-7 col-sm-8 col-xs-12">
+						<address><?php echo $this->getCopyright();?> Designed by <a title="ecomtheme.com" href=" http://www.ecomtheme.com/" target="_blank">Ecomtheme.Com</a></address>
+					</div>
+					<div class="col-lg-5 col-md-5 col-sm-4 col-xs-12">
+						<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('block-payment')->toHtml(); ?>
+					</div>
+				</div>
+			</div>
+		</div>*/ ?>
+		
+    </div>
+</div>
+
+<a id="et_backontop" class="fa-angle-up" href="#" title="<?php echo $this->__('Back to top') ?>"></a>
+<script type="text/javascript">
+	jQuery(document).ready(function($){  
+		jQuery("#et_backontop").hide();
+		jQuery(function () {
+			var wh = $(window).height();
+			var whtml =  $(document).height();
+			$(window).scroll(function () {
+				if ($(this).scrollTop() > whtml/10) {
+					$('#et_backontop').fadeIn();
+				} else {
+					$('#et_backontop').fadeOut();
+				}
+			});
+			jQuery('#et_backontop').click(function () {
+				jQuery('body,html').animate({
+					scrollTop: 0
+				}, 800);
+				return false;
+			});
+		});
+	});
+</script>
+
+<!--script type="text/javascript">
+        var _mfq = _mfq || [];
+        (function () {
+        var mf = document.createElement("script"); mf.type = "text/javascript"; mf.async = true;
+        mf.src = "//cdn.mouseflow.com/projects/f9971ba6-edd9-44e9-8599-487f73e608b6.js";
+        document.getElementsByTagName("head")[0].appendChild(mf);
+      })();
+</script-->
+
+<script type="text/javascript">
+    var onclick = jQuery('body').on('click', function(e) {
+		if (jQuery(e.target).closest('.et_menu_sidebar').length || jQuery(e.target).closest('.menu-button').length) {
+		} else {
+			if(jQuery('body').hasClass('show_sidebar')){
+	            jQuery('body').removeClass('show_sidebar');
+	        }
+		}
+});
+
+</script>
+
+ <!-- Start of Perfect Audience Script
+<script type="text/javascript">
+        (function() {
+            window._pa = window._pa || {};
+            if(document.location.href.indexOf('checkout/onepage/success') != -1) {
+                <?php
+                    $_tmp_amount = 0.00;
+                    $product_id = "";
+                    $lastOrderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
+                    if($lastOrderId) {
+                        $_tmp_amount = Mage::getModel('sales/order')->loadByIncrementId($lastOrderId)->getBaseGrandTotal();
+                    }
+                    if(Mage::registry('current_product')){
+                        $product_id = Mage::registry('current_product')->getSku();
+                    }
+                ?>
+                _pa.orderId = "<?php echo $lastOrderId; ?>";
+                _pa.revenue = "<?php echo $_tmp_amount; ?>";
+            }
+            _pa.productId = "<?php echo $product_id; ?>";
+            var pa = document.createElement('script'); pa.type = 'text/javascript'; pa.async = true;
+            pa.src = ('https:' == document.location.protocol ? 'https:' : 'http:') + "//tag.marinsm.com/serve/55e57bb2928028da9b0000bf.js";
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(pa, s);
+        })();
+</script>
+     End of Perfect Audience Script -->

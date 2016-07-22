@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Thredshare_Brands>
+			<version>1.0.0</version>
+		</Thredshare_Brands>
+	</modules>
+
+	<frontend>
+		<routers>
+			<thredshare_brands>
+				<use>standard</use>
+				<args>
+					<module>Thredshare_Brands</module>
+					<frontName>thredshare_brands</frontName>
+				</args>
+			</thredshare_brands>
+			
+		</routers>
+		
+		
+	</frontend>
+	<global>
+		<models>
+			<thredshare_brands>
+				<class>Thredshare_Brands_Model</class>
+				<resourceModel>thredshare_brands_resource</resourceModel>
+			</thredshare_brands>
+			<thredshare_brands_resource>
+				<class>Thredshare_Brands_Model_Resource</class>
+				<entities>
+					<brands>
+						<table>sku_code_mapping</table>
+					</brands>
+				</entities>
+			</thredshare_brands_resource>
+		</models>
+	
+	</global>
+</config>

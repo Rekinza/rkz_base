@@ -1,0 +1,58 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2014 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php $_product = $this->getProduct(); ?>
+<?php $buttonTitle = $this->__('Add to Bag'); ?>
+<?php if($_product->isSaleable()): ?>
+	<div class="qty-wrap">
+		<?php if(!$_product->isGrouped()): ?>
+		<label for="qty"><?php echo $this->__('Qty :') ?></label>
+		<input type="button" class="quantity-controls quantity-minus" onclick="if(Number($('qty').value)>1){$('qty').value=Number($('qty').value)-1;}" value="-">
+		<input type="text" name="qty" id="qty" maxlength="12" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty" />
+		<input type="button" class="quantity-controls quantity-plus" onclick="$('qty').value=Number($('qty').value)+1" value="+">
+		<?php endif; ?>
+	</div>
+	
+    <div class="add-to-cart">
+		<div class="item-addcart">
+			<button type="button" title="<?php echo $buttonTitle ?>" class="button btn-cart addtocartevent" onclick="productAddToCartForm.submit(this)"><span><span><?php echo $buttonTitle ?></span></span></button>
+			<?php echo $this->getChildHtml('', true, true) ?>
+		</div>
+    </div>
+<?php endif; ?>
+<!--script for analytic.js event trigger -->
+
+<script type="text/javascript">
+
+jQuery(".addtocartevent").unbind().click(function() {
+	console.log("clicked");
+	ga('send', 'event', 'add to cart', 'click', {'nonInteraction': 1}); 
+
+});
+
+</script>
+
+<!--script end -->

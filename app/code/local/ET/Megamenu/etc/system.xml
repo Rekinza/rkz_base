@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<config>
+	<tabs>
+		<et_modules_tab>
+			<label>EcomTheme.com</label>
+			<sort_order>256</sort_order>
+		</et_modules_tab>
+	</tabs>
+	<sections>
+    	<et_megamenu_configs translate="label" module="megamenu">
+    		<label>ET Megamenu</label>            
+            <tab>et_modules_tab</tab>
+			<frontend_type>text</frontend_type>
+			<sort_order>9955</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+				<!-- start general group -->
+				<general translate="label">
+					<label>General settings</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>10</sort_order>
+					<expanded>1</expanded>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<position_id>
+                        	<label>Default Position</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>megamenu/system_config_source_positions</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </position_id>
+					</fields>
+				</general>
+				<!-- end general group -->
+			</groups>
+		</et_megamenu_configs>
+	</sections>
+</config>

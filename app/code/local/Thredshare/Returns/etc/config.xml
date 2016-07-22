@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Thredshare_Returns>
+			<version>1.0.0</version>
+		</Thredshare_Returns>
+	</modules>
+
+	<frontend>
+		<routers>
+			<thredshare_returns>
+				<use>standard</use>
+				<args>
+					<module>Thredshare_Returns</module>
+					<frontName>thredshare_returns</frontName>
+				</args>
+			</thredshare_returns>
+			
+		</routers>
+		
+		
+	</frontend>
+	<global>
+		<models>
+			<thredshare_returns>
+				<class>Thredshare_Returns_Model</class>
+				<resourceModel>thredshare_returns_resource</resourceModel>
+			</thredshare_returns>
+			<thredshare_returns_resource>
+				<class>Thredshare_Returns_Model_Resource</class>
+				<entities>
+					<returns>
+						<table>thredshare_returns</table>
+					</returns>
+				</entities>
+			</thredshare_returns_resource>
+		</models>
+	
+	</global>
+</config>

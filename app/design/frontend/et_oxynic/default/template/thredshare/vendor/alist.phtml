@@ -1,0 +1,113 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2014 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Product list template
+ *
+ * @see Mage_Catalog_Block_Product_List
+ */
+
+?>
+<?php
+echo $this->getChildHtml("seller_header_banner");
+?>
+<div class="container">
+<?php
+echo $this->getChildHtml("seller_header");
+    $_productCollection=$this->getVendorsCollection($this->getRequest()->getParam('after'));
+   
+
+if (!$_productCollection ||!count($_productCollection)) : ?>
+<p class="note-msg"><?php echo $this->__('There are no vendors matching the selection.') ?></p>
+<?php
+else : ?>
+
+    <div id="category-products-wrap">
+        <div class="category-products">
+        <?php //echo $this->getToolbarHtml() ?>
+            
+        
+         
+            <?php // $_collectionSize = $_productCollection->count() ?>
+            <?php // $_columnCount = $this->getColumnCount(); ?>
+            <div class="products-grid vendor">
+                <div class="row">
+                <?php $i=0;
+                foreach ($_productCollection as $_product) :
+                    
+                    ?>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 item">
+                        <div class="product-image">
+                            <a href="<?php echo $this->getVendorUrl($_product) ?>" title="<?php echo $_product['shop_name'] ?>">
+                                <img id="product-collection-image-<?php echo $_product['user_id']; ?>" src="<?php echo $this->getVendorImage($_product) ?>"  />
+                            </a>
+                            
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">
+                                <a href="<?php echo $this->getVendorUrl($_product); ?>" title="<?php echo $_product['shop_name']; ?>">
+                                    <?php echo $_product['shop_name']; ?>
+                                </a>
+                            </div>
+							<div class="fav-brands">
+							Fav Brands: <?php echo $_product['message'];?>
+							</div>
+							<?php
+                            // Provides extra blocks on which to hang some features for products in the list
+                            // Features providing UI elements targeting this block will display directly below the product name
+                            
+                            ?>
+						<div class="my_products">
+						<ul>
+						<?php foreach ($_product['product'] as $pro):?>
+						<li><a href="<?php echo $pro->getProductUrl();?>" class="a_block"><img src="<?php echo Mage::helper('catalog/image')->init($pro, 'image')->resize(100);?>" /></a></li>
+						<?php endforeach;?>
+						</ul>
+						</div>	
+                            
+							
+                        </div>
+                    </div>
+                    <?php endforeach ?>
+                </div>
+            </div>
+            <?php endif; ?>
+			<a class="next_page_url" href="<?php echo $this->getNextPageUrl();?>" />
+            <?php if (!$this->getRequest()->isAjax()):?>
+			<div id="scrolling_loder">
+				<span class="loader_img"><img src="<?php echo $this->getSkinUrl("images/loading.gif");?>" /></span>
+				<span>Loading More Sellers</span>
+			</div>
+			<?php endif;?>
+			
+			<div class="toolbar-bottom">
+                <?php //echo $this->getToolbarHtml() ?>
+            </div>
+        </div>
+    </div>
+
+</div>

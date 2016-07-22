@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<config>
+	<menu>
+		<et>
+			<title>ET Settings</title>
+			<sort_order>1001</sort_order>
+			<children>
+				<ajax>
+					<title>ET Ajax</title>
+					<sort_order>9911</sort_order>
+					<action>adminhtml/system_config/edit/section/et_ajax_configs/</action>
+				</ajax>
+			</children>
+		</et>
+	</menu>
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					<system>
+						<children>
+							<config>
+								<children>
+									<et_ajax_configs translate="title" module="ajax">
+										<title>ET Ajax Settings</title>
+									</et_ajax_configs>
+								</children>
+							</config>
+						</children>
+					</system>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>

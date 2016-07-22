@@ -1,0 +1,164 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2014 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Template for Mage_Page_Block_Html
+ */
+?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>" xmlns:og="http://ogp.me/ns#" xmlns:fb="http://www.facebook.com/2008/fbml">
+
+<head>
+<?php echo $this->getChildHtml('head') ?>
+</head>
+<?php
+	$layout_class = Mage::helper('oxynic')->getConfig('theme_layout', 'full');
+	if ( $layout_class ){
+		$layout_class = 'layout-' . $layout_class;
+	}
+	$body_class = $this->getBodyClass() ? $this->getBodyClass() . ' ' . $layout_class : $layout_class;
+?>
+
+<body class="<?php echo $body_class; ?>" >
+    
+<?php echo $this->getChildHtml('after_body_start') ?>
+<?php $cms_page = Mage::getSingleton('cms/page')->getIdentifier();?>
+<div id="et_theme_wrapper" class="wrapper">
+    <!--<?php echo $this->getChildHtml('global_notices') ?>-->
+    <div class="page">
+        <?php echo $this->getChildHtml('header') ?>
+		<?php echo $this->getChildHtml('breadcrumbs') ?>
+        <div class="main-container col1-layout">
+            <div class="main">
+                <!--<div class="ori-home-page-banner">cms-buyer
+                    <ul>
+                        <li><a href=""></a></li>
+                        <li><a href=""></a></li>
+                        <li><a href=""></a></li>
+                    </ul>
+                </div>-->
+               
+                <div class="home-page-banner"><img src="/skin/frontend/et_oxynic/default/images/header-images.jpg"/></div>
+                
+                <!--
+				<?php if( $this->getChildHtml('homeslider') && $cms_page == 'home' || $cms_page == 'home-left' ){ ?>
+							<?php echo $this->getChildHtml('homeslider'); ?>
+						<?php } ?>
+				-->
+				<div class="col-main">
+				
+				
+					<div class="container">
+					<!--div class="home-container-special"-->
+						<?php echo $this->getChildHtml('global_messages') ?>
+						
+						<?php echo $this->getChildHtml('content') ?>
+						<!--
+						<?php if( $this->getChildHtml('homeservice') && $cms_page == 'home' || $cms_page == 'home-left' ){ ?>
+							<?php echo $this->getChildHtml('homeservice') ?>
+						<?php } ?>
+						
+						
+						<?php if( $cms_page == 'home-left' ){ ?>
+							<div class="row">
+								<div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+									<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('block-sidebar-menu')->toHtml(); ?>
+									<?php echo $this->getChildHtml('homeproducts');?>
+									<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('block-banner-left')->toHtml(); ?>
+									<?php echo $this->getChildHtml('homespecials') ?>
+								</div>
+								<div class="col-lg-9 col-md-9 col-sm-8 col-xs-12">									
+									<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('block-banner-sidebar')->toHtml(); ?>
+									<?php echo $this->getChildHtml('homefeature') ?>
+									<div class="deal-wrap deal-home-left">
+										<?php echo $this->getChildHtml('homedeal') ?>
+									</div>
+									<?php echo $this->getChildHtml('homemen') ?>
+								</div>
+							</div>
+						<?php } ?>
+						<?php if( $this->getChildHtml('buy_sell_button') ){ ?>
+							<?php echo $this->getChildHtml('buy_sell_button') ?>
+						<?php }?>	
+						-->
+									
+						<?php if( $this->getChildHtml('block-home-1') && $cms_page == 'home'){ ?>
+							<?php echo $this->getChildHtml('block-home-1') ?>
+						<?php }?>
+						<?php if( $this->getChildHtml('block-home-2') && $cms_page == 'home'){ ?>
+							<?php echo $this->getChildHtml('block-home-2') ?>
+						<?php }?>
+
+					</div>					
+
+					<?php if( $this->getChildHtml('homebannerfull') || $this->getChildHtml('homebrand') ){ ?>
+					<div class="home-container-special">
+						<?php if( $this->getChildHtml('homebannerfull') ){ ?>
+							<?php echo $this->getChildHtml('homebannerfull') ?>
+						<?php } ?>					
+					</div>
+					<?php } ?>	
+					<?php if( $this->getChildHtml('homedeal') && $cms_page == 'home' ){ ?>
+						<div class="deal-wrap">
+							<div class="home-container-special">
+								<?php echo $this->getChildHtml('homedeal') ?>
+							</div>
+						</div>	
+					<?php } ?>	
+					<?php if( $this->getChildHtml('homewomen') && $cms_page == 'home' || $this->getChildHtml('homemen') && $cms_page == 'home' ){ ?>
+					<div class="container women-men-wrap">	
+						<div class="row">
+							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+								<?php if( $this->getChildHtml('homewomen') && $cms_page == 'home' ){ ?>
+									<?php echo $this->getChildHtml('homewomen') ?>									
+								<?php } ?>							
+							</div>
+							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+								<?php if( $this->getChildHtml('homemen') && $cms_page == 'home' ){ ?>
+									<?php echo $this->getChildHtml('homemen') ?>
+								<?php } ?>							
+							</div>
+						</div>
+					</div>
+					<?php }?>
+				</div>
+            </div>
+        </div>
+        <?php echo $this->getChildHtml('footer') ?>
+        <?php echo $this->getChildHtml('global_cookie_notice') ?>
+        <?php echo $this->getChildHtml('before_body_end') ?>
+    </div>
+</div>
+<?php
+if(Mage::helper('oxynic')->getConfig('show_cpanel', 1)){
+	echo $this->getChildHtml('setting_panel');
+}
+?>
+<?php echo $this->getAbsoluteFooter() ?>
+</body>
+</html>

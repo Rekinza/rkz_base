@@ -1,0 +1,140 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2014 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Product list toolbar
+ *
+ * @see Mage_Catalog_Block_Product_List_Toolbar
+ */
+?>
+<?php if($this->getCollection()->getSize()): ?>
+<?php $_key = ""; $_limit="";?>
+<div class="toolbar">
+
+    <button type="button" class="navbar-toggle collapsed sorter" data-toggle="modal" data-target="#mySortModal" data-toggle="collapse" data-target="#layered-navigation" aria-expanded="false" aria-controls="layered-navigation" style="">
+    <strong><span style="font-size: 16px; color: #fff;font-weight: bold; font-family: 'Lato'; text-transform:uppercase;">Sort By</span></strong>
+    </button>
+
+    <!--?php if( $this->isExpanded() ): ?>
+    <div class="sorter">
+        <?php if( 0 ): ?>
+        <p class="view-mode">
+            <?php $_modes = $this->getModes(); ?>
+            <?php if($_modes && count($_modes)>1): ?>
+            <?php foreach ($this->getModes() as $_code=>$_label): ?>
+                <?php if($this->isModeActive($_code)): ?>
+                    <strong title="<?php echo $_label ?>" class="<?php echo strtolower($_code); ?>"><?php //echo $_label ?></strong>&nbsp;
+                <?php else: ?>
+                    <a href="<?php echo $this->getModeUrl($_code) ?>" title="<?php echo $_label ?>" class="<?php echo strtolower($_code); ?>"><?php //echo $_label ?></a>&nbsp;
+                <?php endif; ?>
+            <?php endforeach; ?>
+            <?php endif; ?>
+        </p>
+        <?php endif; ?> -->
+    	
+    	<div id="mySortModal" class="modal fade sorting" role="dialog">
+    		<div class"modal-dialog modal-lg">
+				<div class="modal-content">
+				<!--div class="sort-by-active">
+				<?php if($this->isLimitCurrent($_key)): ?>
+					<?php echo $this->__('Current: ') ?><?php echo $_limit ?>
+				<?php endif ?>
+				</div-->		
+
+					<ul class="sort-by-option">
+					   <?php foreach($this->getAvailableOrders() as $_key=>$_order): ?>
+						<?php if ($_key=="price"){continue;}?>
+						<li>
+							<a href="<?php echo $this->getOrderUrl($_key, 'asc') ?>" <?php if($this->isOrderCurrent($_key)): ?> class="selected"<?php endif ?>>
+								<?php echo $this->__($_order); ?>
+							</a>
+						</li>
+						 <?php endforeach; ?>
+						<li>
+							<a href="<?php echo $this->getOrderUrl("price", 'desc') ?>" <?php if($this->isOrderCurrent("price")) : ?> class="selected"<?php endif ?>>
+								<?php echo $this->__("Price High to Low"); ?>
+							</a>
+						</li>
+						<li>
+							<a href="<?php echo $this->getOrderUrl("price", 'asc') ?>" <?php if($this->isOrderCurrent("price")): ?> class="selected"<?php endif ?>>
+								<?php echo $this->__("Price Low to High"); ?>
+							</a>
+						</li>						
+					</ul>		
+						
+            <?php if($this->getCurrentDirection() == 'desc'): ?>
+                <a class="fa fa-angle-up" href="<?php echo $this->getOrderUrl(null, 'asc') ?>" title="<?php echo $this->__('Set Ascending Direction') ?>"></a>
+            <?php else: ?>
+                <a class="fa fa-angle-down" href="<?php echo $this->getOrderUrl(null, 'desc') ?>" title="<?php echo $this->__('Set Descending Direction') ?>"></a>
+            <?php endif; ?>	
+	            <div class="modal-footer" style="padding:8px; margin-top:4px;">
+	            	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>	
+	            </div>
+            </div>
+		</div>
+    </div>
+</div>
+
+	
+<div class="pager" style="display:none;">
+        <div class="limiter">
+            <!--label><?php //echo $this->__('Show') ?></label-->
+		   <div class="limiter-active"><?php if($this->isLimitCurrent($_key)): ?><?php echo $_limit ?><?php endif ?></div>
+		   
+			<ul class="limiter-option">
+				<?php 
+				$limit= Mage::app()->getRequest()->getParam('limit');
+				$i = 0;
+				foreach ($this->getAvailableLimit() as  $_key=>$_limit): $i++;?>
+				<li>
+					<a href="<?php echo $this->getLimitUrl($_key) ?>" <?php if($this->isLimitCurrent($_key)||($limit=='' && $i==1)): ?> class="selected" <?php endif ?> >
+						<?php echo $_limit ?>
+					</a>
+				</li>
+				<?php endforeach; ?>
+			</ul> 			
+			<span><?php echo $this->__('products per page') ?></span>
+        </div>
+        <?php echo $this->getPagerHtml() ?>
+</div>
+<?php endif ?>
+
+<script language="javascript">
+    jQuery(document).ready(function($) {
+        $('.limiter-active').html($('.limiter-option li a.selected').html());
+        $('.sort-by-active').html($('.sort-by-option li a.selected').html()); 
+    });
+</script>
+<?php 
+if ($this->getChild('product_list_toolbar_pager')){
+$collection=$this->getChild('product_list_toolbar_pager')->getCollection();
+if ($collection):
+?>
+<a class="next_page_url" href="<?php echo (!($collection->getCurPage(+1)==$collection->getCurPage()))?$this->getChild('product_list_toolbar_pager')->getNextPageUrl():-1;?>" />
+<?php endif;
+}
+?>

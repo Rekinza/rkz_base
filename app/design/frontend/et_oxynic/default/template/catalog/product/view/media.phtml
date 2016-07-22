@@ -1,0 +1,229 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2014 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * Product media data template
+ *
+ * @see Mage_Catalog_Block_Product_View_Media
+ */
+
+$_product = $this->getProduct();
+$_helper = $this->helper('catalog/output');
+$_uniq_mv = false;
+
+if ($_product->getImage() != 'no_selection' && $_product->getImage()) : ?>
+
+<!--div class="more-views col-lg-2 col-md-2 col-sm-2">
+    <ul class="more-views-slider" id="<?php echo $_uniq_mv; ?>">
+    <?php
+        $i = 0;
+        foreach ($this->getGalleryImages() as $_image) :
+            $i++; ?>
+        <li>
+            <a  class="cloud-zoom-gallery <?php if ($i==1) echo "actived"; ?>"
+                onclick="$$('.cloud-zoom-gallery').each(function(e,i){e.removeClassName('actived');});this.addClassName('actived')"
+                rel="useZoom: 'cloud_zoom', smallImage: '<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())/*->resize(360, 360)->setQuality(100)*/; ?>'" title="<?php echo $this->escapeHtml($_image->getLabel()) ?>" href="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile()); ?>">
+                <img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(75, 75)->setQuality(100); ?>" width="75" height="75" alt="<?php echo $this->escapeHtml($_image->getLabel()); ?>" />
+            </a>
+        </li>
+    <?php endforeach; ?>
+    </ul>
+</div-->
+<div class= "product-image product-image-zoom col-lg-12 col-md-12 col-sm-12 col-xs-12 swiper-container">
+	<div class="product-photo-box swiper-wrapper">
+		<?php
+        $i = 0;
+		
+        $images = array();
+        foreach ($this->getGalleryImages() as $image)
+        {
+            $images[] = $image;
+        }
+		
+		if($images[0]['file']== $_product->getImage())   
+		{
+			//Do nothing;
+		}
+		else
+		{
+			$images = array_reverse($images);      // For some products, the order of images are uploaded in reverse order, hence, array needs to be reversed
+		}	
+        foreach ($images as $_image) :
+            $i++; ?>
+            <a  class="cloud-zoom-gallery <?php if ($i==1) echo "actived"; ?>"
+                onclick="$$('.cloud-zoom-gallery').each(function(e,i){e.removeClassName('actived');});this.addClassName('actived')"
+                rel="useZoom: 'cloud_zoom', smallImage: '<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())/*->resize(360, 360)->setQuality(100)*/; ?>'" title="<?php echo $this->escapeHtml($_image->getLabel()) ?>" href="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile()); ?>">
+                <!--img src="" width="75" height="75" alt="<?php echo $this->escapeHtml($_image->getLabel()); ?>" /-->
+			</a>
+			<div class="swiper-slide product-image" style ="text-align:center;"><img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'base image', $_image->getFile()); ?>" alt="<?php echo $this->escapeHtml($_image->getLabel()); ?>" /></div>
+		<?php endforeach; ?>
+    </div>
+    <div class="swiper-pagination"></div>
+	<div class="swiper-button-next"><i class="fa fa-angle-right" style="font-size:48px; color:#adadad;"></i></div>
+    <div class="swiper-button-prev"><i class="fa fa-angle-left" style="font-size:48px; color:#adadad;"></i></div>
+</div>
+
+<!--div class="product-image product-image-zoom col-lg-10 col-md-10 col-sm-10 col-xs-12">
+    <div class="product-photo-box">
+    <a id="cloud_zoom" class="cloud-zoom" rel="zoomWidth:200, zoomHeight:200, adjustX: 20, adjustY: -3" title="<?php echo $this->htmlEscape($this->getImageLabel()); ?>" href="<?php echo $this->helper('catalog/image')->init($_product, 'image')->resize(1600,1600)->setQuality(100); ?>">
+    <?php
+        $_img = '<img id="image" src="'.$this->helper('catalog/image')->init($_product, 'image')/*->resize(360, 360)->setQuality(95)*/.'" alt="'.$this->escapeHtml($this->getImageLabel()).'" title="'.$this->escapeHtml($this->getImageLabel()).'" style="height:100%;"/>';
+        echo $_helper->productAttribute($_product, $_img, 'image');
+    ?>
+    </a>
+    <span class="btn-popup-image fancybox-button" data-fancybox-group="button" href="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail'); ?>"><?php echo $this->__('Double click on above image to view full picture');?></span>
+    <?php foreach ($this->getGalleryImages() as $_image) : ?>
+        <a style="display:none;" class="fancybox-button fancybox-image-hidden" data-fancybox-group="button" href="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())?>"></a>
+    <?php endforeach; ?>
+</div>
+</div>
+<?php else: ?>
+<div class="product-image">
+    <?php
+        $_img = '<img src="'.$this->helper('catalog/image')->init($_product, 'image')/*->resize(360, 360)->setQuality(95)*/.'" alt="'.$this->escapeHtml($this->getImageLabel()).'" title="'.$this->escapeHtml($this->getImageLabel()).'" style="width:260px;"/>';
+        echo $_helper->productAttribute($_product, $_img, 'image');
+    ?>
+</div-->
+<?php endif; ?>
+
+<?php if (count($this->getGalleryImages()) > 0) : $_uniq_mv = 'small_thumbnails_' . uniqid(); ?>
+<!--
+<div class="more-views col-lg-2 col-md-2 col-s-0 col-xs-0">
+    <ul class="more-views-slider" id="<?php echo $_uniq_mv; ?>">
+    <?php
+        $i = 0;
+        foreach ($this->getGalleryImages() as $_image) :
+            $i++; ?>
+        <li>
+            <a  class="cloud-zoom-gallery <?php if ($i==1) echo "actived"; ?>"
+                onclick="$$('.cloud-zoom-gallery').each(function(e,i){e.removeClassName('actived');});this.addClassName('actived')"
+                rel="useZoom: 'cloud_zoom', smallImage: '<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())/*->resize(360, 360)->setQuality(100)*/; ?>'" title="<?php echo $this->escapeHtml($_image->getLabel()) ?>" href="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile()); ?>">
+                <img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(75, 75)->setQuality(100); ?>" width="75" height="75" alt="<?php echo $this->escapeHtml($_image->getLabel()); ?>" />
+            </a>
+        </li>
+    <?php endforeach; ?>
+    </ul>
+</div>
+-->
+<?php endif; ?>
+
+
+
+
+<script type="text/javascript">
+    jQuery(function(){
+        var init = function(){
+        	<?php if ($_uniq_mv) : ?>
+        	jQuery('#<?php echo $_uniq_mv; ?>').owlCarousel({
+    			pagination: false,
+    			center: false,
+    			nav: true,
+    			loop: true,
+    			margin: 10,
+    			navText: [ '', '' ],
+    			slideBy: 1,
+    			autoplay: false,
+    			autoplayTimeout: 2500,
+    			autoplayHoverPause: true,
+    			autoplaySpeed: 800,
+    			startPosition: 0,
+    			responsive:{
+    				0:{
+    					items:3
+    				},
+    				480:{
+    					items:4
+    				},
+    				768:{
+    					items:4
+    				},
+    				1200:{
+    					items:4
+    				}
+    			}
+    		});
+        	<?php endif; ?>
+            // zoom image
+            jQuery('.cloud-zoom, .cloud-zoom-gallery').CloudZoom();
+    
+            // image popup
+            jQuery('.fancybox-image-hidden').each(function(){
+                jQuery(this).addClass("fancybox-button");
+                var attr = jQuery(this).attr('href');
+                var href_current = jQuery('.btn-popup-image').attr('href');
+                if (attr == href_current){
+                    jQuery(this).removeClass("fancybox-button");
+                }
+            });
+            
+            jQuery('a.cloud-zoom-gallery').bind('click', function(){
+                jQuery('.btn-popup-image').attr('href', jQuery(this).attr('href'));
+                jQuery('.fancybox-image-hidden').addClass("fancybox-button");
+                jQuery('.fancybox-image-hidden').each(function(){
+                    jQuery(this).addClass("fancybox-button");
+                    var attr = jQuery(this).attr('href');
+                    var href_current = jQuery('.btn-popup-image').attr('href');
+                    if (attr == href_current) {
+                        jQuery(this).removeClass("fancybox-button");
+                    }
+                });
+            });
+            
+            // popup image slide
+            jQuery(".fancybox-button").fancybox({
+                padding: 0,
+                prevEffect        : 'none',
+                nextEffect        : 'none',
+                closeBtn        : true,
+                closeClick : true,
+                nextClick  : true,
+                mouseWheel : false,
+                helpers        : {
+                    title    : true,
+                    buttons    : {}
+                },
+                afterLoad : function() {
+                    this.title = 'Image ' + (this.index + 1) + ' of ' + this.group.length + (this.title ? ' - ' + this.title : '');
+                }
+            });
+        }
+        try {
+        	init();
+        } catch(e) {
+    		jQuery(window).on('load', init);
+        }
+    });
+</script>
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+		loop:true,
+		nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+		spaceBetween: 0
+    });    
+</script>

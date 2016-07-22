@@ -1,0 +1,109 @@
+/*login*/
+.account-login{
+    h2{
+        font-size: 108%;
+        font-weight: bold;
+        margin-top: 0;
+        text-transform: uppercase;
+    }
+    .content {
+        border: 1px solid @border-color;
+        min-height: 230px;
+        padding: 15px;
+    }
+    .col2-set{
+        float: left;
+        width: 100%;
+    }
+    .col2-set .col-1 { float:left; width:48.5%; }
+    .col2-set .col-2 { float:right; width:48.5%; }
+    .col2-set .col-narrow { width:32%; }
+    .col2-set .col-wide { width:65%; }
+
+    .col3-set .col-1 { float:left; width:32%; }
+    .col3-set .col-2 { float:left; width:32%; margin-left:2%; }
+    .col3-set .col-3 { float:right; width:32%; }
+
+    .col4-set .col-1 { float:left; width:23.5%; }
+    .col4-set .col-2 { float:left; width:23.5%; margin:0 2%; }
+    .col4-set .col-3 { float:left; width:23.5%; }
+    .col4-set .col-4 { float:right; width:23.5%; }  
+}
+/*block account*/
+.block-account{
+    .block-content{
+        li{
+            border-bottom: 1px dotted @border-color;
+            padding: 8px 0;
+            position: relative;  
+            padding-left: 20px;
+            &:before {
+                border: 1px solid @theme-color;
+                border-radius: 50%;
+                content: "";
+                height: 8px;
+                left: 0;
+                position: absolute;
+                top: 15px;
+                width: 8px;
+            }                      
+        }        
+    }
+}
+/*account*/
+.my-account{
+    .col2-set{ float: left; width: 100%;}
+    .col2-set .col-1 { float:left; width:48.5%; }
+    .col2-set .col-2 { float:right; width:48.5%; }
+    .col2-set .col-narrow { width:32%; }
+    .col2-set .col-wide { width:65%; }
+
+    .col3-set .col-1 { float:left; width:32%; }
+    .col3-set .col-2 { float:left; width:32%; margin-left:2%; }
+    .col3-set .col-3 { float:right; width:32%; }
+
+    .col4-set .col-1 { float:left; width:23.5%; }
+    .col4-set .col-2 { float:left; width:23.5%; margin:0 2%; }
+    .col4-set .col-3 { float:left; width:23.5%; }
+    .col4-set .col-4 { float:right; width:23.5%; }  
+
+    .box-account {
+        border: 1px solid @border-color;
+        margin: 0 0 20px;
+        padding: 15px;
+        float: left;
+        width: 100%;
+        .box-head {
+            border-bottom: 1px solid @border-color;
+            margin: 0 0 15px;
+            padding-bottom: 5px;
+            text-align: right;
+            display: inline-block;
+            width: 100%;
+            h2{
+                font-size: 108%;
+                text-transform: uppercase;
+                margin: 0;
+                float: left;
+                font-weight: bold;
+            }            
+        }                     
+    }    
+    .my-wishlist{
+        .product-name{
+            margin-bottom: 5px;
+            font-weight: bold;
+        }        
+        textarea {
+            width: 100%;
+        } 
+        .button.btn-cart{
+            margin: 10px 0;
+        }
+    } 
+    .pager{
+        margin: 15px 0;
+        width: 100%;
+        position: relative;
+    }    
+}

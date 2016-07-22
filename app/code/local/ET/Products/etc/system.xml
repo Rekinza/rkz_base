@@ -1,0 +1,387 @@
+<?xml version="1.0"?>
+<config>
+	<tabs>
+		<et_modules_tab>
+			<label>EcomTheme.com</label>
+			<sort_order>256</sort_order>
+		</et_modules_tab>
+	</tabs>
+	<sections>
+		<et_products_configs translate="label" module="products">
+			<label>ET Products</label>
+			<tab>et_modules_tab</tab>
+			<frontend_type>text</frontend_type>
+			<sort_order>9966</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+				<general translate="label">
+					<expanded>1</expanded>
+					<label>General</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>50</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<!-- <enabled translate="label">
+							<label>Enabled</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>5</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</enabled> -->
+						<block_id translate="label">
+							<label>Block Id</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>10</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</block_id>
+						<block_title translate="label">
+							<label>Block Title</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>15</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</block_title>
+					</fields>
+				</general>
+				<responsive translate="label">
+					<label>Responsive</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>150</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<heading_resp translate="label">
+							<label>Define columns for grid layout.</label>
+							<frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+							<sort_order>5</sort_order>
+							<show_in_default>1</show_in_default>
+						</heading_resp>
+						<col_lg translate="label">
+							<label># Column [on Large Screens]</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>10</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</col_lg>
+						<col_md translate="label">
+							<label># Column [on Medium Screens]</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>15</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</col_md>
+						<col_sm translate="label">
+							<label># Column [on Small Screens]</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>20</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</col_sm>
+						<col_xs translate="label">
+							<label># Column [on Extra Small Screens]</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>25</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</col_xs>
+					</fields>
+				</responsive>
+				<resources translate="label">
+					<label>Data Filters</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>250</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<data_source translate="label">
+							<label>Data Source</label>
+							<frontend_type>select</frontend_type>
+							<source_model>products/system_config_source_dataSource</source_model>
+							<sort_order>5</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</data_source>
+						<!--  <array_serialized translate="label"><label>Customize Data</label><backend_model>adminhtml/system_config_backend_serialized_array</backend_model><frontend_model>products/adminhtml_system_config_form_field_customize</frontend_model><sort_order>7</sort_order><show_in_default>1</show_in_default><show_in_website>1</show_in_website><show_in_store>1</show_in_store><depends><data_source>array_serialized</data_source></depends></array_serialized> -->
+						<product_skus translate="label">
+							<label>Product SKUs</label>
+							<frontend_model>products/adminhtml_system_config_form_field_productsChooser</frontend_model>
+							<sort_order>10</sort_order>
+							<comment>Enter product's sku or click [...] to start chooser</comment>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends>
+								<data_source>product_skus</data_source>
+							</depends>
+						</product_skus>
+						<catalog_category translate="label">
+							<label>Select Category</label>
+							<frontend_type>multiselect</frontend_type>
+							<source_model>products/system_config_source_catalogCategory</source_model>
+							<comment>Please select one or more categories.</comment>
+							<sort_order>15</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends>
+								<data_source>catalog_category</data_source>
+							</depends>
+						</catalog_category>
+						<child_category_include translate="label">
+							<label>Include Child Category</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>20</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends>
+								<data_source>catalog_category</data_source>
+							</depends>
+						</child_category_include>
+						<include_max_depth translate="label">
+							<label>Include Max. Depth</label>
+							<frontend_type>text</frontend_type>
+							<validate>validage-digits</validate>
+							<sort_order>25</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends>
+								<data_source>catalog_category</data_source>
+								<child_category_include>1</child_category_include>
+							</depends>
+						</include_max_depth>
+						<is_new_filter translate="label">
+							<label>Is New Filter</label>
+							<frontend_type>select</frontend_type>
+							<source_model>products/system_config_source_filterType</source_model>
+							<sort_order>30</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends>
+								<data_source separator=",">catalog_category,product_skus</data_source>
+							</depends>
+						</is_new_filter>
+						<is_special_filter translate="label">
+							<label>Is Special Filter</label>
+							<frontend_type>select</frontend_type>
+							<source_model>products/system_config_source_filterType</source_model>
+							<sort_order>35</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends>
+								<data_source separator=",">catalog_category,product_skus</data_source>
+							</depends>
+						</is_special_filter>
+						<is_featured translate="label">
+							<label>Is Featured Filter</label>
+							<frontend_type>select</frontend_type>
+							<frontend_model>products/adminhtml_system_config_form_field_required</frontend_model>
+							<source_model>products/system_config_source_filterType</source_model>
+							<sort_order>40</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends>
+								<data_source separator=",">catalog_category,product_skus</data_source>
+							</depends>
+						</is_featured>
+						<order_by translate="label">
+							<label>Sort by </label>
+							<frontend_type>select</frontend_type>
+							<source_model>products/system_config_source_orderBy</source_model>
+							<sort_order>45</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends>
+								<data_source separator=",">catalog_category,product_skus</data_source>
+							</depends>
+						</order_by>
+						<order_dir translate="label">
+							<label>Sort Direction</label>
+							<frontend_type>select</frontend_type>
+							<source_model>products/system_config_source_ascdesc</source_model>
+							<sort_order>50</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends>
+								<data_source separator=",">catalog_category,product_skus</data_source>
+								<order_by separator=",">name,price,create_at,top_rating,top_reviewed,top_viewed,top_sales</order_by>
+							</depends>
+						</order_dir>
+						<product_count translate="label">
+							<label>Product Limitation</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>55</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends>
+								<data_source separator=",">catalog_category,product_skus</data_source>
+							</depends>
+						</product_count>
+					</fields>
+				</resources>
+				<product_renderer translate="label">
+					<label>Product Display</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>350</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<show_title translate="label">
+							<label>Show Title</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>5</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</show_title>
+						<title_truncate translate="label">
+							<label>Title Max Length</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>6</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends>
+								<show_title>1</show_title>
+							</depends>
+						</title_truncate>
+						<show_description translate="label">
+							<label>Show Description</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>10</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</show_description>
+						<description_truncate translate="label">
+							<label>Description Max Length</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>11</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends>
+								<show_description>1</show_description>
+							</depends>
+						</description_truncate>
+						<show_image>
+							<label>Show Image</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>15</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</show_image>
+						<image_source>
+							<label>Image Source</label>
+							<frontend_type>select</frontend_type>
+							<source_model>products/system_config_source_imageSource</source_model>
+							<sort_order>16</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends>
+								<show_image>1</show_image>
+							</depends>
+						</image_source>
+						<image_size>
+							<label>Image Size</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>17</sort_order>
+							<comment>Eg: 250x200 as exactly size, or 250 to resize by width only.</comment>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends>
+								<show_image>1</show_image>
+							</depends>
+						</image_size>
+						
+						<show_add2cart>
+							<label>Show Add To Cart</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>20</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</show_add2cart>
+						<show_add2wishlist>
+							<label>Show Add To Wishlist</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>25</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</show_add2wishlist>
+						<show_add2compare>
+							<label>Show Add To Compare</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>30</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</show_add2compare>
+						<show_quickview>
+							<label>Show Ajax Quickview</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>35</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</show_quickview>
+						<show_pricebox>
+							<label>Show Price Box</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>40</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</show_pricebox>
+						<show_rattingbox>
+							<label>Show Ratting Box</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>45</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</show_rattingbox>
+					</fields>
+				</product_renderer>
+			</groups>
+		</et_products_configs>
+	</sections>
+</config>

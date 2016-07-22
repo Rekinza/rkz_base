@@ -1,0 +1,118 @@
+<?php
+/**
+ * @package ET_Products
+ * @version 1.0.0
+ * @copyright Copyright (c) 2014 EcomTheme. (http://www.ecomtheme.com)
+ * @license http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+/* @var $helper ET_Carousel_Helper_Data */
+$helper = Mage::helper('products');
+
+/* @var $this ET_Products_Block_Basic */
+$collection = $this->getItems();
+
+$items = $collection->getItems();
+
+if( !empty($items) ):
+
+	$block_id = $this->getBlockId();
+	$block_title = $this->getBlockTitle();
+	
+    // prepare config values
+    $_image_source = $this->getConfig('image_source', 'small_image');
+    $_image_size   = $this->getConfig('image_size', '270');
+    $_image_size_w = intval($_image_size);
+    $_image_size_h = strpos($_image_size, 'x')===false ? null : intval( substr($_image_size, 1+strpos($_image_size, 'x')) );
+    
+    $_show_image           = $this->getConfig('show_image', 1);
+    $_show_title           = $this->getConfig('show_title', 1);
+    $_show_description     = $this->getConfig('show_description', 1);
+    $_description_truncate = $this->getConfig('description_truncate', 0); // 0 is no truncate
+    
+    
+    // responsive class
+    $class_col = '';
+    foreach (array('lg','md','sm','xs') as $sf){
+    	$col = $this->getConfig("col_$sf");
+    	if ($col>0){
+    		$col = ceil(12/$col);
+    	}
+    	if ($col>0 && $col<=12){
+    		$class_col .= " col-$sf-$col";
+    	}
+    }
+    $price_idsf = '_products_'.uniqid();
+?>
+<div class="block et-products et-products-menu"<?php if ($block_id) : ?> id="<?php echo $block_id; ?>"<?php endif; ?>>
+	<div class="block-content products-grid">
+		<div class="basic-products row">
+	    <?php foreach ( $items as $_item ):
+	    	
+	    	/* @var $_item Mage_Catalog_Model_Product */
+	    	// prepare item's data
+	    	$_item_url = $_item->getProductUrl();
+	    	$_item_image_label = $this->getImageLabel($_item, $_image_source, null, true);
+	    	$_item_image_src = $this->helper('catalog/image')->init($_item, $_image_source)->resize($_image_size_w, $_image_size_h);
+	    	
+	    	$is_new = $helper->isNew($_item);
+	    	$is_special = $helper->isSpecial($_item);
+	    	$is_featured = $helper->isFeatured($_item);
+	    	?>
+	    	
+	        <div class="product-item <?php echo $class_col;?>">
+	        
+	        	<?php if ($_show_image): ?>
+	            <div class="product-image">
+					<a href="<?php echo $_item_url; ?>" title="<?php echo $this->stripTags($_item_image_label, null, true) ?>">
+						<img src="<?php echo $_item_image_src; ?>" alt="<?php echo $this->stripTags($_item_image_label, null, true) ?>" />
+					</a>
+					<?php
+					if ( $is_new ){
+						echo "<span class='new-product'>" . $this->__('New') . "</span>";
+					}
+					if ( $is_special ){
+						echo "<span class='sale-product'>" . $this->__('Sale') . "</span>";
+					}
+					?>
+				</div>
+            	<?php endif; // show_image ?>
+            	
+	            <div class="product-info">
+					<?php if ($_show_title): ?>
+					<?php $_itemNameStripped = $this->stripTags($_item->getName(), null, true); ?>
+					<div class="product-name">
+						<a href="<?php echo $_item_url; ?>" title="<?php echo $_itemNameStripped; ?>">
+							<?php echo $helper->productAttribute($_item, $_item->getName() , 'name'); ?>
+						</a>
+						<?php //if($_item->getRatingSummary()): ?>
+						<?php echo $this->getReviewsSummaryHtml($_item, 'short', true); ?>
+						<?php //endif; ?>
+					</div>
+					<?php endif; // show_title ?>
+					
+					<?php echo $this->getPriceHtml($_item, true, $price_idsf); ?>
+				   
+					<?php if ($_show_description) : ?>
+					<div class="short-description">
+					<?php
+						$short_desc = $helper->productAttribute($_item, $_item->getShortDescription(), 'short_description');
+						if ($length = $this->getConfig('description_truncate')) {
+							echo $helper->truncate($short_desc, $length, '...');
+						} else {
+							echo $short_desc;
+						}
+					?>
+					</div>
+					<?php endif; ?>
+	            </div>
+	            
+	        </div>
+	    <?php endforeach; ?>
+		</div>
+	</div>
+</div>
+
+<?php
+endif; // show only items is not empty.
+?>

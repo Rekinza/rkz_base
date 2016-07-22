@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+    <menu>
+       <Msg_Msg91 translate="title">
+		<title>MSG91</title>
+		<sort_order>500</sort_order>
+		<children>
+			    <configuration translate="title" module="msg91">
+				<title>Configuration</title>
+				<action>adminhtml/system_config/edit/section/msg91_section/</action>
+                                 <sort_order>100</sort_order>
+			    </configuration>
+                            <log translate="title" module="msg91">
+				<title>Log</title>
+				<action>adminhtml/log/index</action>
+                                <sort_order>200</sort_order>
+			    </log>
+                             <customnotification translate="title" module="msg91">
+                        <title>Custom Notifications</title>
+                        <action>adminhtml/customnotification</action>
+                        <sort_order>300</sort_order>
+                    </customnotification>
+                              <notificationlog translate="title" module="msg91">
+                        <title>Custom Notifications Log</title>
+                        <action>adminhtml/notificationlog</action>
+                        <sort_order>400</sort_order>
+                    </notificationlog>
+                <testmessage translate="title" module="msg91">
+                    <title>Test Message</title>
+                    <action>adminhtml/testmessage</action>
+                    <sort_order>500</sort_order>
+	         </testmessage>
+			</children>
+	    </Msg_Msg91>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <Msg_Msg91 translate="title">
+		<title>MSG91</title>
+		<sort_order>500</sort_order>
+		<children>
+			    <configuration translate="title" module="msg91">
+				<title>Configuration</title>
+				<action>adminhtml/system_config/edit/section/msg91_section/</action>
+                                 <sort_order>100</sort_order>
+			    </configuration>
+                            <log translate="title" module="msg91">
+				<title>Log</title>
+				<action>adminhtml/log/index</action>
+                                <sort_order>200</sort_order>
+			    </log>
+                             <customnotification translate="title" module="msg91">
+                        <title>Custom Notifications</title>
+                        <action>adminhtml/customnotification</action>
+                        <sort_order>300</sort_order>
+                    </customnotification>
+                              <notificationlog translate="title" module="msg91">
+                        <title>Custom Notifications Log</title>
+                        <action>adminhtml/notificationlog</action>
+                        <sort_order>400</sort_order>
+                    </notificationlog>
+                <testmessage translate="title" module="msg91">
+                    <title>Test Message</title>
+                    <action>adminhtml/testmessage</action>
+                    <sort_order>500</sort_order>
+	         </testmessage>
+			</children>
+	    </Msg_Msg91>
+                 </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

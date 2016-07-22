@@ -1,0 +1,255 @@
+/*checkout one page*/
+#checkout-progress-wrapper {
+    .block-content{
+        dt{
+            border: 1px solid @border-color;
+            padding: 8px 10px;
+            margin-top: 10px;
+        }
+        dd{
+            padding: 10px;
+            border: 1px solid @border-color;
+            border-top: none;
+            .complete{
+                padding: 10px;
+                border: 1px solid @border-color;
+                border-top: none;
+            }
+            address, p{
+                margin: 0;
+            }
+        }
+    }
+}
+
+#checkoutSteps{
+    .buttons-set {
+        margin-top: 0;
+        padding-top: 20px;
+        p.required {
+            margin: 0;
+            padding: 0 0 10px;
+        }        
+    }
+    .sp-methods{
+        input.cvv {
+            width: 50px;
+            margin-right: 10px;
+            float: left;
+        }
+        .cvv-what-is-this {
+            line-height: 250%;
+        }
+        dt{
+            margin-bottom: 5px;
+        }        
+    } 
+    #checkout-shipping-method-load{
+        label{
+            font-weight: normal;
+        }
+        dd{
+            margin-bottom: 20px;
+        }
+
+    }
+    #onepage-checkout-shipping-method-additional-load{
+        .gift-messages{
+            h3{
+                font-size: 100%;
+            }
+        }
+    }
+    .month.validate-cc-exp.required-entry{
+        float: left;
+        margin-right: 5px;
+    }     
+    /* Content Columns */
+    .col2-set{ float: left; width: 100%;}
+    .col2-set .col-1 { float:left; width:48.5%; }
+    .col2-set .col-2 { float:right; width:48.5%; }
+    .col2-set .col-narrow { width:32%; }
+    .col2-set .col-wide { width:65%; }
+
+    .col3-set .col-1 { float:left; width:32%; }
+    .col3-set .col-2 { float:left; width:32%; margin-left:2%; }
+    .col3-set .col-3 { float:right; width:32%; }
+
+    .col4-set .col-1 { float:left; width:23.5%; }
+    .col4-set .col-2 { float:left; width:23.5%; margin:0 2%; }
+    .col4-set .col-3 { float:left; width:23.5%; }
+    .col4-set .col-4 { float:right; width:23.5%; }  
+
+    list-style: none;
+    padding: 0;
+    float: left;
+    width: 100%;
+    ol, ul{
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    > li{
+        position:relative;
+        margin-bottom:1px;
+        float: left;
+        width: 100%;
+        .step-title{
+            background:#333;
+            line-height: 100%;
+            padding: 8px 10px; 
+            border: none;
+            cursor: pointer;
+            a{
+                display: none;
+            }
+            .number{
+                font-weight: bold;
+                float: left;
+                margin-right: 10px;
+                font-size: 100%;
+                line-height: 100%;
+                background: #fff;
+                padding: 1px 5px 2px;
+                width: 17px;
+                height: 16px;
+                text-align: center;
+            }
+            h2{
+                font-size: 100%;
+                line-height: 100%;
+                margin: 0;
+                font-weight: bold;
+                color:#fff;
+            }
+        } 
+        > div{
+            padding:20px;
+            border: 1px solid @border-color;
+            border-top: none;
+            float: left;
+            width: 100%;
+        } 
+        &.active, &:hover{
+            .step-title{
+                background: @theme-color;
+            }
+        }      
+    }
+    /*step checkout content*/
+    #opc-login {
+        h4 {
+            font-size: 100%;
+            font-weight: bold;
+        } 
+        h3 {
+            text-transform: uppercase;
+            margin-top: 0;
+            font-weight: bold;
+            font-size: 108%;
+        }               
+    }  
+}
+
+/*Multi checkout*/
+.checkout-progress {
+    margin: 0 0 20px;
+    padding: 0;
+    display: inline-block;
+    width: 100%;
+    li {
+        border-top: 10px solid #777777;
+        float: left;
+        font-weight: bold;
+        margin: 0;
+        padding: 2px 0 0;
+        text-align: center;
+        width: 20%;
+        position: relative;
+        &.active{
+            border-top-color: @theme-color;
+            color: @theme-color;
+        } 
+        &:before , &:after{
+            content: "";
+            position: absolute;
+            width: 2px;
+            height: 10px;
+            top: -10px;
+            right: 0;
+            background: #fff;
+        }
+        &:before{
+            right: auto;
+            left: 0;
+        }
+    } 
+}
+
+
+.multiple-checkout{
+    /* Content Columns */
+    .col2-set{ float: left; width: 100%;}
+    .col2-set .col-1 { float:left; width:48.5%; }
+    .col2-set .col-2 { float:right; width:48.5%; }
+    .col2-set .col-narrow { width:32%; }
+    .col2-set .col-wide { width:65%; }
+
+    .col3-set .col-1 { float:left; width:32%; }
+    .col3-set .col-2 { float:left; width:32%; margin-left:2%; }
+    .col3-set .col-3 { float:right; width:32%; }
+
+    .col4-set .col-1 { float:left; width:23.5%; }
+    .col4-set .col-2 { float:left; width:23.5%; margin:0 2%; }
+    .col4-set .col-3 { float:left; width:23.5%; }
+    .col4-set .col-4 { float:right; width:23.5%; }  
+    .col2-set, .col3-set {
+        border: 1px solid @border-color;
+        margin: 0 0 25px;
+        padding: 20px;
+    }
+    .col2-set{
+        h2.legend {
+            background: none repeat scroll 0 0 #f5f5f5;
+            border-bottom: 1px solid @border-color;
+            margin: -20px -20px 15px;
+            padding: 7px 10px;
+            position: relative;
+        } 
+    }          
+    h2 {
+        font-size: 108%;
+        font-weight: bold;
+        margin: 0 0 10px;
+    }
+    h3, h4 {
+        font-size: 108%;
+        font-weight: bold;
+    }
+    .box {
+        margin: 0 0 15px;
+    }
+    .place-order{
+        .grand-total {
+            float: right;
+            overflow: hidden;
+            text-align: right;
+            big {
+                font-weight: bold;
+            }        
+        } 
+        .please-wait {
+            padding: 25px 10px 0 0;
+        }               
+    }                  
+}
+.checkout-multishipping-shipping .box-sp-methods {
+    background: none repeat scroll 0 0 #f7f7f7;
+    border: 1px solid @border-color;
+    padding: 13px;
+    position: relative;
+} 
+.sp-methods select.month {
+    float: left;
+    margin-right: 5px;
+} 

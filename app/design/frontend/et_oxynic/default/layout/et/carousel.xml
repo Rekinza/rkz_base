@@ -1,0 +1,11 @@
+<?xml version="1.0"?>   
+<layout version="1.0.0">
+	<default>
+        <reference name="head">
+			<action method="addItem"><type>skin_js</type><name>js/jquery-2.1.1.min.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/jquery-noconflict.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>et/carousel/js/jquery.countdown.js</name></action>
+		</reference>
+    </default>
+</layout>   
+	

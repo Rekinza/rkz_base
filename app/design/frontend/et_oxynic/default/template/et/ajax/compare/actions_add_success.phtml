@@ -1,0 +1,3 @@
+<?php $_helper = $this->helper('catalog/product_compare'); ?>
+<button onclick="hideModal();" class="button" title="<?php echo $this->__('Continue shopping');?>" type="button"><span><span><?php echo $this->__('Continue shopping');?></span></span></button>
+<button type="button" title="<?php echo $this->__('Compare') ?>" class="button" onclick="popWin('<?php echo $_helper->getListUrl() ?>','compare','top:0,left:0,width=820,height=600,resizable=yes,scrollbars=yes')"><span><span><?php echo $this->__('Compare') ?></span></span></button>

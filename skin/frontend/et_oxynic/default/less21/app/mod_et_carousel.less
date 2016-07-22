@@ -1,0 +1,150 @@
+.deal-wrap{
+	background: ~"url(../images/bg-deal.png) no-repeat center center";
+	margin-bottom: 40px;
+	padding: 40px 0 35px 0;
+	float: left;
+	width: 100%;
+	&.deal-home-left{
+		padding: 40px 40px 35px 40px;
+	}
+}
+.et-carousel{
+	position: relative;
+	float: left;
+	width: 100%;
+	.products-grid{
+		margin-top: 0;
+		.item{
+			margin-bottom: 0;
+			background: #fff;
+		}
+	}
+    .owl-controls {
+    	position: absolute;
+    	top: 0;
+    	right: 0;
+		.owl-nav{
+	    	display: inline-block;
+			.owl-prev,
+			.owl-next{
+				float: left;
+				border: 1px solid #e1e1e1;
+				color: #e1e1e1;
+				width: 24px;
+				height: 24px;
+			    line-height: 20px;
+			    text-align: center;
+			    &:before{
+			    	font-family: FontAwesome;
+			    	font-size: 12px;				    	
+			    }
+				&:hover{
+					cursor: pointer;
+					border: 1px solid @border-color;
+					color: #666;
+				}
+			}
+			.owl-prev{
+				margin-right: 7px;
+				&:before{
+			    	content: "\f104";
+			    }
+			}
+			.owl-next{
+				&:before{
+			    	content: "\f105";
+			    }
+			}   		
+	    }	    	    	
+	}
+	&.et-carousel-deal{
+		.products-grid{
+			margin-top: 10px;
+			.product-image{
+				border: none;
+				padding: 0;
+			}				
+			.product-info{
+				padding: 10px 20px 0 20px;
+			}
+		}
+	    .owl-controls {
+	    	position: relative;
+	    	float: left;
+	    	width: 100%;
+	    	text-align: center;
+	    	margin-top: 40px;
+			.owl-nav{
+		    	display: inline-block;
+				.owl-prev,
+				.owl-next{
+					border: 1px solid #fff;
+					color: #fff;
+					width: 36px;
+					height: 36px;
+				    line-height: 32px;
+				    text-align: center;
+				    border-radius: 50%;
+				    &:before{
+				    	font-family: FontAwesome;
+				    	font-size: 18px;				    	
+				    }
+					&:hover{
+						cursor: pointer;
+						background: #fff;
+						color: #000;
+					}
+				}
+				.owl-prev{
+					margin-right: 10px;
+					&:before{
+				    	content: "\f104";
+				    }
+				}
+				.owl-next{
+					&:before{
+				    	content: "\f105";
+				    }
+				}   		
+		    }	    	    	
+		}		 
+	}
+	.special-countdown{
+		border-top: 1px solid @border-color;
+		float: left;
+		width: 100%;
+		margin-top: 5px;
+		background: #f4f4f4;
+		position: relative;
+		padding: 12px 20px 0;
+		height: 50px;
+		&:before{
+			position:absolute;
+			top: 0;
+			left: 0;
+			background: #fff;
+			content: "";
+			width: 100%;
+			height: 1px;
+		}
+		.message{
+			font-size: 14px;
+			color: #666;
+			text-align: center;
+			float: left;
+			margin-right: 8px;
+		} 
+		.clock{
+			float: left;
+			>span{
+				text-align: center;
+				float: left;
+				line-height: 18px;
+				color: #000;
+				&.day{
+					margin-right: 8px;
+				}
+			}
+		}
+	}
+}

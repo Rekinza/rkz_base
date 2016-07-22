@@ -1,0 +1,15 @@
+<script>
+
+</script>
+<?php
+function getOnestepcheckoutModule()
+{
+	$modules = array_keys((array)Mage::getConfig()->getNode('modules')->children());
+	if(in_array('MW_Onestepcheckout',$modules)) 
+	{
+		if(Mage::getStoreConfig('onestepcheckout/config/enabled'))
+			return true;
+	}
+	return false;
+}
+?>

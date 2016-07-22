@@ -1,0 +1,97 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2014 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<style>
+.dashboard-blocks{
+    text-align: center;
+    padding:40px 0 20px;
+}
+.dashboard-blocks p{
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    line-height: 4em;
+}
+
+</style>
+<div class="dashboard">
+     <div class="page-title">
+        <h1><?php echo $this->__('Account Dashboard') ?></h1>
+    </div>
+    <!--div class="account-heading dashboard-img">
+        Your Account
+   </div-->
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6" style="border:1px solid #eaeaea;">
+        <a href="<?php echo $this->getUrl('sales/order/history/') ?>">
+            <div class="dashboard-blocks" >
+                <img src="http://www.rekinza.com/images/account/order2.jpg" style="width:40%;"/>
+                <p>My Orders</p>
+            </div>
+        </a>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6" style="border:1px solid #eaeaea;" >
+         <a href="<?php echo $this->getUrl('thredshare_vendor/vendor/list') ?>">
+            <div class="dashboard-blocks">
+                <img src="http://www.rekinza.com/images/account/wishlist.jpg" style="width:40%;"/>
+                <p>My Shop</p>
+            </div>
+        </a>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6" style="border:1px solid #eaeaea;">
+        <a href="<?php echo $this->getUrl('rewardpoints/rewardpoints') ?>">
+            <div class="dashboard-blocks">
+                <img src="http://www.rekinza.com/images/account/kinzacash1.jpg" style="width:40%;"/>
+                <p>Kinzacash</p>
+            </div>
+        </a>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6" style="border:1px solid #eaeaea;">
+        <a href="<?php echo $this->getUrl('customer/account/edit') ?>">
+            <div class="dashboard-blocks" >
+                <img src="http://www.rekinza.com/images/account/account-info.jpg" style="width:40%;"/>
+                <p>My Profile</p>
+            </div>
+        </a>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6" style="border:1px solid #eaeaea;" >
+        <a href="<?php echo $this->getUrl('wishlist') ?>">
+            <div class="dashboard-blocks">
+                <img src="http://www.rekinza.com/images/account/shop2.jpg" style="width:40%;"/>
+                <p>Wishlist</p>
+            </div>
+        </a>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6" style="border:1px solid #eaeaea;">
+        <a href="<?php echo $this->getUrl('customer/address') ?>">
+            <div class="dashboard-blocks">
+                <img src="http://www.rekinza.com/images/account/address-book.jpg" style="width:40%;"/>
+                <p>Address Book</p>
+            </div>
+        </a>
+    </div>
+</div>
+

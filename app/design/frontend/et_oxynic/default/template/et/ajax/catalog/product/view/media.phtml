@@ -1,0 +1,33 @@
+<?php
+/**
+ * @package ET_Ajax
+ * @version 1.0.4
+ * @copyright Copyright (c) 2014 EcomTheme. (http://www.ecomtheme.com)
+ * @license http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+$_product = $this->getProduct();
+$_helper = $this->helper('catalog/output');
+$_uniq_mv = false;
+
+if ($_product->getImage() != 'no_selection' && $_product->getImage()) : ?>
+<div class="product-image product-image-zoom">
+    <a id="cloud_zoom" class="cloud-zoom" rel="zoomWidth:300, zoomHeight:300, adjustX: 20, adjustY: -3" title="<?php echo $this->htmlEscape($this->getImageLabel()); ?>" href="<?php echo $this->helper('catalog/image')->init($_product, 'image'); ?>">
+    <?php
+        $_img = '<img id="image" src="'.$this->helper('catalog/image')->init($_product, 'image')./*->resize(360, 360)->setQuality(100).*/'" alt="'.$this->escapeHtml($this->getImageLabel()).'" title="'.$this->escapeHtml($this->getImageLabel()).'" />';
+        echo $_helper->productAttribute($_product, $_img, 'image');
+    ?>
+    </a>
+    <?php foreach ($this->getGalleryImages() as $_image) : ?>
+        <a style="display:none;" class="fancybox-button fancybox-image-hidden" data-fancybox-group="button" href="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())?>"></a>
+    <?php endforeach; ?>
+</div>
+<?php else: ?>
+<div class="product-image">
+    <?php
+        $_img = '<img src="'.$this->helper('catalog/image')->init($_product, 'image')/*->resize(360, 360)->setQuality(100).*/'" alt="'.$this->escapeHtml($this->getImageLabel()).'" title="'.$this->escapeHtml($this->getImageLabel()).'" />';
+        echo $_helper->productAttribute($_product, $_img, 'image');
+    ?>
+</div>
+<?php endif; ?>
+

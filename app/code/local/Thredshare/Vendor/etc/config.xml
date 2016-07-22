@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Thredshare_Vendor>
+			<version>1.0.0</version>
+		</Thredshare_Vendor>
+	</modules>
+	
+	<frontend>
+		<routers>
+			<thredshare_vendor>
+				<use>standard</use>
+				<args>
+					<module>Thredshare_Vendor</module>
+					<frontName>thredshare_vendor</frontName>
+				</args>
+			</thredshare_vendor>
+			
+		</routers>
+		
+		
+	</frontend>
+	<global>
+		<models>
+			<vendor>
+				<class>Thredshare_Vendor_Model</class>
+				<resourceModel>thredshare_vendor_resource</resourceModel>
+			</vendor>
+			<thredshare_vendor_resource>
+				<class>Thredshare_Vendor_Model_Resource</class>
+				<entities>
+					<status>
+						<table>thredshare_rejected_status</table>
+					</status>
+				</entities>
+			</thredshare_vendor_resource>
+		</models>
+		<models>
+        <thredsharevendorcron>
+            <class>Thredshare_Vendor_Model</class>
+        </thredsharevendorcron>    
+       </models>
+		<blocks>
+			<thredshare_vendor>
+				<class>Thredshare_Vendor_Block</class>
+			</thredshare_vendor>
+		</blocks>
+	</global>
+
+	 <!--starting code for crontab/Nikita -->
+    <crontab>
+        <jobs>
+            <thredshare_vendor_status>
+                <schedule>
+                    <cron_expr>15 2 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>thredsharevendorcron/observer::setStatus</model>
+                </run>
+            </thredshare_vendor_status>
+        </jobs>
+    </crontab>
+	<!--ending it -->
+</config>

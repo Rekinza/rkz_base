@@ -1,0 +1,71 @@
+<?php $posts = $this->getPosts(); ?>
+<?php $latest_blog_id = 'latest_blog_'.uniqid();?>
+<div id="messages_product_view">
+    <?php Mage::app()->getLayout()->getMessagesBlock()->setMessages(Mage::getSingleton('customer/session')->getMessages(true)); ?>
+    <?php echo Mage::app()->getLayout()->getMessagesBlock()->getGroupedHtml(); ?>
+</div>
+<div class="latest-blog">
+	<div class="block-title"><strong> <span>Latest Blog</span> </strong></div>
+	<div class="latest-blog-content owl-carousel" id="<?php echo $latest_blog_id; ?>">
+		<?php $i=0; foreach ($posts as $post): $i++;?>
+			<?php if ( $i < 7 ){?>
+			<div class="postWrapper">
+				<?php 
+				$content = $post->getPostContent();
+				preg_match_all("/<img .*?(?=src)src=\"([^\"]+)\"/si", $content, $m);
+				$img = $m[1][0];
+				?>
+				<div class="postImage">
+					<img src="<?php echo $img;?>" alt="<?php echo $post->getTitle(); ?>"/>
+					<span class="bg-image"></span>
+					<a class="fa fa-share" href="<?php echo $post->getAddress(); ?>" title="<?php echo $post->getTitle(); ?>"></a>
+				</div>
+				<div class="postInfo">
+					<div class="postTitle">
+						<h2><a href="<?php echo $post->getAddress(); ?>" ><?php echo $post->getTitle(); ?></a></h2>
+					</div>		
+					<div class="postDetails">
+						<span><?php echo $post->getCreatedTime(); ?></span>
+					</div>
+					<div class="postContent"><?php echo substr($post->getPostContent(),0, 120); ?></div>
+				</div>
+			</div>
+			<?php }?>			
+		<?php endforeach; ?>		
+	</div>
+	<div class="owl-controls" id="<?php echo $latest_blog_id; ?>_controls">
+		<div class="owl-nav">
+		</div>
+	</div>	
+</div>
+
+
+<script type="text/javascript">
+jQuery('<?php echo "#$latest_blog_id"; ?>').owlCarousel({
+    margin: 30,
+    loop: true,
+    autoplay: false,
+	nav: true,
+	navText: [ '', '' ],
+    autoplayTimeout: 5000,
+    autoplayHoverPause: false,
+	responsive: {
+		0:{
+			items: 1
+		},
+		768:{
+			items: 2
+		},
+		992:{
+			items: 2
+		},
+		1200:{
+			items: 3
+		}
+	},
+    navContainer: '#<?php echo $latest_blog_id; ?>_controls .owl-nav',
+    dotsContainer: '#<?php echo $latest_blog_id; ?>_controls .owl-dots'
+   
+});
+</script>
+

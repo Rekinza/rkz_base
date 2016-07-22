@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<config>
+    <modules>
+        <BusinessKing_AttributeQuickAdd>
+            <active>true</active>
+            <codePool>local</codePool>					
+        </BusinessKing_AttributeQuickAdd>
+    </modules>
+</config> 

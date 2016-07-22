@@ -1,0 +1,24 @@
+<?php
+/**
+ * @package ET_Megamenu
+ * @version 1.0.4
+ * @copyright Copyright (c) 2014 EcomTheme. (http://www.ecomtheme.com)
+ * @license http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+/* @var $this ET_Megamenu_Block_Navbar */
+
+$position = $this->getPosition();
+$top_menus = $this->getTopLevelMenus();
+if (count($top_menus)) :
+?>
+<div class="meganav-container">
+	<ul id="meganav">
+	<?php
+	    foreach ($top_menus as $menu){
+			echo $this->getMenuHtml($menu);
+		}
+	?>
+	</ul>
+</div>
+<?php endif; ?>

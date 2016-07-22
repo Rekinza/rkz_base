@@ -1,0 +1,60 @@
+<div id="transaction_history_box">
+<?php //echo $this->getToolbarHtml()?>
+<?php $transactions = $this->getTransactionNew();
+if ($transactions!=null && $transactions->count()>0):
+?>
+
+<table id="my-transaction-table" class="data-table">
+    <col width="1">
+    <col width="1">
+    <!-- <col width="1"> -->
+    <col width="1">
+    <col width="1">
+    <col width="1">
+        <thead>
+            <tr>
+            	<th style="text-align: center;"><?php echo $this->__("ID")?></th>
+                <th><?php echo $this->__("Transaction Amount")?></th>
+				<th><?php echo $this->__("Details")?></th>
+				<th><?php echo $this->__("Status")?></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach($transactions as $transaction):?>
+		<?php 
+		$type=$transaction->getType();
+		   if ($type=="deposit"){
+		   $amount="+".$transaction->getPoints();
+		   $message=$transaction->getMessage();
+		   $status="Deposited";
+		   }else{
+		   $amount="-".$transaction->getPoints();
+		   $message=explode(";",$transaction->getMessage());
+		   $message=implode("<br>",$message);
+		   $message=preg_replace("/\\n/","<br>",$message);
+		   $status_int=$transaction->getStatus();
+		   if ($status_int==0){
+		   $status="pending";
+		   }else{
+		   $status="completed";
+		   }
+		   }
+		   
+		   ?>          
+		  <tr>	<td style="text-align: center;"><?php echo $transaction->getData('id')?></td>
+                   <td style="text-align: right;"><span class="price"><?php echo $amount;?></span></td>
+          
+                    <td style="width: 230px;"><?php echo $message;?></td>
+					<td><?php echo $status;?></td>
+           	</tr>
+        <?php endforeach;?>
+      	</tbody>
+</table>
+<?php else:?>
+<?php echo "You do not have any transactions as of now.";?>
+<?php endif;?>
+
+<?php //echo $this->getToolbarHtml()?>
+
+</div>
+<script type="text/javascript">decorateTable('my-transaction-table')</script>

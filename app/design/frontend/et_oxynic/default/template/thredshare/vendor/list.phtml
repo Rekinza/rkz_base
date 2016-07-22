@@ -1,0 +1,280 @@
+<?php
+$vendor1=$this->getVendor();
+
+if (!$vendor1){
+Mage::getSingleton('core/session')->addError("You have not been authorised to sell");
+Mage::app()->getFrontController()->getResponse()->setRedirect(Mage::getBaseUrl()."customer/account");
+return;
+}
+
+?>
+<div class="account-heading shop-img">
+        Your Shop
+</div>
+
+<div class="vendor_profile">
+<span class="edit" style="float:right;"><a href="<?php echo Mage::getUrl("thredshare_vendor/vendor/newvendor");?>">Edit</a></span>
+<span style="display: inline-block;width:40%">
+<img src="<?php echo Mage::getBaseUrl()."media/cartmart/vendor/vendor/images/".$this->getVendor()->getImage();;?>" /> 
+</span>
+<span class="vendor_description" style="display: inline-block;
+margin-left: 10px;
+vertical-align: top;
+width:44%">
+<h2 class="vendor_name"><?php echo $this->getVendor()->getShopName();?></h2>
+<div class="vendor_brands"><b>Favourite Brands : </b><?php echo " ".implode(", ",explode(",",$this->getVendor()->getMessage()));?> </div>
+<div class="more-brand">To see the brands we accept <a style="color:rgb(255, 32, 82);" href="http://www.rekinza.com/brands">click here</a></div>
+<div id="pick_up_button">Schedule A New Pick Up</div>
+</span>
+</div>
+
+<?php
+
+$collection=$this->getVendorProductCollection();
+
+?>
+<?php if ($collection && $collection->getSize()):?>
+<?php $total_records=$collection->getSize();?>
+<div class="list">You have listed <?php echo $collection->getSize();?> products till now</div>
+<?php $collection1=$this->getAcceptedProductCollection();?>
+<?php if ($collection1->getSize()){?>
+<div class="table_heading">Accepted Products</div>
+<table class="data-table myshop">
+<thead>
+
+<tr class="first last">
+<th rowspan="1" class="a-center hidden-xs">Serial No.</th>
+<th rowspan="1" class="a-center">Product</th>
+<th rowspan="1" class="a-center hidden-xs">Name</th>
+<th rowspan="1" class="a-center">Brand</th>
+<th rowspan="1" class="a-center hidden-xs">Status</th>
+<th rowspan="1" class="a-center">Sale Price</th>
+</tr>
+
+</thead>
+
+<tbody>
+<?php $i=1;?>
+<?php foreach ($collection1 as $product):?>
+<tr class="<?php if ($i==1){echo "first";}if ($i==$total_records){echo "last";}if ($i%2==0){echo "even";}else{echo "odd";}?>">
+<td class="a-center hidden-xs">
+<?php 
+echo $i;$i++;
+?>
+</td>
+<td>
+<img src='<?php echo Mage::helper('catalog/image')->init($product, 'image')->resize(150);?>' />
+</td>
+
+<td class="hidden-xs">
+<?php echo $product->getName();?>
+</td>
+<td>
+<?php echo $product->getAttributeText("brands");?>
+</td>
+<td class="hidden-xs">
+<?php 
+$status=$product->getStatus();
+
+if ($status=="1"){
+if ($product->getSpecialPrice() && $product->getSpecialPrice()>0){
+echo "listed";
+}
+else{
+echo "approved";
+}
+}else{
+echo "rejected";
+}
+?>
+</td>
+<td >
+<?php echo (int)$product->getSpecialPrice();?>
+</td>
+</tr>
+
+<?php endforeach;?>
+</tbody>
+</table>
+<!--
+<div class="update_price_all" onclick="changePrice();">Update All</div>
+<form id="update_price_form" method="post" action="<?php echo Mage::getUrl("*/*/*");?>">
+<input type="hidden" class="update_data" name="update_data"/>
+<input type="hidden" name="action" value="change_price"/>
+</form>
+-->
+<?php }?>
+
+
+<?php
+$collection2=$this->getRejectedProductCollection();
+
+?>
+
+
+<?php if ($collection2->getSize()):?>
+<div class="table_heading">Rejected Products</div>
+<table class="data-table myshop">
+<thead>
+
+<tr class="first last">
+<th rowspan="1" class="a-center hidden-xs">Serial No.</th>
+<th rowspan="1" class="a-center">Name</th>
+<th rowspan="1" class="a-center hidden-xs">Brand</th>
+<th rowspan="1" class="a-center hidden-xs">Color</th>
+<th rowspan="1" class="a-center">Reason</th>
+<th rowspan="1" class="a-center hidden-xs">Status</th>
+<!--<th rowspan="1" class="a-center">Action</th>-->
+
+</tr>
+
+</thead>
+
+<tbody>
+<?php $i=1;?>
+<?php foreach ($collection2 as $product):?>
+<tr class="<?php if ($i==1){echo "first";}if ($i==$total_records){echo "last";}if ($i%2==0){echo "even";}else{echo "odd";}?>">
+<td class="a-center hidden-xs">
+<?php 
+echo $i;$i++;
+?>
+</td>
+<td>
+<?php echo $product->getName();?>
+</td>
+<td class="hidden-xs">
+<?php echo $product->getAttributeText("brands");?>
+</td>
+<td class="hidden-xs">
+<?php echo $product->getAttributeText("color");?>
+</td>
+<td>
+<?php echo $product->getReason();?>
+</td>
+<td class="hidden-xs">
+<?php  $rejected_after=$product->getAttributeText("rejected_after");
+if (!$rejected_after || $rejected_after=="NA"){
+echo "Action Awaited";
+}else{
+if ($rejected_after=="donate"){
+echo "donated";
+}else{
+echo "returned";
+}
+}
+?>
+</td>
+<!--<td>
+<?php 
+$rejected_after=$product->getAttributeText("rejected_after");
+
+
+if ( (!$rejected_after || $rejected_after=="NA")){
+?>
+<button type="button" onclick="changeStatus('return',<?php echo $product->getId();?>)">Return</button>
+<button type="button" onclick="changeStatus('donate',<?php echo $product->getId();?>)">Donate</button>
+<?php
+}
+?>
+</td>-->
+
+</tr>
+
+
+<?php endforeach;?>
+</tbody>
+</table>
+<?php endif;?>
+<?php $collection3=$this->getSoldProductCollection();?>
+<?php if ($collection3->getSize()):?>
+<div class="table_heading">Sold Products</div>
+<table class="data-table myshop">
+<thead>
+
+<tr class="first last">
+<th rowspan="1" class="a-center hidden-xs">Serial No.</th>
+<th rowspan="1" class="a-center">Product</th>
+<th rowspan="1" class="a-center hidden-xs">Date Of Sale</th>
+<th rowspan="1" class="a-center hidden-xs">Name</th>
+<th rowspan="1" class="a-center">Brand</th>
+<th rowspan="1" class="a-center hidden-xs">Sale Price</th>
+<th rowspan="1" class="a-center">KinzaCash Earned</th>
+</tr>
+
+</thead>
+
+<tbody>
+<?php $i=1;?>
+<?php foreach ($collection3 as $product):?>
+<tr class="<?php if ($i==1){echo "first";}if ($i==$total_records){echo "last";}if ($i%2==0){echo "even";}else{echo "odd";}?>">
+<td class="a-center hidden-xs">
+<?php 
+echo $i;$i++;
+?>
+</td>
+<td>
+<img src='<?php echo Mage::helper('catalog/image')->init($product, 'image')->resize(150);?>' />
+</td>
+<td class="hidden-xs">
+<?php echo $product->getPickUpDate();?>
+</td>
+<td class="hidden-xs">
+<?php echo $product->getName();?>
+</td>
+<td>
+<?php echo $product->getAttributeText("brands");?>
+</td>
+<td class="hidden-xs">
+<?php echo (int)$product->getSpecialPrice();?>
+</td>
+<td>
+<?php echo $product->getMsrp();?>
+</td>
+</tr>
+
+
+
+<?php endforeach;?>
+<tr>
+<p> The KinzaCash will be reflected in your account once the Buyer Protection period ends and no returns can be made </p>
+</tr>
+</tbody>
+</table>
+<?php endif;?>
+<?php else:?>
+<div class="empty">You have not listed any products</div>
+<?php endif;?>
+
+
+
+
+
+<script>
+function changePrice(button){
+var pricesToChange=[];
+if (button){
+var input=jQuery(button).siblings('input');
+var info=[input.attr("data-product-id"),input.val()];
+pricesToChange.push(info);
+}else{
+jQuery('.update_price').each(function(){
+var info=[jQuery(this).attr("data-product-id"),jQuery(this).val()];
+pricesToChange.push(info);
+});
+}
+if (pricesToChange && pricesToChange.length){
+jQuery('#update_price_form .update_data').val(JSON.stringify(pricesToChange));
+jQuery('#update_price_form').submit();
+}else{
+alert("Some error please try after some time");
+}
+}
+function changeStatus(status,product_id){
+window.location.href=window.location.host+"/thredshare_vendor/vendor/list/"+"?change_status="+status+"&product_id="+product_id+"&action=change_status";;
+}
+jQuery('#pick_up_button').on('click',function(){
+	
+window.location.href="<?php echo $this->getUrl("thredshare_pickup/pickup/getpickup");?>";
+
+});
+</script>

@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<config>
+   <menu>
+		<et>
+			<title>ET Settings</title>
+			<sort_order>1001</sort_order>
+			<children>
+				<megamenu>
+					<title>ET Megamenu</title>
+					<sort_order>9955</sort_order>
+					<action>adminhtml/system_config/edit/section/et_megamenu_configs/</action>
+					
+					<children>
+						<position module="megamenu">
+							<title>Manage Position</title>
+							<sort_order>100</sort_order>
+							<action>megamenu/adminhtml_position/</action>
+						</position>	
+						<menu module="megamenu">
+							<title>Manage Menu</title>
+							<sort_order>110</sort_order>
+							<action>megamenu/adminhtml_menu/</action>
+						</menu>
+					</children>
+				</megamenu>
+			</children>
+		</et>
+	</menu>
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					<system>
+						<children>
+							<config>
+								<children>										
+									<et_megamenu_configs translate="title" module="megamenu">
+										<title>ET Megamenu Settings</title>
+									</et_megamenu_configs>
+								</children>
+							</config>
+						</children>
+					</system>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>

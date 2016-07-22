@@ -1,0 +1,205 @@
+<?php
+/**
+ * @package ET_Carousel
+ * @version 1.0.0
+ * @copyright Copyright (c) 2014 EcomTheme. (http://www.ecomtheme.com)
+ * @license http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+/* @var $helper ET_Carousel_Helper_Data */
+$helper = Mage::helper('carousel');
+
+/* @var $this ET_Carousel_Block_Carousel */
+$collection = $this->getItems();
+
+$items = $collection->getItems();
+
+if( !empty($items) ):
+	
+	$block_id = $this->getBlockId();
+	$block_title = $this->getBlockTitle();
+
+    $carousel_id = 'carousel_'.uniqid();
+    
+    // prepare config values
+    $_image_source = $this->getConfig('image_source', 'small_image');
+    $_image_size   = $this->getConfig('image_size', '270');
+    $_image_size_w = intval($_image_size);
+    $_image_size_h = strpos($_image_size, 'x')===false ? null : intval(substr($_image_size, 1+strpos($_image_size, 'x')));
+    
+    $_show_image           = $this->getConfig('show_image', 1);
+    $_show_title           = $this->getConfig('show_title', 1);
+    $_title_truncate       = $this->getConfig('title_truncate', 0);
+    $_show_description     = $this->getConfig('show_description', 1);
+    $_description_truncate = $this->getConfig('description_truncate', 0); // 0 is no truncate
+    
+    $_show_add2cart        = $this->getConfig('show_price_box', 1);
+    $_show_add2wishlist    = $this->getConfig('show_add2wishlist', 1);
+    $_show_add2compare     = $this->getConfig('show_add2compare', 1);
+    $_show_quickview       = $this->getConfig('show_quickview', 1);
+    $_show_pricebox        = $this->getConfig('show_pricebox', 1);
+    $_show_rattingbox      = $this->getConfig('show_rattingbox', 1);
+    
+    $price_idsf = '_carousel_'.uniqid();
+    
+?>
+<div class="block et-carousel"<?php if($block_id) : ?> id="<?php echo $block_id; ?>"<?php endif; ?>>
+
+	<?php if ($block_title): ?>
+	<div class="block-title">
+		<?php if (!$block_title=="Featured"):?>
+		
+		<strong>
+		    <span><?php echo Mage::helper('core')->escapeHtml($block_title); ?></span>
+		</strong>
+		<?php else:?>
+		<div class="first-sentence">FEATURED <span class="highlight">PRODUCTS</span></div>
+		<?php endif;?>
+	</div>
+	<?php endif; ?>
+	
+	<div class="block-content products-grid">
+		
+		<div class="owl-carousel <?php echo $this->getConfig('block_class_suffix'); ?>" id="<?php echo $carousel_id; ?>">
+	    <?php foreach ( $items as $_item ): ?>
+	    <?php
+	    	/* @var $_item Mage_Catalog_Model_Product */
+	    	$_item_url = $_item->getProductUrl();
+	    	$_item_image_label = $this->getImageLabel($_item, $_image_source, null, true);
+	    	$_item_image_src = $this->helper('catalog/image')->init($_item, $_image_source)->resize($_image_size_w, $_image_size_h);
+	    	
+	    	$is_new = $this->helper('carousel')->isNew($_item);
+	    	$is_special = $this->helper('carousel')->isSpecial($_item);
+	    	?>
+	    	
+	        <div class="item">
+	            <?php if ($_show_image): ?>
+	            <div class="product-image">
+					<a href="<?php echo $_item_url; ?>" title="<?php echo $this->stripTags($_item_image_label, null, true) ?>">
+						<img src="<?php echo $_item_image_src; ?>" alt="<?php echo $this->stripTags($_item_image_label, null, true) ?>" />
+					</a>
+					
+					<?php
+					if ( $is_new ){
+						echo "<span class='new-product new-product-sale'>" . $this->__('New with tag') . "</span>";
+					}
+					if ( $is_special ){
+						echo "<span class='sale-product'>" . $this->__('Sale') . "</span>";
+					}
+					?>	
+					<?php if ($_show_quickview && Mage::helper('core')->isModuleEnabled('ET_Ajax') && Mage::helper('ajax')->isQuickviewEnabled() ): ?>
+						<div class="item-quickview">
+							<a href="<?php echo Mage::helper('ajax')->getQuickviewUrl($_item); ?>"><?php echo $this->__('Quick View');?></a>
+						</div>
+					<?php endif; ?>					
+				</div>
+            	<?php endif; // show_image ?>
+            
+	            <div class="product-info">
+					<?php if ($_show_title): ?>
+					<?php $_itemNameStripped = $this->stripTags($_item->getName(), null, true); ?>
+					<div class="product-name">
+						<a href="<?php echo $_item_url; ?>" title="<?php echo $_itemNameStripped; ?>">
+							<?php echo $helper->productAttribute($_item, $_item->getName() , 'name'); ?>
+						</a>
+					
+					</div>
+					<span class="manufacture" style="font-size: 12px;
+font-weight: normal;"><?php echo $_item->getAttributeText("brands");?></span>	
+					<?php endif; // show_title ?>
+					
+					<?php echo $this->getReviewsSummaryHtml($_item, 'short', true); ?>
+					<?php echo $this->getPriceHtml($_item, true, $price_idsf); ?>
+					
+					<?php if ($_show_description) : ?>
+					<div class="short-description">
+					<?php
+						$short_desc = $helper->productAttribute($_item, $_item->getShortDescription(), 'short_description');
+						if ($length = $this->getConfig('description_truncate')) {
+							echo $helper->truncate($short_desc, $length, '...');
+						} else {
+							echo $short_desc;
+						}
+					?>
+					</div>
+					<?php endif; ?>
+					
+					<div class="item-cwc-wrap">
+						<div class="item-cwc-inner">
+							<?php if ($_show_add2cart) : ?>
+							    <?php if ($_item->isSaleable()) : ?>
+								<div class="item-addcart">
+									<button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_item) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
+								</div>
+							    <?php else: ?>
+								<p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+							    <?php endif; ?>
+							<?php endif; ?>
+							<?php if ($_show_add2wishlist && $this->helper('wishlist')->isAllow()) : ?>
+								<div class="item-wishlist">
+									<a href="<?php echo Mage::helper('wishlist')->getAddUrl($_item) ?>" class="link-wishlist" title="<?php echo $this->__('Add to Wishlist') ?>"><?php echo $this->__('Add to Wishlist') ?></a>
+								</div>
+							<?php endif; ?>								
+							<?php if ($_show_add2compare && ($_compareUrl = $this->getAddToCompareUrl($_item))) : ?>
+								<div class="item-compare">
+									<a href="<?php echo $_compareUrl ?>" class="link-compare" title="<?php echo $this->__('Add to Compare') ?>"><?php echo $this->__('Add to Compare') ?></a>
+								</div>
+							<?php endif; ?>							
+						</div>
+					</div>	
+					
+	            </div>
+	            
+	        </div>
+	    <?php endforeach; ?>
+		</div>
+		<div class="owl-controls" id="<?php echo $carousel_id; ?>_controls">
+			<div class="owl-nav"></div>
+		</div>
+	</div>
+</div>
+
+<?php
+    $col_lg = (int)$this->getConfig('col_lg', 4);
+    $col_md = (int)$this->getConfig('col_md', 4);
+    $col_sm = (int)$this->getConfig('col_sm', 2);
+    $col_xs = (int)$this->getConfig('col_xs', 1);
+    $theme_responsive = Mage::helper('oxynic')->getConfig('theme_responsive', 1);
+    if (!$theme_responsive){
+        $col_lg = $col_md;
+        $col_sm = $col_md;
+        $col_xs = $col_md;
+    }
+?>
+
+<script type="text/javascript">
+jQuery('<?php echo "#$carousel_id"; ?>').owlCarousel({
+    margin: 30,
+    loop: true,
+    autoplay: false,
+	nav: true,
+	navText: [ '', '' ],
+    autoplayTimeout: 5000,
+    autoplayHoverPause: false,
+	responsive: {
+		0:{
+			items: <?php echo $col_xs; ?>
+		},
+		768:{
+			items: <?php echo $col_sm; ?>
+		},
+		992:{
+			items: <?php echo $col_md; ?>
+		},
+		1200:{
+			items: <?php echo $col_lg; ?>
+		}
+	},
+    navContainer: '#<?php echo $carousel_id; ?>_controls .owl-nav'
+   
+});
+</script>
+
+<?php
+endif; // show only items is not empty.
+?>

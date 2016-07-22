@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Thredshare_Customer>
+      <version>1.0</version>
+    </Thredshare_Customer>
+  </modules>
+ 
+  <frontend>
+    <routers>
+      <customer>
+        <args>
+          <modules>
+            <Thredshare_Customer before="Mage_Customer_AccountController">Thredshare_Customer</Thredshare_Customer>
+          </modules>
+        </args>
+      </customer>
+    </routers>
+  </frontend>
+</config>

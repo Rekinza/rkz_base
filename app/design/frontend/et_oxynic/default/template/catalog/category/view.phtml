@@ -1,0 +1,121 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2014 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Category view template
+ *
+ * @see Mage_Catalog_Block_Category_View
+ */
+?>
+<!--script type="text/javascript">
+jQuery(document).ready(function(){    
+    
+    if(jQuery(window).innerWidth() <= 766) { 
+        /*jQuery('#narrow-by-list dd').hide();
+        jQuery('#narrow-by-list dt').click(function() {
+            jQuery('#narrow-by-list dd').slideUp();
+            jQuery(this).next().slideDown();
+            return(false);
+        });*/
+        jQuery('#narrow-by-list dd').hide();
+                    jQuery('#narrow-by-list dt').click(function() {
+                        jQuery('#narrow-by-list dd').removeClass( "active" );
+                        jQuery(this).next("dd").addClass( "active" );
+                        jQuery(this).siblings("dd").not("dd.active").slideUp();
+                        jQuery(this).next("dd").slideToggle( );
+                    });
+    };
+});
+</script-->
+<?php
+    $_helper    = $this->helper('catalog/output');
+    $_category  = $this->getCurrentCategory();
+    $_imgHtml   = '';
+    if ($_imgUrl = $_category->getImageUrl()) {
+        $_imgHtml = '<p class="category-image"><img src="'.$_imgUrl.'" alt="'.$this->escapeHtml($_category->getName()).'" title="'.$this->escapeHtml($_category->getName()).'" /></p>';
+        $_imgHtml = $_helper->categoryAttribute($_category, $_imgHtml, 'image');
+    }
+?>
+
+<div class="page-title category-title">
+    <?php if($this->IsRssCatalogEnable() && $this->IsTopCategory()): ?>
+        <a href="<?php echo $this->getRssLink() ?>" class="link-rss"><?php echo $this->__('Subscribe to RSS Feed') ?></a>
+    <?php endif; ?>
+    <h1 class="page-heading"><?php echo $_helper->categoryAttribute($_category, $_category->getName(), 'name') ?></h1>
+</div>
+<?php if (($_category->getName() != "Bags") && ($_category->getParentCategory()->getName() != "Bags") && ($_category->getName() != "Accessories") && ($_category->getParentCategory()->getName() != "Accessories")): ?>
+    <div class="size-option" style="width: 100%; margin:4px; text-align:center;" ><span style="color: #323232;font-size: 10px; text-transform:uppercase;font-weight:bold;">Each Item is Unique.</span>
+    <button type="button" class="collapsed size-option-btn" data-toggle="modal" data-target="#myModal" data-toggle="collapse" data-target="#layered-navigation" aria-expanded="false" aria-controls="layered-navigation" style="width: 40%;background-color: #50c7c2;font-size: 8px;margin:2px;border-radius:0;">
+        <strong><span style="font-size: 10px; color: #fff;font-weight: bold; font-family: 'Lato'; text-transform:uppercase;">Choose Your Size</span></strong>
+    </button>
+    </div>
+ <?php endif; ?>   
+
+<?php if($_imgUrl): ?>
+    <?php echo $_imgHtml ?>
+<?php endif; ?>
+
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+
+<?php if($_description=$this->getCurrentCategory()->getDescription()): ?>
+    <div class="category-description std">
+        <?php echo $_helper->categoryAttribute($_category, $_description, 'description') ?>
+    </div>
+<?php endif; ?>
+
+<?php if($this->isContentMode()): ?>
+    <?php echo $this->getCmsBlockHtml() ?>
+
+<?php elseif($this->isMixedMode()): ?>
+    <?php echo $this->getCmsBlockHtml() ?>
+    <?php echo $this->getProductListHtml() ?>
+
+<?php else: ?>
+    <?php echo $this->getProductListHtml() ?>
+<?php endif; ?>
+
+<script>
+    jQuery(document).ready(function() {
+    jQuery('.collapsed').click(function(){
+        jQuery('.active').removeClass('active');
+        jQuery('.in').removeClass('in');
+        jQuery('#Size').addClass('active');
+        jQuery('#Size').addClass('in');
+    });
+});
+
+<!--script for analytic.js event trigger -->
+
+
+jQuery(".size-option-btn").unbind().click(function() {
+	ga('send', 'event', 'size option button - catalog', 'click', {'nonInteraction': 1}); 
+
+});
+
+<!--script end -->
+
+</script>

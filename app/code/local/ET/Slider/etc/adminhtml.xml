@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<config>
+	<menu>
+		<et>
+			<title>ET Settings</title>
+			<sort_order>1001</sort_order>
+			<children>
+				<slider>
+					<title>ET Slider</title>
+					<sort_order>9977</sort_order>
+					<action>adminhtml/system_config/edit/section/et_slider_configs/</action>
+					
+					<children>
+						<groups module="slider">
+							<title>Manage Groups</title>
+							<sort_order>0</sort_order>
+							<action>slider/adminhtml_group</action>
+						</groups>
+						<slides module="slider">
+							<title>Manage Slides</title>
+							<sort_order>0</sort_order>
+							<action>slider/adminhtml_slide</action>
+						</slides>
+						<captions module="slider">
+							<title>Manage Captions</title>
+							<sort_order>0</sort_order>
+							<action>slider/adminhtml_caption</action>
+						</captions>
+					</children>
+				</slider>
+			</children>
+		</et>
+	</menu>
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					<system>
+						<children>
+							<config>
+								<children>
+									<et_slider_configs translate="title" module="slider">
+										<title>ET Slider Settings</title>
+									</et_slider_configs>
+								</children>
+							</config>
+						</children>
+					</system>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>

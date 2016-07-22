@@ -1,0 +1,187 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2014 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+/**
+ * @var Mage_Page_Block_Html_Header $this
+ */
+?>
+<script type="text/javascript">
+    jQuery('document').ready(function(){
+        jQuery('.catalog-category-view, .catalog-product-view, body').find('.et-products').remove();
+        jQuery('.catalog-category-view').find('.block-compare').remove();
+       
+        jQuery('.catalog-product-view .qty-wrap').remove();
+        
+    });
+</script>
+
+<div class="header-container">
+	<div class="header">
+		<div class="header-top">
+			<div class="container">
+                            <div class="free-shipping">100% Authenticity Guaranteed &bull; Free Shipping & Returns</div>
+				<!--div class="row"-->
+				<?php /*<span class="welcome-msg hidden-xs"><?php echo $this->getChildHtml('welcome') ?> <?php echo $this->getAdditionalHtml() ?></span>*/?>
+				<div class="header-setting">
+					<?php /*<span class="header-setting-title"><?php echo $this->__('Setting');?></span>*/?>
+					<div class="header-setting-content">
+						<?php echo $this->getChildHtml('store_language') ?>
+						<?php echo $this->getChildHtml('currency'); ?>
+					</div>
+				</div>
+				<?php if (Mage::getSingleton('customer/session')->isLoggedIn()):?>
+				<div class="header-account">
+					<span>
+                                            <a class="arrow mya-back-pos" title="<?php echo $this->__('My Account')?>" href="<?php echo $this->getUrl('customer/account')?>"><?php echo $this->__('My Account')?></a>
+					</span>
+					<div class="quick-access" id="top_links">
+						<?php echo $this->getChildHtml('topLinks') ?>
+					</div>
+				</div>
+				<?php else:?>
+				<div class="header-account">
+					<span>
+                                            <a class="arrow mya-back-pos" title="<?php echo $this->__('Sign Up')?>" href="<?php echo $this->getUrl('customer/account/create')?>"><?php echo $this->__('Sign Up')?></a>
+					</span>
+					
+				</div>
+				<div class="header-account visible-xs">
+					<span>
+                                            <a class="arrow mya-back-pos" title="<?php echo $this->__('Log In')?>" href="<?php echo $this->getUrl('customer/account/login')?>"><?php echo $this->__('Log In')?></a>
+					</span>
+					
+				</div>
+				<?php endif;?>
+				<div class="header-login hidden-xs">
+					<?php if($this->helper('customer')->isLoggedIn()):?>
+						<span>
+							<a href="<?php echo $this->getUrl('customer/account/logout')?>" title="<?php echo $this->__('Logout');?>"><?php echo $this->__('Logout');?></a>
+						</span>
+					<?php endif;?>
+					<?php if(!$this->helper('customer')->isLoggedIn()):?>
+						<span style="padding-right: 22px;">
+							<a  class="login-back-pos" data-toggle="modal" data-target="#modal-login" title="<?php echo $this->__('Login')?>"><?php echo $this->__('Login')?></a>
+						</span>
+						<?php echo $this->getChildHtml('customer_form_mini_login'); ?>
+					<?php endif;?>
+				</div>
+				<!--/div-->
+			</div>
+		</div>
+
+		<div class="header-under header-menu menu-column">
+			<div class="container">
+				<div class="row">
+					<div>
+						<div class="logo">
+							<a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>">
+								<img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" />
+							</a>
+						</div>
+						<div class="new-mobile-logo">
+							<a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>">
+								<img src="http://www.rekinza.com/images/REKINZA-mobile-logo.png" alt="<?php echo $this->getLogoAlt() ?>" />
+							</a>
+						</div>
+					</div>
+					<div style="margin-top:24px">
+                                                <?php $sub_total = number_format(Mage::getModel('checkout/cart')->getQuote()->getSubtotal(), 2); ?>
+                                                <?php $cart_item_count = Mage::getSingleton('checkout/cart')->getSummaryQty(); ?>
+                                                <?php $cart_item_count = (($cart_item_count < 1) || ($cart_item_count == '')) ? 0 : $cart_item_count; ?>
+                                             
+						<?php echo $this->getChildHtml('topSearch'); ?>
+						<div class="mobile-login">
+						<a class="icon" href="http://www.rekinza.com/customer/account/login/"><span class="glyphicon glyphicon-user"></span></a>
+						</div>
+						<?php echo $this->getChildHtml('ajaxCart') ?>
+						
+                                           
+					</div>
+					<div style="color: #fff;
+    					height: 60px;
+    					overflow: hidden;
+    					position: fixed;
+					    right: 0;
+					    top: 25%;
+					    width: 48px;
+					    z-index: 100;">
+					<div data-id="ePQwC2Z1tX" class="livechat_button"><a href="https://www.livechatinc.com/customer-service/?partner=lc_6770341&amp;utm_source=chat_button">customer service</a></div></div>
+					<?php echo $this->getChildHtml('topContainer'); ?>
+				<!--/div>
+			</div>
+		</div>
+		<div class="header-menu menu-column">
+			<div class="container"-->
+				<div class="menu-nav">
+					<?php if ( Mage::helper('oxynic')->getConfig('use_megamenu', 1) ): ?>
+					<?php echo $this->getChildHtml('megaMenu') ?>
+					<?php else: ?>
+					<?php echo $this->getChildHtml('topMenu') ?>
+					<?php endif; ?>
+				</div>
+				<nav class="mobile-nav">
+					<?php echo $this->getChildHtml('topMobimenu') ?>
+				</nav>						
+			</div>		
+		</div>
+	</div>
+	<div class="header-info">
+		<div class="desktop-info">
+			<div class="info col-lg-4 col-md-4 col-sm-4"><i class="fa fa-truck info-icon" style="font-size:14px;"></i>  Free Shipping on Orders above Rs.999</div>
+			<div class="info col-lg-4 col-md-4 col-sm-4"><span class="glyphicon glyphicon-refresh info-icon"></span>  Easy 3-Day Returns</div>
+			<div class="info col-lg-4 col-md-4 col-sm-4"><span class="glyphicon glyphicon-bookmark info-icon"></span>  100% Trusted Quality</div>
+		</div>
+		<div class="mobile-info">
+			<div class= "swiper-container">
+               <div class="swiper-wrapper">
+                       <br>
+                       <div class="swiper-slide product-image" style ="text-align:center; font-weight:bold;"><i class="fa fa-truck info-icon" style="font-size:14px;"></i>  Free Shipping on Orders above Rs.999</div>
+                       <div class="swiper-slide product-image" style ="text-align:center;font-weight:bold;;"><span class="glyphicon glyphicon-refresh info-icon"></span>  Easy 3-Day Returns</div>
+                       <div class="swiper-slide product-image" style ="text-align:center;font-weight:bold;"><span class="glyphicon glyphicon-bookmark info-icon"></span>  100% Trusted Quality</div>                              
+               </div>
+           </div>
+       </div>
+	</div>
+</div>
+</div>
+
+<!--script for analytic.js event trigger for Mobile My Cart-->
+
+<script type="text/javascript">
+
+jQuery(".mobilecart").unbind().click(function() {
+	console.log("mobilecart");
+	ga('send', 'event', 'my cart', 'click',{'nonInteraction': 1}); 
+
+});
+
+var swiper = new Swiper('.swiper-container', {
+       pagination: '.swiper-pagination',
+       paginationClickable: true,
+       loop:true,
+       autoplay: 5000,
+       autoplayDisableOnInteraction: false
+   });
+</script>

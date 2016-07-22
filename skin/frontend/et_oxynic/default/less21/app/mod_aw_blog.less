@@ -1,0 +1,268 @@
+.blog-toolbar{
+    .toolbar{
+        padding-top: 10px;
+        padding-bottom: 0;
+        border: none;
+        border-top: 1px solid @border-color;
+        .pager .pages {
+            top: 10px;
+        }
+    }
+}
+.postWrapper {
+    margin-bottom: 30px;
+    display: inline-block;
+}
+
+.postImage {
+    float: left;    
+    margin-right: 30px;
+    width: 270px;
+    height: 180px;
+    img{
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.postTitle {
+    margin-bottom: 10px;
+    color: #000;
+    h2 {
+        font-size: 123.08%;
+        font-weight: normal;
+        margin: 0px;
+        padding: 0px;
+        a{
+            color: #000;
+            &:hover{
+                color: @theme-color;
+            }
+        }
+    }     
+}
+
+.postDetails {
+    font-size: 83%;
+    margin-bottom: 10px;
+    span{
+        float: left;
+    }
+    i{
+        margin-right: 2px;
+        font-size: 12px;
+        &.fa-user,
+        &.fa-comments-o{
+            margin-left: 2px;
+        }
+    }
+}
+
+.postContent {
+    padding-bottom: 0;
+    img{
+        display: none;
+    }
+    .aw-blog-read-more{
+        display: inline-block;
+        border: 2px solid #666;
+        background: #fff;
+        padding: 6px 10px;
+        line-height: 100%;
+        margin-top: 10px;
+        &:hover{
+            background: @theme-color;
+            color: #fff;
+            border: 2px solid transparent;
+        }
+    }
+    &.postContent-detail{
+        img{
+            display: block;
+            margin: 15px 0;
+            max-width: 100%;
+        }
+    }
+}
+
+
+.postBookmarks {
+    padding-bottom: 10px;
+}
+
+.postBookmarks h4 {
+    font-size: 100%;
+    font-weight: bold;
+}
+
+.commentWrapper {
+    padding-bottom: 20px;
+}
+
+.commentContent {
+    padding-bottom: 0px;
+}
+
+.commentDetails {
+    margin-bottom: 5px;
+    padding: 0px;
+}
+
+.commentDetails h4.username {
+    display: inline;
+    font-size: 100%;
+}
+
+.postError {
+    font-size: 100%;
+}
+
+.tags {
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.tags UL {
+    display: inline;
+}
+
+.tags UL LI {
+    font-weight: normal;
+    display: inline;
+    padding-right: 6px;
+}
+
+.tags h4 {
+    font-size: 100%;
+    font-weight: bold;
+}
+
+.menu-tags, .menu-categories, .menu-recent {
+    margin-bottom: 30px;
+}
+
+.menu-tags h5, .menu-categories h5, .menu-recent h5 {
+    font-size: 11px;
+}
+
+.block-blog .menu-tags UL LI {
+    display: inline;
+    padding: 2px;
+    margin-left: 10px;
+}
+
+.block-blog .menu-categories UL LI,
+.block-blog .menu-recent UL LI {
+    border-bottom: 1px dotted @border-color;
+    padding: 8px 0;
+    position: relative;  
+}
+
+
+.block-blog .menu-recent UL LI a, 
+.block-blog .menu-categories UL LI a, 
+.block-blog .menu-tags UL LI a {
+	line-height: 100%;
+    padding-left: 20px;
+    &:before {
+        border: 1px solid @theme-color;
+        border-radius: 50%;
+        content: "";
+        height: 8px;
+        left: 0;
+        position: absolute;
+        top: 15px;
+        width: 8px;
+    }
+}
+
+.tagcloud {
+    /* text-align:center; */
+}
+
+/*.tag-count-1 {
+    font-size: 1em !important;
+}
+
+.tag-count-2 {
+    font-size: 1.2em !important;
+}
+
+.tag-count-3 {
+    font-size: 1.4em !important;
+}
+
+.tag-count-4 {
+    font-size: 1.6em !important;
+}
+
+.tag-count-5 {
+    font-size: 1.8em !important;
+}
+
+.tag-count-6 {
+    font-size: 2em !important;
+}
+
+.tag-count-7 {
+    font-size: 2em !important;
+}
+
+.tag-count-8 {
+    font-size: 2em !important;
+}
+
+.tag-count-9 {
+    font-size: 2em !important;
+}
+
+.tag-count-10 {
+    font-size: 2em !important;
+}
+
+.block-blog .head h4 {
+    padding-left: 20px;
+}
+*/
+/*.block-blog .block-title strong {
+    background-image: url(../images/icon_blog.png);
+    background-repeat: no-repeat;
+    padding-left: 21px;
+    text-align: left;
+}
+*/
+.postWrapper .poster {
+    display: inline;
+}
+.aw-post-comment{
+    margin-top: 40px;
+    display: inline-block;
+    width: 100%;
+    li{
+        margin-bottom: 0;
+    }
+    .required{
+        display: none;
+    }
+    input{
+        margin: 20px 30px 30px 0;
+        float: left;
+    }
+}
+.input-box.aw-blog-comment-area {
+    width: 100%;
+}
+
+.widget-latest li {
+    font-size: 12px;
+    padding: 5px 10px;
+}
+
+.block-blog .menu-categories {
+    margin: 0;
+}
+
+A.awblog_current_comment {
+    text-decoration: none !important;
+    font-weight: bold !important;
+}

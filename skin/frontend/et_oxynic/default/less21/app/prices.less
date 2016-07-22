@@ -1,0 +1,51 @@
+.price-box{
+	margin: 5px 0;
+	float: left;
+	width: 100%;
+	.minimal-price{
+		margin: 0;
+	}
+	.price-from{
+		float: left;
+		margin: 0 10px 0 0;
+	}
+	.price-to{
+		float: left;
+		margin: 0;
+	}
+}
+.price-box .price {
+	color: @theme-color;
+    display: inline-block;
+    line-height: 100%;
+	font-size: 107.69%;
+	font-weight: bold;
+}
+.price-box .regular-price .price {
+	line-height: 100%;
+}
+.price-box .old-price .price-label,
+.price-box .special-price .price-label{
+	display: none;
+}
+.price-box .old-price{
+	float: left;
+    margin: 0 10px 0 0;	
+	color: #999;
+}
+.price-box .old-price .price{
+	text-decoration: line-through;
+    color: #666;
+    font-weight: normal;
+}
+.price-box .special-price {
+    display: inline-block;
+    margin: 0;
+}
+.price-as-configured{
+	display: inline;
+}
+.price-box-bundle {
+    float: left;
+    width: 100%;
+}

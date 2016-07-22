@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<config>
+	<tabs>
+		<et_modules_tab>
+			<label>EcomTheme.com</label>
+			<sort_order>256</sort_order>
+		</et_modules_tab>
+	</tabs>
+	<sections>
+		<et_ajax_configs translate="label" module="ajax">
+			<label>ET Ajax</label>
+			<tab>et_modules_tab</tab>
+			<frontend_type>text</frontend_type>
+			<sort_order>9911</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+				<general translate="label" module="ajax">
+                    <label>General Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                    
+						<is_enabled translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </is_enabled>
+                        
+                        <loading_size translate="label">
+                            <label>Loading Box Size</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </loading_size>
+                        
+                        <confirm_size translate="label">
+                            <label>Confirm Box Size</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </confirm_size>
+                        
+                        <options_size translate="label">
+                            <label>Options Box Size</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </options_size>
+                        
+                        <quickview_size translate="label">
+                            <label>Quickview Box Size</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </quickview_size>
+                        
+                    </fields>
+                </general>
+			</groups>
+		</et_ajax_configs>
+	</sections>
+</config>

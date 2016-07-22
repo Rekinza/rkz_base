@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <BusinessKing_AttributeQuickAdd>
+            <version>0.1.0</version>
+        </BusinessKing_AttributeQuickAdd>
+    </modules>
+    
+    <global>
+    	<blocks>
+    		<attributequickadd>
+    			<class>BusinessKing_AttributeQuickAdd_Block</class>
+    		</attributequickadd>
+    		<adminhtml>
+    			<rewrite>
+    				<catalog_product_attribute_edit_tab_options>BusinessKing_AttributeQuickAdd_Block_Adminhtml_Catalog_Product_Attribute_Edit_Tab_Options</catalog_product_attribute_edit_tab_options>
+    			</rewrite>
+    		</adminhtml>	
+    	</blocks>
+    </global>
+    
+    <admin>
+        <routers>
+            <attributequickadd>
+                <use>admin</use>
+                <args>
+                    <module>BusinessKing_AttributeQuickAdd</module>
+                    <frontName>attributequickadd</frontName>
+                </args>
+            </attributequickadd>
+        </routers>
+    </admin> 	
+    
+    <!--<stores>
+        <admin>
+            <design>
+                <package>
+                    <name>default</name> 
+                </package>
+                <theme>
+                    <default>ontap</default> 
+                </theme>
+            </design>
+        </admin>
+	</stores>-->
+	  
+</config>

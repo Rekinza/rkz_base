@@ -1,0 +1,181 @@
+<?php
+/**
+ * @package ET_Oxynic
+ * @version 1.0.0
+ * @copyright Copyright (c) 2014 EcomTheme. (http://www.ecomtheme.com)
+ * @license http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+/* @var $this ET_Oxynic_Block_Panel */
+// $f = $this->getForm();
+// echo $f->getHtml();
+
+$helper = Mage::helper('oxynic');
+$theme_color = $helper->getConfig('theme_color', 'default');
+$theme_layout = $helper->getConfig('theme_layout', 'full');
+$use_megamenu = $helper->getConfig('use_megamenu', 1);
+$position_id = $helper->getConfig('position_id', '');
+if ( is_callable('ET_Megamenu_Model_System_Config_Source_Positions::getOptionArray') ){
+	$position_options = ET_Megamenu_Model_System_Config_Source_Positions::toOptionArray();
+} else {
+	$position_options = null;
+}
+$collapsed = $helper->getConfig('cpanel_collapsed', true);
+
+$stores = array();
+foreach (Mage::app()->getStores() as $store){
+    $stores[$store->getId()] = $store->getUrl();
+}
+?>
+
+<input type="checkbox" id="theme_setting_panel_toggler" <?php if(!$collapsed) echo 'checked'; ?> data-ck="<?php echo $helper->getCookieName('cpanel_collapsed'); ?>">
+<div id="theme_setting_panel" class="visible-lg on">
+	<div class="head">
+		<i class="fa fa-cog"></i> Theme Settings
+	</div>
+	<div class="body">
+		<div class="setting_messages">
+		</div>
+		<form action="<?php echo $this->getUrl('oxynic/index/save'); ?>" method="post" id="setting_form">
+			<div class="form-group">
+				<label class="control-label">Theme Color</label>
+				<div class="controls">
+					<input type="hidden" class="form-control" name="setting[theme_color]" value="<?php echo $theme_color; ?>" id="setting_theme_color">
+					<span class="help-block">
+						<span class="color-cell <?php echo $theme_color=='default'?'sel':''; ?>" data-color="default" data-store="<?php echo $stores[1]; ?>"></span>
+						<span class="color-cell <?php echo $theme_color=='blue'?'sel':''; ?>" data-color="blue"         data-store="<?php echo $stores[4]; ?>"></span>
+						<span class="color-cell <?php echo $theme_color=='deep-grass'?'sel':''; ?>" data-color="deep-grass" data-store="<?php echo $stores[5]; ?>"></span>
+						<span class="color-cell <?php echo $theme_color=='brow'?'sel':''; ?>" data-color="brow"         data-store="<?php echo $stores[6]; ?>"></span>
+						<span class="color-cell <?php echo $theme_color=='orange'?'sel':''; ?>" data-color="orange"     data-store="<?php echo $stores[8]; ?>"></span>
+						<span class="color-cell <?php echo $theme_color=='green'?'sel':''; ?>" data-color="green"       data-store="<?php echo $stores[9]; ?>"></span>
+						<span class="color-cell <?php echo $theme_color=='yellow'?'sel':''; ?>" data-color="yellow"     data-store="<?php echo $stores[10]; ?>"></span>
+						<span class="color-cell <?php echo $theme_color=='pink'?'sel':''; ?>" data-color="pink"         data-store="<?php echo $stores[11]; ?>"></span>
+						<span class="color-cell <?php echo $theme_color=='lavender'?'sel':''; ?>" data-color="lavender" data-store="<?php echo $stores[12]; ?>"></span>
+					</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label">Theme Layout</label>
+				<div class="controls">
+					<select class="form-control" name="setting[theme_layout]" id="setting_theme_layout" data-ck="<?php echo $helper->getCookieName('theme_layout'); ?>">
+						<option value="full" <?php echo $theme_layout=='full'?'selected':''; ?>>Full</option>
+						<option value="boxed" <?php echo $theme_layout=='boxed'?'selected':''; ?>>Boxed</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label">Use Megamenu</label>
+				<div class="controls">
+					<select class="form-control" name="setting[use_megamenu]" id="setting_use_megamenu" data-ck="<?php echo $helper->getCookieName('use_megamenu'); ?>">
+						<option value="0" <?php if(!$use_megamenu){ ?>selected<?php } ?>>No</option>
+						<option value="1" <?php if($use_megamenu){ ?>selected<?php } ?>>Yes</option>
+					</select>
+				</div>
+			</div>
+			<?php if ($position_options): ?>
+			<div class="form-group <?php echo $use_megamenu ? 'on' : 'off'; ?>">
+				<label class="control-label">Menu Position</label>
+				<div class="controls">
+					<select class="form-control" name="setting[position_id]" id="setting_position_id" data-ck="<?php echo $helper->getCookieName('position_id'); ?>">
+						<?php foreach ( $position_options as $pos ): ?>
+						<option value="<?php echo $pos['value']; ?>" <?php if($position_id==$pos['value']){ ?>selected<?php } ?>><?php echo $pos['label']; ?></option>
+						<?php endforeach; ?>
+					</select>
+				</div>
+			</div>
+			<?php endif; ?>
+			<div class="actions">
+				<button type="reset" class="btn btn-default" id="setting_theme_reset">Reset</button>
+				<button type="submit" class="btn btn-default" id="setting_theme_submit">Apply</button>
+			</div>
+		</form>
+	</div>
+	<div class="toggle">
+		<label for="theme_setting_panel_toggler"></label>
+	</div>
+</div>
+<script type="text/javascript">
+jQuery(function($){
+	function createCookie(n, v, d) {
+		if (d) {
+			var date = new Date();
+			date.setTime(date.getTime() + (d * 24 * 60 * 60 * 1000));
+			var expires = "; expires=" + date.toGMTString();
+		} else var expires = "";
+		document.cookie = n + "=" + v + expires + "; path=/";
+	}
+
+	function readCookie(n) {
+		var nameEQ = n + "=";
+		var ca = document.cookie.split(';');
+		for (var i = 0; i < ca.length; i++) {
+			var c = ca[i];
+			while (c.charAt(0) == ' ')
+			c = c.substring(1, c.length);
+			if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+		}
+		return null;
+	}
+
+	function eraseCookie(n) {
+		createCookie(n, "", -1);
+	}
+	$('#theme_setting_panel form').on('submit', function(e){
+		e.preventDefault();
+		e.stopPropagation();
+		return false;
+	});
+	$('#setting_use_megamenu').on('change', function(e){
+		var $position_id = $('#setting_position_id');
+		if ( $(this).val()==1 ){
+			$position_id
+				.closest('.form-group')
+				.removeClass('off')
+				.addClass('on');
+		} else {
+			console.log($position_id, 'turn off');
+			$position_id
+				.closest('.form-group')
+				.removeClass('on')
+				.addClass('off');
+		}
+	});
+	$('#setting_theme_submit').on('click', function(e){
+		e.preventDefault();
+		$('[data-ck]').each(function(e){
+			var $this = $(this), $key = $this.data('ck'), $val = $this.val();
+			if ( $key ){
+				createCookie($key, $val, 1);
+				console.log( 'createCookie("'+$key+'", "'+$val+'", 1);' );
+			}
+		});
+		window.location.reload();
+	});
+	$('#setting_theme_reset').on('click', function(e){
+		e.preventDefault();
+		$('[data-ck]').each(function(e){
+			var $this = $(this), $key = $this.data('ck');
+			if ( $key ){
+				eraseCookie($key);
+				console.log( 'eraseCookie("'+$key+'");' );
+			}
+		});
+		window.location.reload();
+	});
+
+	$('[data-color]').on('click', function(e){
+		var $this = $(this), color = $this.data('color');
+		if ( !$this.hasClass('sel') ){
+			$('#setting_theme_color').val(color);
+			$this.addClass('sel').siblings().removeClass('sel');
+			if ($this.data('store')) window.location.href = $this.data('store');
+		}
+	});
+	
+	$('#theme_setting_panel [for="theme_setting_panel_toggler"]').on('click', function(e){
+		var $check = $('#theme_setting_panel_toggler'), $val = $check.is(':checked'), $key = $check.data('ck');
+		$val ? createCookie($key, 1, 1) : eraseCookie($key);
+	});
+	
+});
+</script>

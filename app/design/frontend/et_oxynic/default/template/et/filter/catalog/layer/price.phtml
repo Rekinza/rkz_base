@@ -1,0 +1,101 @@
+<?php
+/**
+ * @package ET_Filter
+ * @version 1.0.4
+ * @copyright Copyright (c) 2014 EcomTheme. (http://www.ecomtheme.com)
+ * @license http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+$currentcy = Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol(); ?>
+<div class="price-min-wrap">
+	<span><?php echo $currentcy; ?></span>
+	<input id="price-min" type="text" value="<?php echo $this->getCurrentMinPriceFilter(); ?>">
+</div>
+<div class="price-min-wrap">
+	<span><?php echo $currentcy; ?></span>
+	<input id="price-max" type="text" value="<?php echo $this->getCurrentMaxPriceFilter(); ?>">
+</div>
+<button id="submit_filter" class="button" onclick="priceEvent(this.value)" value="">
+	<span><?php echo $this->__('Submit') ?></span>
+</button>
+<div id="price_filter" class="price-filter">
+    <span id="price_filter_first" class="price-first"></span>
+    <span id="price_filter_last" class="price-last"></span>
+</div>
+<ul style="display:none;">
+    <li>
+        <span id="price_filter_first_current"><?php echo $currentcy.$this->getCurrentMinPriceFilter(); ?></span>
+        <span id="price_filter_last_current"><?php echo $currentcy.$this->getCurrentMaxPriceFilter(); ?></span>
+    </li>
+</ul>
+
+<script type="text/javascript">
+    mx_Price = <?php echo $this->getMaxPriceFloat(); ?>;
+    mn_Price = <?php echo $this->getMinPriceFloat(); ?>;
+	mx_PriceText = $('price-max').value;
+	mn_PriceText = $('price-min').value;
+	$('price-max').onchange = function(){
+		mx_PriceText = $('price-max').value;
+		if( mx_PriceText > mx_Price){
+			$('price-max').value = mx_Price;
+			mx_PriceText = mx_Price;
+		}
+		if( mx_PriceText < mn_Price){
+			$('price-max').value = mn_Price;
+			mx_PriceText = mn_Price;
+		}
+		mn_PriceText = $('price-min').value;
+		$('submit_filter').value = mn_PriceText+'-'+mx_PriceText;
+	};
+	$('price-min').onchange = function(){
+		mn_PriceText = $('price-min').value;
+		if( mn_PriceText > mx_Price){
+			$('price-min').value = mx_Price;
+			mn_PriceText = mx_Price;
+		}
+		if( mn_PriceText < mn_Price){
+			$('price-min').value = mn_Price;
+			mn_PriceText = mn_Price;
+		}
+		mx_PriceText = $('price-max').value;
+		$('submit_filter').value = mn_PriceText+'-'+mx_PriceText;
+	};
+	
+	priceSliderUrl = '<?php echo $this->getUrlPattern(); ?>';
+    <?php if (!$this->getRequest()->isAjax()): ?>
+    function priceEvent(val) {
+        if (val) {
+            var url = priceSliderUrl.replace('__PRICE_VALUE__', val);
+            <?php if ($this->helper('filter')->isAjaxEnabled()): ?>
+            handleEvent(url);
+            <?php else: ?>
+            window.location.href = url;
+            <?php endif; ?>
+        }
+    }
+    <?php endif; ?>
+    
+	timerSlider = null;
+    new Control.Slider([$('price_filter_first'), $('price_filter_last')], 'price_filter', {
+        range: $R(mn_Price, mx_Price),
+        sliderValue: [<?php echo $this->getCurrentMinPriceFilter(); ?>, <?php echo $this->getCurrentMaxPriceFilter(); ?>],
+        values: $R(mn_Price, mx_Price),
+        restricted: true,
+        onChange: function(val){
+            if (val[0] != <?php echo $this->getCurrentMinPriceFilter(); ?> || val[1] != <?php echo $this->getCurrentMaxPriceFilter(); ?>) {
+				if (timerSlider) {
+					clearTimeout(timerSlider);
+				}
+				timerSlider = priceEvent(val.join('-'));
+            }
+			
+        },
+        onSlide: function(val){
+            $('price_filter_last_current').innerHTML = val[1];
+            $('price_filter_first_current').innerHTML = val[0];
+			$('price-max').value = val[1];
+            $('price-min').value = val[0];
+        }
+    });
+	
+</script>

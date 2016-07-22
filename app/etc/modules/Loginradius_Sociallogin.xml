@@ -1,0 +1,8 @@
+<config>
+    <modules>
+        <Loginradius_Sociallogin>
+            <active>false</active>
+            <codePool>community</codePool>
+        </Loginradius_Sociallogin>
+    </modules>
+</config>

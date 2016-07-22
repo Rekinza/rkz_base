@@ -1,0 +1,25 @@
+<?php if(Mage::helper('rewardpoints')->moduleEnabled()){?>
+<!--?php $store_id = Mage::app()->getStore()->getId();?>
+<div class="dashboard">
+    <div class="box-account box-info account-box ad-account-info">
+        <div class="head box-head">
+		<h2 style="background: none;padding: 0px;"><?php echo Mage::helper('rewardpoints/data')->getRewardIconHtml($store_id).$this->__('KinzaCash Information') ?></h2>
+        </div>
+
+		<table>
+			<tr><td>
+					<?php $store_id = Mage::app()->getStore()->getId();?>
+					<p class="amount"><?php echo $this->__('Your KinzaCash balance is <strong class="highlight">%s</strong>',Mage::helper('rewardpoints')->formatPoints($this->getRewardPoints(),$store_id)) ?></p>
+				
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+    var exchangeForm = new VarienForm('frm_exchange_rewardpoints', true);
+    //]]>
+</script>
+<?php }?> -->

@@ -1,0 +1,238 @@
+<style>
+p.pickup-h3{
+	font-size: 14px;
+    line-height: 1.6em;
+    font-weight: normal;
+}
+.pickup input{
+	margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+.options-form{
+	font-size: 14px;
+	font-weight: 400;
+}
+</style>
+<div class="pickup">
+<div class="col-lg-9">
+  <div class="pickup-title">
+        <h1 class="pickup-h1">Schedule Your Free Pickup</h1>
+        <h2 class="pickup-h2">You are 1-Step Away from De-Cluttering Your Closet.</h2> 
+		<h2 class="pickup-h2">A Simple Closet = A Simple Life</h2>
+    </div>
+</div>
+<form id="pick_out_form" method="post" action="<?php echo $this->getUrl("thredshare_pickup/pickup/requestpickup");?>">
+<div class="col-lg-9">
+<div class="pickup-box">
+<h3 class="pickup-h3"> Tell us a little about yourself </h3>
+<input class="required" type="text" name="first_name" placeholder="First Name"/>
+<input class="required" type="text" name="last_name" placeholder="Last Name"/>
+<input class="required" type="text" name="email" placeholder="Email ID"/>
+<input class="required mobile" type="text" name="mobile_no" placeholder="Mobile Number"/>
+</div>
+<div class="pickup-box">
+<h3 class="pickup-h3"> The pick-up address </h3>
+<input class="required" type="text" name="address1" placeholder="Address Line 1"/>
+<input type="text" name="address2" placeholder="Address Line 2"/>
+<input class="required" type="text" name="city" placeholder="City"/>
+<input class="required" type="text" name="state" placeholder="State"/>
+<input class="required number" type="text" name="pincode" id = "pincode" placeholder="Pincode"/>
+</div>
+<img src="http://www.rekinza.com/images/power-packet1.png" width="100%"/>
+<div class="pickup-box">
+<h3 class="pickup-h3"> A little about the pickup </h3>
+<input class="required number" type="text" name="date" id="datepicker" placeholder="Pickup Date"/>
+<!--p class="pickup-h3">Why is my pickup date so delayed?</p><p class="pickup-h3">Due to an overwhelming number of sell requests, we will only be able to organise pickups after 10 days.</p-->
+<!--<br>Pickup Start Time
+<input class="required number" type="time" name="start_time" id="start_time"/>
+<br>Pickup End Time
+<input class="required number" type="time" name="end_time" id="end_time"/>-->
+<input class="required number" type="text" name="item_count" id="item_count" placeholder="No. Of Items (Approx)"/>
+<input class="required number" type="text" name="amount" id="amount" placeholder="Value Of Items (Approx)"/>
+<p class="pickup-h3"><strong> What items will you be sending? </strong></p>
+<input type="checkbox" name="clothes" class = "mycheckbox" value="Clothes"> <p class="options-form">Clothes</p><br> <!--nik added required -->
+<input type="checkbox" name="bags" class = "mycheckbox" value="Bags"> <p class="options-form">Bags</p><br> <!--nik added required -->
+<input type="checkbox" name="shoes" class = "mycheckbox" value="Shoes"><p class="options-form">Shoes</p><br><!--nik added required -->
+<input type="checkbox" name="accessories" class = "mycheckbox" value="Accessories"><p class="options-form">Accessories</p><br><!--nik added required -->
+<br>
+<p class="pickup-h3"><strong> What would you like us to do with items we don't accept?</strong></p>
+<input type="radio" name="unaccepted_action" class="myradiobutton" value="recycle"><p class="options-form">Please recycle my items responsibly & donate them to NGO's </p><br>
+<input type="radio" name="unaccepted_action" class="myradiobutton" value="return"><p class="options-form">Please return my items
+</p>
+<p class="options-form"> (Please note that a shipping & handling fee of Rs.199 will be charged for returning your items)</p>
+</div>
+<div class="pickup-box">
+<h3 class="pickup-h3"> And some tips and tricks </h3>
+<p class="pickup-h3">We know that you are super excited to detox! While cleaning out, please note that:</p>
+<p class="pickup-h3">1. Label is a must - we are <strong>unable</strong> to sell anything that does not have a label </p>
+<p class="pickup-h3">2. Items should be in <a href="http://www.rekinza.com/sell#quality" style="color:#50c7c2">good condition</a> - please do not send us anything that you wouldn't buy! (Rekinza has final say in the acceptance of all items)</p>
+<p class="pickup-h3">3. Please check our <a href="http://www.rekinza.com/brands" style="color:#50c7c2">accepted brands list</a> - if a brand is not on it, email <a href="mailto:hello@rekinza.com" style="color:#50c7c2">hello@rekinza.com</a> to check, as we do add new brands all the time!</p>
+<p class="pickup-h3">4. <span style="color:#50c7c2">Women's Wear</span> only - we do not accept menswear, kidswear, household items at the moment</p>
+<input type="checkbox" id="agreement"name="t&c" value="t&c"><p class="options-form"><strong> I accept that I am a detox ninja and have read the above instructions. T&C Apply.</p> <!--added id here-->
+</div>
+
+
+<div class="clear"></div>
+<!--div class="g-recaptcha" data-sitekey="6LegfxgTAAAAAOjURXbiLMDox64NQeNC1pqUr-U_"></div-->
+
+<button type="button" onclick="submitPickUpForm();" title="Submit" class="button"><span><span>Submit</span></span></button>
+
+
+</form>
+</div>
+<script>
+
+
+
+function submitPickUpForm(){
+isSuc=true;
+
+jQuery('.pickup .number').each(function(){
+if (!(/[0-9]+/.test(jQuery(this).val()))){
+alert(jQuery(this).attr('placeholder')+" should be a number");
+isSuc=false;
+return false;
+}
+});
+if (!isSuc){
+return;
+}
+jQuery('.pickup .required').each(function(){
+if (!(/.+/.test(jQuery(this).val()))){
+alert(jQuery(this).attr('placeholder')+" is required");
+isSuc=false;
+return false;
+}
+});
+if (!isSuc){
+return;
+}
+jQuery('.pickup .mobile').each(function(){
+if (!( /^\d{10}$/.test(jQuery(this).val()))){
+alert("Please enter a 10 digit valid mobile no. (Please do not start with 0 or +91)");
+isSuc=false;
+return false;
+}
+});
+if (!isSuc){
+return;
+}
+
+var checkedAtLeastOne = false;
+jQuery('.mycheckbox').each(function() {
+    if (jQuery(this).is(":checked")) {
+        checkedAtLeastOne = true;
+    }
+});
+if (!checkedAtLeastOne) {
+    	alert("Please select the type of items you wish to sell");
+     isSuc = false;
+    return false;
+}
+
+if(!isSuc){
+	return;
+}
+
+var selectedAtLeastOne = false;
+jQuery('.myradiobutton').each(function() {
+    if (jQuery(this).is(":checked")) {
+        selectedAtLeastOne = true;
+    }
+});
+if (!selectedAtLeastOne) {
+    	alert("Please select action for unaccepted items.");
+     isSuc = false;
+    return false;
+}
+
+if(!isSuc){
+	return;
+}
+
+//var agree = false;
+jQuery('#agreement').each(function() {
+    if (jQuery(this).is(":checked")) {
+        isSuc = true;
+    }
+    else{
+    	alert("Please accept the Closet Detox Terms & Conditions");
+    	isSuc = false;
+    	return false;
+    }
+});
+
+if(!isSuc){
+	return;
+}
+
+
+jQuery('#pick_out_form').submit();
+
+}
+jQuery(document).ready(function(){
+	jQuery('#datepicker').datepicker({
+	beforeShowDay: DisableSunday,
+	minDate:new Date((new Date()).getTime()+2*86400000)
+	});
+});
+ 
+function DisableSunday(date) {
+ 
+  var day = date.getDay();
+ // If day == 0 then it is Sunday
+ if (day == 0) {
+ 
+ return [false] ; 
+ 
+ } else { 
+ 
+ return [true] ;
+ }
+  
+}
+
+/*************Check if pincode is serviceable******************/
+( function($) {	   
+$(document).ready(
+	function($)
+	{
+		$('#pincode').change(
+			function()
+			{
+				$.ajax({
+				type:'POST',
+				
+				url:"/backend/pickup/pickup_validate_pincode_serviceable.php",
+				data:
+				{
+					'pincode':$('#pincode').val()
+				},
+				async: false,
+				
+				success:function(message)
+				{
+					if(!$.trim(message)) 
+					{ 
+						//Do nothing
+					}
+					else
+					{
+						alert(message);
+						$('#pincode').val('');
+					}
+				}
+				});
+			
+			}
+		);		
+	}
+);
+})(jQuery);
+
+
+</script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>

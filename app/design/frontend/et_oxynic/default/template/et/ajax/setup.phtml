@@ -1,0 +1,140 @@
+<?php
+/**
+ * @package ET_Ajax
+ * @version 1.0.4
+ * @copyright Copyright (c) 2014 EcomTheme. (http://www.ecomtheme.com)
+ * @license http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+/* @var ET_Ajax_Helper_Data */
+$helper = Mage::helper('ajax');
+?>
+<script type="text/javascript">
+if (!('ETA_Options' in window)) {
+	window.ETA_Options = {
+		is_ajax_compare_enabled:   <?php echo $helper->isAjaxCompareEnabled() ? 'true' : 'false' ?>,
+        is_ajax_checkout_enabled:  <?php echo $helper->isAjaxCheckoutEnabled() ? 'true' : 'false' ?>,
+        is_ajax_wishlist_enabled:  <?php echo $helper->isAjaxWishlistEnabled() ? 'true' : 'false' ?>,
+        is_ajax_quickview_enabled: <?php echo $helper->isQuickviewEnabled() ? 'true' : 'false' ?>,
+        
+        dim: {
+        	loading: <?php echo $helper->getLoadingSize(); ?>,
+        	confirm: <?php echo $helper->getConfirmSize(); ?>,
+        	options: <?php echo $helper->getOptionsSize(); ?>,
+        	iframe: <?php echo $helper->getQuickviewSize(); ?>
+        	
+        }
+	};
+}
+</script>
+<div id="ajax-loading" class="ajax-loading">
+    <div class="dialog">
+        <div class="content">
+            <div class="img-loader text-center">
+                <img src="<?php echo Mage::getDesign()->getSkinUrl('images/loader.gif'); ?>" alt="Loading..." />
+                <div></div>
+				<div id = "phrase"></div>
+				<div id ="quoter" style = "font-weight:bold"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div role="dialog" tabindex="-1" id="ajax-messagebox" class="ajax-modal">
+	<div class="dialog">
+		<div class="content">
+			<div class="body">
+				<div class="iframe"></div>
+				<div class="message"></div>
+				<div class="options"></div>
+				<div class="actions"></div>
+    		</div>
+		</div>
+		<a class="xclose popupclose" title="Close" href="javascript:hideModal();void(0);"><span class="times">&times;</span><span class="sr-only">Close</span></a>
+	</div>
+</div>
+<script type="text/javascript">
+
+    jQuery(".popupclose").unbind().click(function() {
+    console.log("shutpopup");
+    ga('send', 'event', 'add to cart popup', 'close',{'nonInteraction': 1}); 
+
+});
+
+jQuery( document ).ready(function() {
+        generatestylequote();
+	/*	if ( $('.messages .success-msg').length )
+	{
+	console.log("Added to cart");
+    $('.messages').css('display','none'); // 'disable' default messages on top of content
+    function showCartForASecOrThreeAndAHalf() {
+        $('#mini-cart .menu').css('display','block');
+        setTimeout(function () { $('#mini-cart .menu').css('display',''); }, 3500); // display:'' to restore previous settings
+        }
+        showCartForASecOrThreeAndAHalf();
+}
+		*/
+});
+function generatestylequote()
+{	
+	var index = Math.floor((Math.random() * 11) + 1);//getRandomizer(1,5);
+	index = parseInt(index,10);
+	console.log(index);
+	if (index == 1)
+	{
+		document.getElementById("phrase").innerHTML  = "Life isn’t perfect but your outfit can be";
+	}
+	else if (index == 2)
+	{
+		document.getElementById("phrase").innerHTML  = "People will stare, make it worth their while";
+		document.getElementById("quoter").innerHTML  = "-Harry Winston";
+	}
+	else if (index == 3)
+	{
+		document.getElementById("phrase").innerHTML  = "Be your own kind of beautiful";
+	}
+	else if (index == 4)
+	{
+		document.getElementById("phrase").innerHTML  = "Clothes will not change the world, women who wear them will";
+		document.getElementById("quoter").innerHTML  = "-Anne Klein";	
+	}
+	else if (index == 5)
+	{
+		document.getElementById("phrase").innerHTML  = "I don't do fashion. I am fashion";
+		document.getElementById("quoter").innerHTML  = "-Coco Chanel";	
+	}
+	else if (index == 6)
+	{
+		document.getElementById("phrase").innerHTML  = "Online shopping gives me a reason to live for another 3-5 days";
+	}
+	else if (index == 7)
+	{
+		document.getElementById("phrase").innerHTML  = "I don't design clothes. I design dreams";
+		document.getElementById("quoter").innerHTML  = "-Ralph Lauren";	
+	}
+	else if (index == 8)
+	{
+		document.getElementById("phrase").innerHTML  = "Fashions fade, style is eternal";
+		document.getElementById("quoter").innerHTML  = "-Yves Saint Laurent";	
+	}
+	else if (index == 9)
+	{
+		document.getElementById("phrase").innerHTML  = "Clothes are like a good meal, a good movie, great pieces of music";
+		document.getElementById("quoter").innerHTML  = "-Michael Kors";	
+	}
+	else if (index == 10)
+	{
+		document.getElementById("phrase").innerHTML  = "Elegance is the only beauty that never fades";
+		document.getElementById("quoter").innerHTML  = "-Audrey Hepburn";	
+	}
+	else if (index == 11)
+	{
+		document.getElementById("phrase").innerHTML  = "A girl should be two things: classy and fabulous";
+		document.getElementById("quoter").innerHTML  = "-Coco Chanel";	
+	}	
+}		
+function getRandomizer(bottom, top) {
+    return function() {
+        return Math.floor( Math.random() * ( 1 + top - bottom ) ) + bottom;
+    }
+}
+</script>

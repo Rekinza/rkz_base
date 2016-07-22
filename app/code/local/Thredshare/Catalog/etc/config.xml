@@ -1,0 +1,27 @@
+<config>
+    <modules>
+        <Thredshare_Catalog>
+            <version>0.1.0</version>
+        </Thredshare_Catalog>
+    </modules>
+    <global>
+        <blocks>
+            <catalog>
+                <rewrite>
+                    <product_list_toolbar>Thredshare_Catalog_Block_Product_List_Toolbar</product_list_toolbar>
+                </rewrite>
+            </catalog>
+        </blocks>
+        <models>
+            <catalog>
+                <rewrite>
+                    <config>Thredshare_Catalog_Model_Config</config>
+				    <layer>Thredshare_Catalog_Model_Layer</layer>
+				</rewrite>
+			
+            </catalog>
+           
+        </models>
+    </global>
+
+</config>

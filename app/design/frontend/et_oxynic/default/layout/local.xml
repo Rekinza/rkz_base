@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<layout version="1.0.0">
+
+	<default>
+		<reference name="head">
+			<action method="addCss">
+				<stylesheet>css/bootstrap.min.css</stylesheet>
+			</action>
+			<action method="addCss">
+				<stylesheet>css/font-awesome.min.css</stylesheet>
+			</action>
+			
+			
+			<action method="addCss">
+               	<stylesheet helper="oxynic/getAppStylesheet" />
+           	</action>
+			
+			<action method="addItem">
+				<type>skin_js</type>
+				<name>js/jquery-2.1.1.min.js</name>
+			</action>
+			
+			<action method="addItem">
+				<type>skin_js</type>
+				<name>js/jquery-noconflict.js</name>
+			</action>
+			
+			<action method="addItem">
+				<type>skin_js</type>
+				<name>js/bootstrap.min.js</name>
+			</action>
+			
+			<action method="addItem">
+				<type>skin_js</type>
+				<name>js/cloud-zoom.1.0.3.min.js</name>
+			</action>
+			
+			<action method="addItem">
+				<type>skin_js</type>
+				<name>js/jquery.fancybox.js</name>
+			</action>
+
+			<action method="addItem">
+				<type>skin_js</type>
+				<name>js/fancybox-buttons.js</name>
+			</action>		
+
+			<action method="addItem">
+				<type>skin_js</type>
+				<name>js/owl.carousel.min.js</name>
+			</action>		
+					
+			<action method="addItem">
+				<type>skin_js</type>
+				<name>js/imagesloaded.js</name>
+			</action>
+			
+			<action method="addItem">
+				<type>skin_js</type>
+				<name>js/app.js</name>
+			</action>
+			<action method="addItem">
+				<type>skin_js</type>
+				<name>js/gen.js</name>
+			</action>
+			<action method="addItem">
+            	<type>skin_js</type>
+            	<script>js/jquery.dlmenu.js</script>
+            </action>
+		</reference>
+		
+		<reference name="header">
+			<block type="core/text_list" name="megamenu_navbar" as="megaMenu" translate="label" >
+				<label>Navbar Megamenu</label>
+				<block type="megamenu/navbar" name="megamenu.navbar">
+			    	<action method="setPositionId">
+				        <position_id helper="oxynic/getPositionId"/>
+				    </action>
+			    </block>
+			</block>		
+		</reference>
+				
+		<reference name="root">			
+			<block type="core/text_list" name="setting_panel">
+				<block type="oxynic/panel" name="frontcpanel" template="et/oxynic/panel.phtml"></block>
+			</block>			
+		</reference> 
+	</default>
+	<customer_account>
+	<reference name="customer_account_navigation">
+		<action method="addLink" translate="label">
+		<name>product_list</name>
+		<path>thredshare_vendor/vendor/list</path>
+		<label>My Shop</label>
+		<position>1</position>
+		</action>
+	</reference>
+	</customer_account>
+	<thredshare_vendor_vendor_list>
+	<update handle="customer_account" />
+	<reference name="my.account.wrapper">
+        <block type="Thredshare_Vendor_Block_List" name="vendor_list" template="thredshare/vendor/list.phtml" />
+    </reference>
+	</thredshare_vendor_vendor_list>
+	
+	<thredshare_vendor_vendor_newvendor>
+	<reference name="content">
+		<block type="core/template" name="new_vendor" template="thredshare/vendor/new_vendor.phtml"/>
+	</reference>
+	<reference name="root">
+	 <action method="setTemplate"><template>page/1column.phtml</template></action>
+	</reference>
+	</thredshare_vendor_vendor_newvendor>
+	<thredshare_pickup_pickup_getpickup>
+		<reference name="content" >
+			<block type="core/template" template="thredshare/pickup/pickup.phtml"/>
+		</reference>
+	</thredshare_pickup_pickup_getpickup>
+	<catalog_product_view>
+         <reference name="head">
+				<action method="addJs">
+					<script>swiper/swiper.min.js</script>
+				</action>
+				<action method="addCss">
+					<stylesheet>css/swiper.min.css</stylesheet>
+				</action>
+			</reference>
+	</catalog_product_view>
+</layout>

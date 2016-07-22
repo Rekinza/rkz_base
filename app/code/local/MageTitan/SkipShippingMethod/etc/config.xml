@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<config>
+
+  <modules>
+    <MageTitan_SkipShippingMethod>
+      <version>0.9.0</version>
+    </MageTitan_SkipShippingMethod>
+  </modules>
+
+  <global>
+    <rewrite>
+      <skipshippingmethod_checkout_onepage>
+        <from><![CDATA[#^/checkout/onepage/#]]></from>
+        <to>/skipshippingmethod/checkout_onepage/</to>
+      </skipshippingmethod_checkout_onepage>
+    </rewrite>
+    <models>
+      <skipshippingmethod>
+        <class>MageTitan_SkipShippingMethod_Model</class>
+      </skipshippingmethod>
+    </models>
+    <blocks>
+      <skipshippingmethod>
+        <class>MageTitan_SkipShippingMethod_Block</class>
+      </skipshippingmethod>
+      <checkout>
+        <rewrite>
+          <onepage>MageTitan_SkipShippingMethod_Block_Checkout_Onepage</onepage>
+        </rewrite>
+      </checkout>
+    </blocks>
+    <helpers>
+      <skipshippingmethod>
+        <class>MageTitan_SkipShippingMethod_Helper</class>
+      </skipshippingmethod>
+    </helpers>
+  </global>
+
+  <frontend>
+    <routers>
+      <skipshippingmethod>
+        <use>standard</use>
+        <args>
+          <module>MageTitan_SkipShippingMethod</module>
+          <frontName>skipshippingmethod</frontName>
+        </args>
+      </skipshippingmethod>
+    </routers>
+  </frontend>
+
+  <default>
+    <checkout>
+      <skipshippingmethod>
+        <enabled>0</enabled>
+        <method>first_available</method>
+        <error>Your order cannot be completed at this time as there is no shipping methods available for it. Please make neccessary changes in your shipping address.</error>
+      </skipshippingmethod>
+    </checkout>
+  </default>
+
+</config>

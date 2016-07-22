@@ -1,0 +1,111 @@
+<html>
+
+	<head></head>
+	<h1>Cohort Analysis</h1>
+
+	<div id ="cohort_analysis">
+	
+			<fieldset>
+				<form action = "cohort_analysis_analyse.php" method = "GET">
+				<h3>Analyse by Date Range</h3>			
+					Start Date:<input type = "date" name = "start_date">
+					End Date:<input type = "date" name = "end_date">
+					<p class = "submit">
+						<input type = "submit" value = "Search">
+					</p>			
+				</form>
+				<br>
+				<a href = "..\..\backend_home.php"><button class ="panel_button">Home</button></a>
+
+			</fieldset>
+			
+		</div>	
+
+</html>
+
+<style>
+body
+{
+	background-color: #F0F0F0  ;
+}
+
+h1 
+{
+	text-align: center;
+	color: #bb1515;
+	font-family: 'Arial';
+	background-color: #b7c3c2;
+	width:50%;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+span
+{
+	float:left;
+	display:inline-block;
+	width:49%;
+}
+
+h2
+{
+	text-align: center;
+	color: #bb1515;
+	font-family: 'Arial';
+	background-color: #b7c3c2;
+	width:50%;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+
+div
+{
+	margin-left:auto;
+	margin-right:auto;
+	width:50%;
+	text-align:center;
+	line-height:2em;
+}
+
+legend
+{
+	font-size: 1.2em;
+	background-color :#669999;
+	color : white;
+	width:100%;
+
+}
+
+.panel_button
+{
+	color: white;
+	background: #bb1515;
+	border: 2px outset #d7b9c9;
+	font-size:1.1em;
+	border-radius:7px;
+} 
+
+a
+{
+	text-decoration:none;
+}
+
+a:link 
+{
+	color: aquamarine;
+	
+}
+
+a:visited
+{
+	color:white;
+}
+
+a:hover
+{
+	color:grey;
+}
+
+
+</style>

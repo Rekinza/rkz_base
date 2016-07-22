@@ -1,0 +1,149 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2014 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+
+$cats=Mage::registry('current_product')->getCategoryIds();
+$product_id = Mage::registry('current_product')->getId();
+$products=Mage::getModel('catalog/category')->load($cats[count($cats)-1]);
+$products=$products->getProductCollection();
+$products->addAttributeToSelect("*")->addAttributeToFilter("entity_id",array("neq"=>$product_id))
+		->addAttributeToFilter("special_price",array("gt"=>0))->setPageSize(8);
+		Mage::getSingleton('cataloginventory/stock')->addInStockFilterToCollection($products);
+?>
+<?php if($products->getSize()): ?>
+<div class="block block-related">
+    <div class="block-title">
+        <strong><span><?php echo $this->__('Related Products') ?></span></strong>
+    </div>
+    <div class="block-content products-grid">
+        <ol class="releated-product-list" id="block-related">
+        <?php
+        foreach($products as $_item):
+            $is_new = Mage::helper('oxynic')->isNew($_item);
+            $is_special = Mage::helper('oxynic')->isSpecial($_item);
+            ?>
+            <li>
+				<div class="product-image">
+					<a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->escapeHtml($_item->getName()) ?>">
+						<img src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->resize(500, 500) ?>" width="270" height="auto" alt="<?php echo $this->escapeHtml($_item->getName()) ?>" />
+					</a>
+					
+					<?php
+                    if ($is_new && !$is_special) {
+                        echo "<span class='new-product'>".$this->__('New With Tag')."</span>";
+                    }
+                    if ($is_new && $is_special) {
+                        echo "<span class='new-product new-product-sale'>".$this->__('New With Tag')."</span>";
+                    }
+                    if ($is_special){
+                        echo "<span class='sale-product'>".$this->__('Sale')."</span>";
+                    } ?>					
+					<?php if (Mage::helper('core')->isModuleEnabled('ET_Ajax') && Mage::helper('ajax')->isQuickviewEnabled()) : ?>
+						<div class="item-quickview">
+							<a href="<?php echo Mage::helper('ajax')->getQuickviewUrl($_item); ?>"><?php echo $this->__('Quick view');?></a>
+						</div>
+					<?php endif; ?>					
+				</div>
+                <div class="product-info">
+                    <span class="product-name">
+						<a href="<?php echo $_item->getProductUrl() ?>">
+                        <div>
+                    
+                            <span class="brands" style="display:block;"><?php echo $_item->getAttributeText('brands'); ?></span>
+                        </div>		
+                        <?php echo $this->escapeHtml($_item->getName()) ?></a>  			
+					</span>
+					 
+					<?php echo $this->getReviewsSummaryHtml($_item, 'short', true) ?>
+					<?php echo $this->getPriceHtml($_item, true, '-related') ?>
+					<div class="item-cwc-wrap">
+						<div class="item-cwc-inner">
+							<?php if($_item->isSaleable()): ?>
+								<div class="item-addcart">
+									<button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_item) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
+								</div>
+							<?php else: ?>
+								<p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+							<?php endif; ?>
+
+							<?php if ($this->helper('wishlist')->isAllow()) : ?>
+								<div class="item-wishlist">
+									<a href="<?php echo $this->helper('wishlist')->getAddUrl($_item) ?>" class="link-wishlist" title="<?php echo $this->__('Add to Wishlist') ?>"><?php echo $this->__('Add to Wishlist') ?></a>
+								</div>
+							<?php endif; ?>
+							
+							<?php if($_compareUrl=$this->getAddToCompareUrl($_item)): ?>
+								<div class="item-compare">
+									<a href="<?php echo $_compareUrl ?>" class="link-compare" title="<?php echo $this->__('Add to Compare') ?>"><?php echo $this->__('Add to Compare') ?></a>
+								</div>
+							<?php endif; ?>							
+						</div>
+					</div>					
+                </div>
+            </li>
+        <?php endforeach ?>
+        </ol>
+        <script type="text/javascript">decorateList('block-related', 'none-recursive')</script>
+    </div>
+    <script type="text/javascript">
+    //<![CDATA[
+    $$('.related-checkbox').each(function(elem){
+        Event.observe(elem, 'click', addRelatedToProduct)
+    });
+
+    var relatedProductsCheckFlag = false;
+    function selectAllRelated(txt){
+        if (relatedProductsCheckFlag == false) {
+            $$('.related-checkbox').each(function(elem){
+                elem.checked = true;
+            });
+            relatedProductsCheckFlag = true;
+            txt.innerHTML="<?php echo $this->__('unselect all') ?>";
+        } else {
+            $$('.related-checkbox').each(function(elem){
+                elem.checked = false;
+            });
+            relatedProductsCheckFlag = false;
+            txt.innerHTML="<?php echo $this->__('select all') ?>";
+        }
+        addRelatedToProduct();
+    }
+
+    function addRelatedToProduct(){
+        var checkboxes = $$('.related-checkbox');
+        var values = [];
+        for(var i=0;i<checkboxes.length;i++){
+            if(checkboxes[i].checked) values.push(checkboxes[i].value);
+        }
+        if($('related-products-field')){
+            $('related-products-field').value = values.join(',');
+        }
+    }
+    //]]>
+    </script>
+</div>
+<?php endif ?>

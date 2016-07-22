@@ -1,0 +1,455 @@
+<?xml version="1.0" ?>
+<config>
+    <tabs>
+        <msg module="msg91" translate="label">
+            <label>Msg</label>
+            <sort_order>100</sort_order>
+        </msg>
+    </tabs>
+    <sections>
+        <msg91_section module="msg91" translate="label">
+            <label>MSG91</label>
+            <sort_order>11</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <tab>msg</tab>
+            <groups>
+                <general_settings translate="label">
+                    <label>General Settings</label>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        
+                        <enabled translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>This extension works only if it is Enabled.</comment>
+                        </enabled>
+                    </fields>
+                </general_settings>
+                <gateway_configuration translate="label">
+                    <label>MSG91 Gateway Configuration</label>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <authkey translate="label tooltip comment">
+                            <label>Authentication Key</label>
+                            <comment>Authentication Gateway</comment>
+                            <tooltip>Give SMS Gateway Authentication Key in this field</tooltip>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry</validate>
+                        </authkey>
+                    </fields>
+                </gateway_configuration>
+                <template_configuration translate="label">
+                    <label>Message Template Configuration</label>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                          <allow_unicode translate="label">
+                            <label>Allow UNICODE</label>
+                            <comment>Set yes if you want to send SMS in: Unicode</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allow_unicode>
+                        <allow_gsm_characters translate="label">
+                            <label>Allow Extended GSM Characters</label>
+                            <comment>Allow {,},\\,[,],~,|,^ Characters</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allow_gsm_characters>
+                        <chars_per_message translate="label">
+                            <label>Number of Characters per message</label>
+                            <comment>Max number of characters per message</comment>
+                            <tooltip>Number of Characters per message</tooltip>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                        </chars_per_message>
+                    </fields>
+                </template_configuration>
+               <routes_configuration>
+                      <label>Route Configuration</label>
+                    <sort_order>35</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+				<route_code translate="label comment">
+					<label>Select Route</label>
+                                        <comment>You can select after save the authentication key </comment>
+                                        <frontend_type>select</frontend_type>					
+					<source_model>Msg_Msg91_Model_System_Config_Source_Routevalues</source_model>
+					<sort_order>10</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+				</route_code>
+                                 <senderid translate="label tooltip comment">
+                            <label>Sender ID</label>
+                            <comment>http://help.msg91.com/article/10-how-to-choose-sender-id</comment>
+                            <tooltip>Give SMS Gateway sender ID in this field.Refer Below Link</tooltip>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>text</frontend_type>
+                        </senderid>
+			</fields>
+                </routes_configuration>
+                <message_log translate="label">
+                    <label>Message Log</label>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <send_log_enabled translate="label">
+                            <label>Log all messages</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </send_log_enabled>
+                        <unsend_log_enabled translate="label">
+                            <label>Log all unsend messages</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </unsend_log_enabled>
+                    </fields>
+                </message_log>
+                <configure_messages translate="label">
+                    <label>Configure Messages</label>
+                    <sort_order>50</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                          <registration_enabled translate="label">
+                            <label>When registration is done</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </registration_enabled>
+                        <registration_message translate="label">
+                            <label>Place registration message</label>
+                            <comment>Available variable: {{firstname}}, {{lastname}}</comment>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>textarea</frontend_type>
+                         <depends><registration_enabled>1</registration_enabled></depends>
+                        </registration_message>
+                      
+                        <order_enabled translate="label">
+                            <label>When order is placed</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </order_enabled>
+                        <order_message translate="label">
+                            <label>Place order message</label>
+                            <comment>Available variable: {{order_number}},{{firstname}}, {{lastname}}</comment>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>textarea</frontend_type>
+                             <depends><order_enabled>1</order_enabled></depends>
+                        </order_message>
+                        <shipment_enabled translate="label">
+                            <label>When shipment is placed</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </shipment_enabled>
+                        <shipment_message translate="label">
+                            <label>Place shipment message</label>
+                            <comment>Available variable: {{order_number}},{{firstname}},{{lastname}}</comment>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>textarea</frontend_type>
+                                <depends><shipment_enabled>1</shipment_enabled></depends>
+                        </shipment_message>
+                        <invoice_enabled translate="label">
+                            <label>When invoice is placed</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </invoice_enabled>
+                        <invoice_message translate="label">
+                            <label>Place invoice message</label>
+                            <comment>Available variable: {{order_number}},{{firstname}},{{lastname}}</comment>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>textarea</frontend_type>
+                            <depends><invoice_enabled>1</invoice_enabled></depends>
+                        </invoice_message>
+                        <canceled_enabled translate="label">
+                            <label>When order is canceled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </canceled_enabled>
+                        <canceled_message translate="label">
+                            <label>Canceled order message</label>
+                            <comment>Available variable: {{order_number}},{{firstname}},{{lastname}}</comment>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>textarea</frontend_type>
+                            <depends><canceled_enabled>1</canceled_enabled></depends>
+                        </canceled_message>
+                          <forgotpassword_enabled translate="label">
+                            <label>When forgot password </label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>85</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </forgotpassword_enabled>
+                        <forgotpassword_message translate="label">
+                            <label>Place forgotpassword message</label>
+                            <comment>Available variable: {{firstname}},{{email}}</comment>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>textarea</frontend_type>
+                         <depends><forgotpassword_enabled>1</forgotpassword_enabled></depends>
+                        </forgotpassword_message>
+                           <changepassword_enabled translate="label">
+                            <label>When change password </label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>92</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </changepassword_enabled>
+                        <changepassword_message translate="label">
+                            <label>Place changepassword message</label>
+                            <comment>Available variable: {{firstname}},{{email}}</comment>
+                            <sort_order>93</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>textarea</frontend_type>
+                         <depends><changepassword_enabled>1</changepassword_enabled></depends>
+                        </changepassword_message>
+                           <accountedit_enabled translate="label">
+                            <label>When Edit Account</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>95</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </accountedit_enabled>
+                        <accountedit_message translate="label">
+                            <label>Place edit account message</label>
+                            <comment>Available variable: {{firstname}},{{lastname}},{{email}},{{current_password}},{{password}}</comment>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>textarea</frontend_type>
+                         <depends><accountedit_enabled>1</accountedit_enabled></depends>
+                        </accountedit_message>
+                          <newsletter_enabled translate="label">
+                            <label>When NewsLetter Subscription/Unsubscription</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>105</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </newsletter_enabled>
+                        <newsletter_sub_message translate="label">
+                            <label>Place NewsLetter Subscription message</label>
+                            <comment>Available variable: {{firstname}},{{email}},{{subscription}}</comment>
+                            <sort_order>115</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>textarea</frontend_type>
+                         <depends><newsletter_enabled>1</newsletter_enabled></depends>
+                        </newsletter_sub_message>
+                        <newsletter_unsub_message translate="label">
+                            <label>Place NewsLetter UnSubscription message</label>
+                            <comment>Available variable: {{firstname}},{{email}},{{subscription}}</comment>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>textarea</frontend_type>
+                         <depends><newsletter_enabled>1</newsletter_enabled></depends>
+                        </newsletter_unsub_message>
+                       <review_enabled translate="label">
+                            <label>When Product Review Added</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>125</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </review_enabled>
+                        <approvereview_message translate="label">
+                            <label>Place Review Approve message</label>
+                            <comment>Available variable: {{nickname}},{{title}},{{status}}</comment>
+                            <sort_order>135</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>textarea</frontend_type>
+                            <depends><review_enabled>1</review_enabled></depends>
+                        </approvereview_message>
+                        <review_message translate="label">
+                            <label>Place Review message</label>
+                            <comment>Available variable: {{firstname}},{{email}},{{nickname}},{{title}},{{detail}}</comment>
+                            <sort_order>130</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>textarea</frontend_type>
+                            <depends><review_enabled>1</review_enabled></depends>
+                        </review_message>
+                          <tags_enabled translate="label">
+                            <label>When Product Tags Added</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>135</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tags_enabled>
+                        <tags_message translate="label">
+                            <label>Place tags message</label>
+                            <comment>Available variable: {{firstname}},{{lastname}},{{producttagname}},{{productname}}</comment>
+                            <sort_order>140</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>textarea</frontend_type>
+                            <depends><tags_enabled>1</tags_enabled></depends>
+                        </tags_message>
+                           <approvetags_message translate="label">
+                            <label>Place tags approve message</label>
+                            <comment>Available variable: {{firstname}},{{lastname}},{{tagname}},{{status}}</comment>
+                            <sort_order>142</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>textarea</frontend_type>
+                            <depends><tags_enabled>1</tags_enabled></depends>
+                        </approvetags_message>
+                             <coupon_enabled translate="label">
+                            <label>When Coupon Added</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>145</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </coupon_enabled>
+                        <coupon_message translate="label">
+                            <label>Place coupon message</label>
+                            <comment>Available variable: {{coupon_code}},{{discount_amount}},{{to_date}},{{firstname}},{{lastname}}</comment>
+                            <sort_order>150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>textarea</frontend_type>
+                            <depends><coupon_enabled>1</coupon_enabled></depends>
+                        </coupon_message>
+                                 <stockupdate_enabled translate="label">
+                            <label>When Stock Update</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>160</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </stockupdate_enabled>
+                        <stockupdate_message translate="label">
+                            <label>Place Stock Update message</label>
+                            <comment>Available variable: {{firstname}},{{qty}},{{productname}},{{firstname}},{{lastname}}</comment>
+                            <sort_order>170</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>textarea</frontend_type>
+                            <depends><stockupdate_enabled>1</stockupdate_enabled></depends>
+                        </stockupdate_message>
+                        <outstockupdate_message translate="label">
+                            <label>Place Out Stock Update message</label>
+                            <comment>Available variable: {{qty_change}},{{qty}},{{productname}},{{firstname}},{{lastname}}</comment>
+                            <sort_order>170</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>textarea</frontend_type>
+                            <depends><stockupdate_enabled>1</stockupdate_enabled></depends>
+                        </outstockupdate_message>
+                            
+                    </fields>
+                </configure_messages>
+            </groups>
+        </msg91_section>
+    </sections>
+</config>

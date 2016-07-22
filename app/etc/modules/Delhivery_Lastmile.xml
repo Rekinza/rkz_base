@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Delhivery
+ * @category   Delhivery
+ * @package    Delhivery_Lastmile
+ * @copyright  Copyright (c) 2010-2011 Delhivery. (http://www.delhivery.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+ -->
+<config>
+    <modules>
+        <Delhivery_Lastmile>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Delhivery_Lastmile>
+    </modules>
+</config> 

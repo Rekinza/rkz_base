@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+    <layout version="0.1.0">
+        <returns_returns_returns>
+            <reference name="content">
+                <block type="core/template" name="returns" template="returns/returns.phtml" />
+            </reference>
+        </returns_returns_returns>
+    </layout>

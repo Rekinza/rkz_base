@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<config>
+	<menu>
+		<et>
+			<title>ET Settings</title>
+			<sort_order>1001</sort_order>
+			<children>
+				<carousel>
+					<title>ET Carousel</title>
+					<sort_order>9922</sort_order>
+					<action>adminhtml/system_config/edit/section/et_carousel_configs/</action>
+				</carousel>
+			</children>
+		</et>
+	</menu>
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					<system>
+						<children>
+							<config>
+								<children>
+									<et_carousel_configs translate="title" module="carousel">
+										<title>ET Carousel Settings</title>
+									</et_carousel_configs>
+								</children>
+							</config>
+						</children>
+					</system>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>

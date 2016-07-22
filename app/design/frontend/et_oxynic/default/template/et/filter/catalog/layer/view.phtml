@@ -1,0 +1,122 @@
+<?php
+/**
+ * @package ET_Filter
+ * @version 1.0.4
+ * @copyright Copyright (c) 2014 EcomTheme. (http://www.ecomtheme.com)
+ * @license http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+if ($this->canShowBlock()): ?>
+
+    <?php if (!$this->getRequest()->isAjax()): ?>
+     <!--start here -->
+        <div class="navbar-header">
+          <a href="#top">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#layered-navigation" aria-expanded="false" aria-controls="layered-navigation" style="
+              width: 100%;
+              position: fixed;
+              z-index: 99; 
+              top: 99px; 
+              left: 0;
+              background-color: #f2f2f2;
+              font-size:9px;
+              border-top:solid 1px #323232;
+              border-bottom:solid 1px #323232;
+            ">
+        
+            <!--this span class is only for reading for the developer and the icon bars are the literal bars and it will definitely work without them, in rekinza we need to change this to funnel -->
+            <!-- <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span> -->
+            <strong><span style="font-size: 184.62%; color: #000;font-weight: bold; font-family: 'Montserrat';">Filters</span></strong>
+          </button>
+      </a>
+           
+        </div>
+        <!--stop here -->
+    <div id="layered-navigation" class="collapse navbar-collapse"> <!--commented out by Nikita, has t be there
+        <div id="navbar" class="collapse navbar-collapse">-->
+    <!-- <div>
+            <strong><span style="font-size: 184.62%; color: #000;font-weight: bold; font-family: 'Montserrat';">Filters</span></strong>
+        </div> -->
+<!--//added by Nikita
+
+
+
+</div>
+
+<!--ended by Nikita -->
+    <?php endif; ?>
+        <div class="block block-layered-nav nav-navbar">
+           <!--style="display: none;" on toggle we need to do this-->
+          
+            <div class="block-title filter-head">
+                <strong><?php echo $this->__('Filter By') ?></strong>
+            </div>
+            <!-- added closing div here by N-->
+          
+            <?php echo $this->getStateHtml() ?>
+            <div class="block-content">
+                <?php if ($this->getLayer()->getState()->getFilters()): ?>
+                    <div class="actions"><a href="<?php echo $this->getClearUrl() ?>"><?php echo $this->__('Clear All') ?></a></div>
+                <?php endif; ?>
+                <?php if ($this->canShowOptions()): ?>
+                    <!--p class="block-subtitle"><?php //echo $this->__('Shopping Options') ?></p-->
+                    <dl id="narrow-by-lists">
+                        <?php $_filters = $this->getFilters() ?>
+                        <?php foreach ($_filters as $_filter): ?>
+                            <?php if ($_filter->getItemsCount()): ?>
+                                <dt><?php echo $this->__($_filter->getName()) ?></dt>
+                                
+                                <dd><?php echo $_filter->getHtml() ?></dd>
+                                
+                                <?php $activeFilters = $this->getLayer()->getState()->getFilters(); ?>
+                                <!--?php echo $this->__('Filters'); ?>
+                                <?php if(!in_array($_filter, $activeFilters)): ?>
+                                <dd style="display:none;">
+                                <?php else: ?>
+                                <dd>
+                                <?php endif; ?>
+                                <?php echo $_filter->getHtml() ?>
+                                </dd>
+                                
+                                <change ends here-->
+                    
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </dl>
+                    <script type="text/javascript">decorateDataList('narrow-by-list')</script>
+                <?php endif; ?>
+            </div>
+        </div>
+    <?php if (!$this->getRequest()->isAjax()): ?>
+    <!--</div>
+    <!--added by N the following end of div-->
+</div>
+
+    <?php endif; ?>
+    <script type="text/javascript">
+    jQuery(document).ready(function(){    
+        
+        if(jQuery(window).innerWidth() <= 766) { 
+            /*jQuery('#narrow-by-list dd').hide();
+            jQuery('#narrow-by-list dt').click(function() {
+                jQuery('#narrow-by-list dd').slideUp();
+                jQuery(this).next().slideDown();
+                return(false);
+            });*/
+            jQuery('#narrow-by-lists dd').hide();
+                        jQuery('#narrow-by-lists dt').click(function() {
+                            jQuery('#narrow-by-lists dd').removeClass( "active" );
+                            jQuery(this).next("dd").addClass( "active" );
+                            jQuery(this).siblings("dd").not("dd.active").slideUp();
+                            jQuery(this).next("dd").slideToggle( );
+                        });
+        };
+    });
+    </script>
+
+
+
+<?php endif; ?>

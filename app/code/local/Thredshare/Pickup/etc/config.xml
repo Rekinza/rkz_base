@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Thredshare_Pickup>
+			<version>1.0.0</version>
+		</Thredshare_Pickup>
+	</modules>
+
+	<frontend>
+		<routers>
+			<thredshare_pickup>
+				<use>standard</use>
+				<args>
+					<module>Thredshare_Pickup</module>
+					<frontName>thredshare_pickup</frontName>
+				</args>
+			</thredshare_pickup>
+			
+		</routers>
+		
+		
+	</frontend>
+	<global>
+		<models>
+			<thredshare_pickup>
+				<class>Thredshare_Pickup_Model</class>
+				<resourceModel>thredshare_pickup_resource</resourceModel>
+			</thredshare_pickup>
+			<thredshare_pickup_resource>
+				<class>Thredshare_Pickup_Model_Resource</class>
+				<entities>
+					<pickup>
+						<table>thredshare_pickup</table>
+					</pickup>
+				</entities>
+			</thredshare_pickup_resource>
+		</models>
+	
+	</global>
+</config>

@@ -1,0 +1,542 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <socialconfig translate="label" module="sociallogin">
+            <label>Login Radius</label>
+            <sort_order>1</sort_order>
+        </socialconfig>
+    </tabs>
+    <sections>
+        <sociallogin_options translate="label" module="sociallogin">
+            <label>Social Login and Social Share</label>
+            <tab>socialconfig</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <info translate="label">
+                    <frontend_model>Loginradius_Sociallogin_Model_System_Config_Info</frontend_model>
+                    <comment><![CDATA[]]></comment>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                </info>
+                <apiSettings translate="label">
+                    <label>API Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <expanded>false</expanded>
+                    <sort_order>2</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <apikey translate="label">
+                            <label>API Key</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[Paste LoginRadius API Key here. To get the API Key, login to <a href="http://www.loginradius.com" target="_blank">LoginRadius</a>]]></comment>
+                            <sort_order>3</sort_order>
+                            <show_in_default>14</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </apikey>
+                        <apisecret translate="label">
+                            <label>API Secret</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[Paste LoginRadius API Secret here. To get the API Secret, login to <a href="http://www.loginradius.com" target="_blank">LoginRadius</a>]]></comment>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </apisecret>
+                    </fields>
+                </apiSettings>
+                <basicSettings translate="label">
+                    <label>Social Login Basic Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>3</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>false</expanded>
+                    <fields>
+                        <heading_example translate="label">
+                            <label>Redirection Settings</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>14</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </heading_example>
+
+                        <redirectAfterLogin translate="label">
+                            <label>Redirection settings after login</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>sociallogin/source_uihover</source_model>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </redirectAfterLogin>
+                        <customUrlLogin translate="label">
+                            <label></label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>16</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </customUrlLogin>
+
+                        <redirectAfterRegistration translate="label">
+                            <label>Redirection settings after registration</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>sociallogin/source_uihover</source_model>
+                            <sort_order>17</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </redirectAfterRegistration>
+
+                        <customUrlRegistration translate="label">
+                            <label></label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>18</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </customUrlRegistration>
+
+                    </fields>
+                </basicSettings>
+                <advancedSettings translate="label">
+                    <label>Social Login Advanced Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>4</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <interface_customization translate="label">
+                            <label>Social Login Interface Customization</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>14</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </interface_customization>
+                        <loginradius_title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[Text displayed above Social login Interface]]></comment>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </loginradius_title>
+
+                        <iconSize translate="label">
+                            <label>Social Login icons size</label>
+                            <frontend_type>select</frontend_type>
+                            <comment><![CDATA[Select the icon size to use in the Social Login interface.]]></comment>
+                            <source_model>sociallogin/source_iconsize</source_model>
+                            <sort_order>16</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </iconSize>
+                        <iconsPerRow translate="label">
+                            <label>Social Login icons per row</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[How many social icons would you like to be displayed per row?]]></comment>
+                            <sort_order>17</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </iconsPerRow>
+                        <backgroundColor translate="label">
+                            <label>Background Color</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[What background color would you like to use for the Social Login interface? (Leave empty for transparent. You can enter hexa-decimal code of the color as well as name of the color (in English language and small letters).)]]></comment>
+                            <sort_order>18</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </backgroundColor>
+
+                        <interface_display translate="label">
+                            <label>Social Login Interface Display Settings</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>19</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </interface_display>
+
+                        <showdefault translate="label">
+                            <label>Show Social Login interface in right side panel</label>
+                            <frontend_type>select</frontend_type>
+                            <comment><![CDATA[Select No, if you don't want to display module in right panel. You can also set widget in pages or any area of your site.]]></comment>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </showdefault>
+                        <aboveLogin translate="label comment">
+                            <label>Show Social Login interface above login form</label>
+                            <frontend_type>select</frontend_type>
+                            <comment><![CDATA[Select 'Yes' to enable Social Login interface above login form.]]></comment>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>21</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </aboveLogin>
+                        <belowLogin translate="label comment">
+                            <label>Show Social Login interface below login form</label>
+                            <frontend_type>select</frontend_type>
+                            <comment><![CDATA[Select 'Yes' to enable Social Login interface below login form.]]></comment>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>22</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </belowLogin>
+                        <aboveRegister translate="label comment">
+                            <label>Show Social Login interface above registration form</label>
+                            <frontend_type>select</frontend_type>
+                            <comment><![CDATA[Select 'Yes' to enable Social Login interface above registration form.]]></comment>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>23</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </aboveRegister>
+                        <belowRegister translate="label">
+                            <label>Show Social Login interface below registration form</label>
+                            <frontend_type>select</frontend_type>
+                            <comment><![CDATA[Select 'Yes' to enable Social Login interface below registration form.]]></comment>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>24</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </belowRegister>
+
+                        <email_settings translate="label">
+                            <label>Social Login Email Settings</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </email_settings>
+
+                        <emailrequired translate="label">
+                            <label>Email Required</label>
+                            <frontend_type>select</frontend_type>
+                            <comment><![CDATA[A few Social Networks do not supply user email address as part of user profile data. Do you want users to provide their email before completing the registration process?]]></comment>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>26</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </emailrequired>
+                        <verificationText translate="label">
+                            <label>Email verification message</label>
+                            <frontend_type>textarea</frontend_type>
+                            <comment><![CDATA[This message will be used in verification email.]]></comment>
+                            <sort_order>27</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </verificationText>
+                        <popupText translate="label">
+                            <label>"Email required" - Popup title</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[This text will be displayed on "Email required" popup.]]></comment>
+                            <sort_order>28</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </popupText>
+                        <popupError translate="label">
+                            <label>Error message</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[This text will be displayed on the popup if the entered email is already registered or invalid.]]></comment>
+                            <sort_order>29</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </popupError>
+                        <notifyUser translate="label">
+                            <label>Enable registration notification to user</label>
+                            <frontend_type>select</frontend_type>
+                            <comment><![CDATA[Send email to newly registered customer regarding login credentials.]]></comment>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </notifyUser>
+                        <notifyUserText translate="label">
+                            <label>User notification email message</label>
+                            <frontend_type>textarea</frontend_type>
+                            <comment><![CDATA[This message will be sent to user in notification email along with login credentials. If left empty, default message will be sent.]]></comment>
+                            <sort_order>31</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </notifyUserText>
+                        <notifyAdmin translate="label">
+                            <label>Enable registration notification to owner</label>
+                            <frontend_type>select</frontend_type>
+                            <comment><![CDATA[Send email to store owner on new customer registration regarding customer details.]]></comment>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>32</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </notifyAdmin>
+                        <notifyAdminText translate="label">
+                            <label>Owner notification email message</label>
+                            <frontend_type>textarea</frontend_type>
+                            <comment><![CDATA[This message will be sent to admin in notification email.]]></comment>
+                            <sort_order>33</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </notifyAdminText>
+
+                        <user_settings translate="label">
+                            <label>Social Login User Settings</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>34</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </user_settings>
+
+                        <profileFieldsRequired translate="label">
+                            <label>Profile Fields Required</label>
+                            <frontend_type>select</frontend_type>
+                            <comment><![CDATA[Ask the required Magento User Profile fields in a popup when user registers through Social Login.]]></comment>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>35</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </profileFieldsRequired>
+                        <updateProfileData translate="label">
+                            <label>Update Profile Data</label>
+                            <frontend_type>select</frontend_type>
+                            <comment><![CDATA[Select yes to update user profile details in your Magento website, every time user logs into your website.]]></comment>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>36</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </updateProfileData>
+
+                        <socialLinking translate="label">
+                            <label>Social Linking</label>
+                            <frontend_type>select</frontend_type>
+                            <comment><![CDATA[Link existing user accounts with Social Login.]]></comment>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>37</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </socialLinking>
+                        <debugMode translate="label">
+                            <label>Enable Debugging</label>
+                            <frontend_type>select</frontend_type>
+                            <comment><![CDATA[If your customers are not able to login, Please enable debug mode to display errors.]]></comment>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>38</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </debugMode>
+                    </fields>
+                </advancedSettings>
+                <horizontalSharing translate="label">
+                    <label>Horizontal Social Sharing</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>5</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <horizontalShareEnable translate="label">
+                            <label>Enable Horizontal Social Sharing</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>14</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </horizontalShareEnable>
+
+
+                        <horizontalSharingTheme translate="label">
+                            <label>Choose a theme</label>
+                            <frontend_type>radios</frontend_type>
+                            <source_model>sociallogin/source_HorizontalSharing</source_model>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </horizontalSharingTheme>
+                        <horizontalSharingProviders translate="label">
+                            <label>Sharing Providers</label>
+                            <frontend_type>checkboxes</frontend_type>
+                            <comment><![CDATA[<div style="clear: both !important;"><p class="note"><span>Selected providers will be displayed in the Social Sharing widget</span></p></div>]]></comment>
+                            <sort_order>16</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </horizontalSharingProviders>
+                        <horizontalSharingProvidersHidden translate="label">
+                            <label>Rearrange Icons</label>
+                            <frontend_type>hidden</frontend_type>
+                            <sort_order>17</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </horizontalSharingProvidersHidden>
+                        <horizontalCounterProviders translate="label">
+                            <label>Sharing Providers</label>
+                            <frontend_type>checkboxes</frontend_type>
+                            <comment><![CDATA[<div style="clear: both !important;"><p class="note"><span>Selected providers will be displayed in the Social Sharing widget</span></p></div>]]></comment>
+                            <sort_order>18</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </horizontalCounterProviders>
+                        <horizontalCounterProvidersHidden translate="label">
+                            <label>Rearrange Icons</label>
+                            <frontend_type>hidden</frontend_type>
+                            <sort_order>19</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </horizontalCounterProvidersHidden>
+                        <horizontalShareProduct translate="label">
+                            <label>Show Social Sharing Interface at Product Pages</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </horizontalShareProduct>
+                        <horizontalShareSuccess translate="label">
+                            <label>Enable Social Sharing at Checkout Success Page</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>21</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </horizontalShareSuccess>
+                    </fields>
+                </horizontalSharing>
+                <verticalSharing translate="label">
+                    <label>Vertical Social Sharing</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>6</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <verticalShareEnable translate="label">
+                            <label>Enable Vertical Social Sharing</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>14</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </verticalShareEnable>
+
+                        <verticalSharingTheme translate="label">
+                            <label>Choose a theme</label>
+                            <frontend_type>radios</frontend_type>
+                            <source_model>sociallogin/source_VerticalSharing</source_model>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </verticalSharingTheme>
+                        <verticalAlignment translate="label">
+                            <label>Alignment</label>
+                            <frontend_type>select</frontend_type>
+                            <comment><![CDATA[Select the position of the Social Counter widget with respect to page]]></comment>
+                            <source_model>sociallogin/source_SharingVerticalAlignment</source_model>
+                            <sort_order>16</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </verticalAlignment>
+
+                        <verticalSharingProviders translate="label">
+                            <label>Sharing Providers</label>
+                            <frontend_type>checkboxes</frontend_type>
+                            <comment><![CDATA[<div style="clear: both !important;"><p class="note"><span>Selected providers will be displayed in the Social Counter widget</span></p></div>]]></comment>
+                            <sort_order>17</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </verticalSharingProviders>
+                        <verticalSharingProvidersHidden translate="label">
+                            <label>Rearrange Icons</label>
+                            <frontend_type>hidden</frontend_type>
+                            <sort_order>18</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </verticalSharingProvidersHidden>
+                        <verticalCounterProviders translate="label">
+                            <label>Sharing Providers</label>
+                            <frontend_type>checkboxes</frontend_type>
+                            <comment><![CDATA[<div style="clear: both !important;"><p class="note"><span>Selected providers will be displayed in the Social Sharing widget</span></p></div>]]></comment>
+                            <sort_order>19</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </verticalCounterProviders>
+                        <verticalCounterProvidersHidden translate="label">
+                            <label>Rearrange Icons</label>
+                            <frontend_type>hidden</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </verticalCounterProvidersHidden>
+                        <verticalShareProduct translate="label">
+                            <label>Show Social Sharing Interface at Product Pages</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>21</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </verticalShareProduct>
+                        <verticalShareSuccess translate="label">
+                            <label>Enable Social Sharing at Checkout Success Page</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>22</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </verticalShareSuccess>
+                    </fields>
+                </verticalSharing>
+            </groups>
+        </sociallogin_options>
+    </sections>
+</config>
