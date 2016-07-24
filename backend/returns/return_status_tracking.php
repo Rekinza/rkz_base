@@ -169,7 +169,7 @@ if (!empty($waybill_status_update_or_email_send_error_list))
      
 	$email = "komal@rekinza.com";
 	$cc_email = "stuti@rekinza.com";
-	$subject = "CRON JOB ERRORS -- pickup status";
+	$subject = "CRON JOB ERRORS -- return status";
 	$fault_string = implode("<br>",$waybill_status_update_or_email_send_error_list);
 	$body = $fault_string;
     sendmail($subject , $body, $email, $cc_email);
