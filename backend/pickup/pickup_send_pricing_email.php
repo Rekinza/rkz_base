@@ -97,14 +97,14 @@ Mage::app();
 			}
 			else
 			{
-				$fault = "id: ".$row['id']." table-status: ".$row['status']." ".$logistics_partner." status: ".$status." waybill-number: ".$awb." query failed.\n";
+				$fault = "id: ".$result_set['id']." Email: ".$result_set['email']." table-status: ".$result_set['status']." query failed.\n";
 				array_push($waybill_status_update_or_email_send_error_list, $fault);
 			}
 		}
 		else
 		{
 
-			$fault = "id: ".$row['id']." table-status: ".$row['status']." ".$logistics_partner." status: ".$status." waybill-number: ".$awb." email failed no query ran.\n";
+			$fault = "id: ".$result_set['id']." Email: ".$result_set['email']." table-status: ".$result_set['status']." email failed no query ran.\n";
 			array_push($waybill_status_update_or_email_send_error_list, $fault);
 		}	
  	}
@@ -119,20 +119,22 @@ Mage::app();
 		}
 		else
 		{
-			$fault = "id: ".$row['id']." table-status: ".$row['status']." ".$logistics_partner." status: ".$status." waybill-number: ".$awb." query failed.\n";
+			$fault = "id: ".$result_set['id']." Email: ".$result_set['email']." table-status: ".$result_set['status']." query failed.\n";
 			array_push($waybill_status_update_or_email_send_error_list, $fault);
 		}
  	}
- 	if (!empty($waybill_status_update_or_email_send_error_list))
-	{    
-		$email = "stuti@rekinza.com";
-		$subject = "CRON JOB ERRORS -- pickup status";
-		$fault_string = implode("<br>",$waybill_status_update_or_email_send_error_list);
-		$body = $fault_string;
-	    sendmail($subject , $body, $email);
-	}
-
 }
+
+if (!empty($waybill_status_update_or_email_send_error_list))
+{    
+	$email = "stuti@rekinza.com";
+	$subject = "CRON JOB ERRORS -- pricing email";
+	$fault_string = implode("<br>",$waybill_status_update_or_email_send_error_list);
+	$body = $fault_string;
+    sendmail($subject , $body, $email);
+}
+
+
 function sendmail($subject, $body, $email){
 
 
