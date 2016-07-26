@@ -25,6 +25,7 @@ if ($numresult > 0)
 		$status = $_POST['status'];
 		$comments = $_POST['comments'];
 		$waybill_number = $_POST['waybill_number'];
+		$logistics_partner = $_POST['logistics_partner'];
 			
 		include 'db_config.php';
 		
@@ -34,7 +35,7 @@ if ($numresult > 0)
 				$status = 'scheduled';
 		}
 		
-		$query = "UPDATE thredshare_returns SET waybill_number = '$waybill_number', pickup_date = '$pickup_date', refund_mode = '$refund_mode', status = '$status', comments = '$comments' WHERE id = '$id' ";
+		$query = "UPDATE thredshare_returns SET logistics_partner = '$logistics_partner', waybill_number = '$waybill_number', pickup_date = '$pickup_date', refund_mode = '$refund_mode', status = '$status', comments = '$comments' WHERE id = '$id' ";
 		
 		$result = mysql_query($query);
 		
@@ -128,6 +129,7 @@ if ($numresult > 0)
 				<th>Refund Mode</th>
 				<th>Account Details</th-->
 				<th>Status</th>
+				<th>Logistics Partner</th>
 				<th>Waybill</th>
 				<th>Comments</th>
 				<th>Send Email</th>
@@ -156,6 +158,7 @@ if ($numresult > 0)
 				$ifsc_code =mysql_result($result,$i,'ifsc_code');
 				$status =mysql_result($result,$i,'status');
 				$comments =mysql_result($result,$i,'comments');
+				$logistics_partner=mysql_result($result,$i, 'logistics_partner');
 				$waybill_number=mysql_result($result,$i, 'waybill_number');
 				
 			?>
@@ -233,6 +236,34 @@ if ($numresult > 0)
 				<select name ="status">
 					<?php echo $option ?>
 				</select>
+				</td>
+				<td>
+				<?php
+						$get = mysql_query("SELECT partner_name FROM logistics_partner where 1");
+						//$option = '<option value="" disabled="disabled" selected="selected">Select Partner</option>';
+						$option = '';
+						$partner_found_flag = 0 ; //flag to check if assigned logistics partner for a pick up is found
+						while($row = mysql_fetch_assoc($get))
+						{
+							if($row['partner_name'] == $logistics_partner)	
+							{		
+									$option .= '<option value = "'.$row['partner_name'].'" selected = "selected">'.$row['partner_name'].'</option>';
+									$partner_found_flag = 1;
+							}
+							else if (($row['partner_name'] == 'NuvoEx') && ($partner_found_flag == 0))
+							{
+									$option .= '<option value = "'.$row['partner_name'].'" selected = "selected">'.$row['partner_name'].'</option>';
+							}
+							else
+							{	
+									$option .= '<option value = "'.$row['partner_name'].'">'.$row['partner_name'].'</option>';
+							}	
+						}
+				?>
+				
+					<select name ="logistics_partner">
+						<?php echo $option ?>
+					</select>
 				</td>
 				<td><input type = "text" value = '<?php echo $waybill_number; ?>' name = "waybill_number"></td>
 				<td><textarea name="comments" style ="width:50px;" ><?php echo $comments; ?></textarea></td>
