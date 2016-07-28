@@ -79,17 +79,15 @@ if($numresult >0)
 			{
 				$list_of_items = explode(", ", $items);	
 				$items_name = '';
-				echo var_dump($list_of_items);
+				
 				if($list_of_items)
 				{
-					foreach($list_of_items as $i)
+					foreach($list_of_items as $item)
 					{
-						$_sku = $i;
-						echo $_sku;
+						$_sku = $item;
 						$_product = Mage::getModel('catalog/product')->loadByAttribute('sku',$_sku);
 						$items_name .= $_product->getName();
 						$items_name .= ", ";
-						echo var_dump($_product);
 					}
 				}
 				
