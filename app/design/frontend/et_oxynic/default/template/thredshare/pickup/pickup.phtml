@@ -43,7 +43,7 @@ p.pickup-h3{
 <img src="http://www.rekinza.com/images/power-packet1.png" width="100%"/>
 <div class="pickup-box">
 <h3 class="pickup-h3"> A little about the pickup </h3>
-<input class="required number" type="text" name="date" id="datepicker" placeholder="Pickup Date"/>
+<input class="required number" type="text" name="date" id="datepicker" placeholder="Pickup Date" onchange="validate_pickup()"/>
 <!--p class="pickup-h3">Why is my pickup date so delayed?</p><p class="pickup-h3">Due to an overwhelming number of sell requests, we will only be able to organise pickups after 10 days.</p-->
 <!--<br>Pickup Start Time
 <input class="required number" type="time" name="start_time" id="start_time"/>
@@ -259,6 +259,7 @@ function validate_pickup()
 			else
 			{
 				//do nothing
+				document.getElementById('pickup_submit').hidden = false;
 			}
 		}
 	});
