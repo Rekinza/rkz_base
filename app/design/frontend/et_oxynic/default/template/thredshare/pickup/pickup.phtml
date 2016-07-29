@@ -1,3 +1,20 @@
+<style>
+p.pickup-h3{
+	font-size: 14px;
+    line-height: 1.6em;
+    font-weight: normal;
+}
+.pickup input{
+	margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+.options-form{
+	font-size: 14px;
+	font-weight: 400;
+}
+</style>
 <div class="pickup">
 <div class="col-lg-9">
   <div class="pickup-title">
@@ -25,9 +42,9 @@
 </div>
 <img src="http://www.rekinza.com/images/power-packet1.png" width="100%"/>
 <div class="pickup-box">
-<h3 class="pickup-h3"> And a little about the pickup </h3>
-<input class="required number" type="text" name="date" id="datepicker" placeholder="Pickup Date" onchange="validate_pickup()" />
-<p class="pickup-h3">Why is my pickup date so delayed?</p><p class="pickup-h3">Due to an overwhelming number of sell requests, we will only be able to organise pickups after 10 days.</p>
+<h3 class="pickup-h3"> A little about the pickup </h3>
+<input class="required number" type="text" name="date" id="datepicker" placeholder="Pickup Date"/>
+<!--p class="pickup-h3">Why is my pickup date so delayed?</p><p class="pickup-h3">Due to an overwhelming number of sell requests, we will only be able to organise pickups after 10 days.</p-->
 <!--<br>Pickup Start Time
 <input class="required number" type="time" name="start_time" id="start_time"/>
 <br>Pickup End Time
@@ -44,15 +61,18 @@
 <input type="radio" name="unaccepted_action" class="myradiobutton" value="recycle"><p class="options-form">Please recycle my items responsibly & donate them to NGO's </p><br>
 <input type="radio" name="unaccepted_action" class="myradiobutton" value="return"><p class="options-form">Please return my items
 </p>
-<p class="pickup-h3"> (Please note that a shipping & handling fee of Rs.199 will be charged for returning your items)</p>
-<p class="pickup-h3"> &nbsp;</p>
-<p class="pickup-h3">We know that you are super excited to detox! While cleaning out, please ensure that everything:</p>
-<p class="pickup-h3">1. has a label - we are unable to sell anything that does not have a label </p>
-<p class="pickup-h3">2. is in <a href="http://www.rekinza.com/sell#quality" style="color:#50c7c2">good condition</a></p>
-<p class="pickup-h3">3. belongs to a brand from our <a href="http://www.rekinza.com/brands" style="color:#50c7c2">accepted brands list</a> - if not, please email <a href="mailto:hello@rekinza.com" style="color:#50c7c2">hello@rekinza.com</a> to check, as we do add new brands all the time!</p>
-<p class="pickup-h3">4. is only <span style="color:#50c7c2">Women's Wear</span></p>
+<p class="options-form"> (Please note that a shipping & handling fee of Rs.199 will be charged for returning your items)</p>
+</div>
+<div class="pickup-box">
+<h3 class="pickup-h3"> And some tips and tricks </h3>
+<p class="pickup-h3">We know that you are super excited to detox! While cleaning out, please note that:</p>
+<p class="pickup-h3">1. Label is a must - we are <strong>unable</strong> to sell anything that does not have a label </p>
+<p class="pickup-h3">2. Items should be in <a href="http://www.rekinza.com/sell#quality" style="color:#50c7c2">good condition</a> - please do not send us anything that you wouldn't buy! (Rekinza has final say in the acceptance of all items)</p>
+<p class="pickup-h3">3. Please check our <a href="http://www.rekinza.com/brands" style="color:#50c7c2">accepted brands list</a> - if a brand is not on it, email <a href="mailto:hello@rekinza.com" style="color:#50c7c2">hello@rekinza.com</a> to check, as we do add new brands all the time!</p>
+<p class="pickup-h3">4. <span style="color:#50c7c2">Women's Wear</span> only - we do not accept menswear, kidswear, household items at the moment</p>
 <input type="checkbox" id="agreement"name="t&c" value="t&c"><p class="options-form"><strong> I accept that I am a detox ninja and have read the above instructions. T&C Apply.</p> <!--added id here-->
 </div>
+
 
 <div class="clear"></div>
 <!--div class="g-recaptcha" data-sitekey="6LegfxgTAAAAAOjURXbiLMDox64NQeNC1pqUr-U_"></div-->
@@ -74,6 +94,7 @@ function validatemail(mail)
 } 
 function submitPickUpForm(){
 isSuc=true;
+
 jQuery('.pickup .number').each(function(){
 if (!(/[0-9]+/.test(jQuery(this).val()))){
 alert(jQuery(this).attr('placeholder')+" should be a number");
@@ -104,6 +125,7 @@ return false;
 if (!isSuc){
 return;
 }
+
 var checkedAtLeastOne = false;
 jQuery('.mycheckbox').each(function() {
     if (jQuery(this).is(":checked")) {
@@ -115,9 +137,11 @@ if (!checkedAtLeastOne) {
      isSuc = false;
     return false;
 }
+
 if(!isSuc){
 	return;
 }
+
 var selectedAtLeastOne = false;
 jQuery('.myradiobutton').each(function() {
     if (jQuery(this).is(":checked")) {
@@ -129,9 +153,11 @@ if (!selectedAtLeastOne) {
      isSuc = false;
     return false;
 }
+
 if(!isSuc){
 	return;
 }
+
 //var agree = false;
 jQuery('#agreement').each(function() {
     if (jQuery(this).is(":checked")) {
@@ -143,15 +169,19 @@ jQuery('#agreement').each(function() {
     	return false;
     }
 });
+
 if(!isSuc){
 	return;
 }
+
+
 jQuery('#pick_out_form').submit();
+
 }
 jQuery(document).ready(function(){
 	jQuery('#datepicker').datepicker({
 	beforeShowDay: DisableSunday,
-	minDate:new Date((new Date()).getTime()+10*86400000)
+	minDate:new Date((new Date()).getTime()+2*86400000)
 	});
 });
  
@@ -169,6 +199,7 @@ function DisableSunday(date) {
  }
   
 }
+
 /*************Check if pincode is serviceable******************/
 ( function($) {	   
 $(document).ready(
