@@ -92,8 +92,18 @@ function validatemail(mail)
     alert("You have entered an invalid email address!")  
     return (false)  
 } 
+
+
 function submitPickUpForm(){
 isSuc=true;
+
+var mail = document.getElementById("email");
+mailvalue = mail.value;
+if (!validatemail(mailvalue))  
+{  
+isSuc = false; 
+return false;
+}  
 
 jQuery('.pickup .number').each(function(){
 if (!(/[0-9]+/.test(jQuery(this).val()))){
