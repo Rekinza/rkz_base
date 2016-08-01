@@ -40,6 +40,11 @@ class Thredshare_Returns_Model_Returns extends Mage_Core_Model_Abstract{
 	
 	
 	}
+	public function updateReturn($id, $items)
+	{
+		$this->load($id)->setData('items', $items)->save();
+	}
+
 
 
 }

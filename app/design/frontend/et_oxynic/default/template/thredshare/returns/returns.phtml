@@ -36,7 +36,7 @@
 <div class="col-lg-6 col-lg-offset-3">
 <div class="pickup-box">
 <h3 class="pickup-h3"> Reason for Return </h3>
-<select class = "required "name ="reason" id = "reason">
+<select class = "required" name ="reason" id = "reason">
 	<option value="" disabled="disabled" selected="selected">Reason for Return</option>
 	<option value ="fit_too_big">Fit (Too Big)</option>
 	<option value ="fit_too_small">Fit (Too Small)</option>
@@ -52,14 +52,15 @@
 <input class="required" type="text" name="email_id" id="email_id" placeholder="Email ID" onchange ="show_order_id_field();"/>
 <input class="required" type="text" name ="order_number" id ="order_number" placeholder="Order ID" onkeypress='validate(event)' onchange="order_return_allow_check()" />
 </div>
-<!--<input class="required" type="text" name="items" id="items" placeholder="Item(s) to return"/> --> 
+<!--<input class="required" type="text" name="items" id="items" placeholder="Item(s) to return"/> commented by nik--> 
+<input class="required" type="text" name="mobile" placeholder="Mobile Phone Number" onkeypress='validate(event)'/>
 </div>
 <div class="pickup-box">
 <h3 class="pickup-h3"> When & Where Can We Get The Item/s Picked </h3>
 <input class="required number" type="text" name="date" id="datepicker" placeholder="Pickup Date"/>
 <input class="required" type="text" name="mobile" placeholder="Mobile Phone Number" onkeypress='validate(event)'/>
 <input class="required" type="text" name="address1" placeholder="Address Line 1"/>
-<input type="text" name="address2" placeholder="Address Line 2"/>
+<input class="required" type="text" name="address2" placeholder="Address Line 2"/>
 <input class="required" type="text" name="city" placeholder="City"/>
 <input class="required" type="text" name="state" placeholder="State"/>
 <input class="required number" type="text" name="pincode" placeholder="Pin Code"/>
@@ -78,7 +79,6 @@
 <input type="text" name="acc_holders_name" id ="acc_holders_name" placeholder="Account Holder's Name" hidden = "true"/>
 <input type="text" name="acc_number" id ="acc_number" placeholder="Account Number" hidden = "true" onkeypress='validate(event)'/>
 <input type="text" name="ifsc_code" id ="ifsc_code" placeholder="IFSC Code" hidden = "true"/>
-
 </div>-->
 <div class="clear"></div>
 <div class="pickup-title" style="text-align:left;font-size:14px; line-height:120%; ">
@@ -100,7 +100,6 @@
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 <script>
 
-
 function submitReturnForm(){
 isSuc=true;
 /*jQuery('.pickup .number').each(function(){
@@ -110,6 +109,16 @@ isSuc=false;
 return false;
 }
 });*/
+
+var mail = document.getElementById("email_id");
+mailvalue = mail.value;
+if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mailvalue)))  
+{  
+isSuc = false; 
+alert("Please provide us with the correct email to proceed");
+return false;
+}  
+
 if (!isSuc){
 return;
 }
@@ -133,11 +142,20 @@ return false;
 if (!isSuc){
 return;
 }
-
-
-
+var atLeastOneIsChecked = $('.p_checkbox:checkbox:checked').length;
+if(atLeastOneIsChecked == 0)
+{
+	alert("Please check one item");
+	//event.preventDefault();
+	console.log("here "+atLeastOneIsChecked);
+	return false;
+}
+if(!jQuery("#reason").val())
+{
+	alert("Please select any one reason for your return");
+	return false;
+}
 jQuery('#return_form').submit();
-
 }
 function DisableSunday(date) {
  
@@ -153,39 +171,43 @@ function DisableSunday(date) {
  }
   
 }
-
 jQuery(document).ready(function(){
 jQuery('#datepicker').datepicker({
 	beforeShowDay: DisableSunday,
 	minDate:new Date((new Date()).getTime()+2*86400000)
 	});
 });
-
 /*************Display order ID field if email ID is not null******************/
 function show_order_id_field()
 {
-	
+	console.log("ha");
 	var email_input = document.getElementById('email_id').value;
+  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email_input))  
+  { 
 	
 	strlen = email_input.length;
 		
 	if (Number(strlen) > 0)
 	{
+		console.log("hi");
 		if(jQuery("#order_number").val())
 		{
 			order_return_allow_check();
 		}
-
 	}
+  }
+  else
+  {
+  	alert ("please enter a valid email");
+  }
 }
-
 /*************Check if order ID filled is valid******************/
 function order_return_allow_check()
 {
 	jQuery.ajax({
 	type:'POST',
 	
-	url:"/backend/returns/returns_order_id_validate.php",
+	url:"http://localhost/rekinza/backend/returns/returns_order_id_validate.php",
 	data:
 	{
 		'order_number':jQuery('#order_number').val(),
@@ -200,6 +222,7 @@ function order_return_allow_check()
 			var parentdiv = document.getElementById("order-div");
 			if(isJson(message))
 			{
+				console.log(message);
 				document.getElementById('return_submit').hidden = false; //Submit button to be disabled	
 				var json_data = JSON.parse(message);
 				console.log(json_data.count);
@@ -213,8 +236,8 @@ function order_return_allow_check()
 					element0.type = "checkbox";
 					element0.name = "p_sku[]";
 					element0.className = "required";
+					element0.className = "p_checkbox";
 					element0.value = json_data.product_skus[i];
-
 					newdiv.appendChild(element0);
 
 					var element1 = document.createElement("div");
@@ -230,18 +253,17 @@ function order_return_allow_check()
 	            	element2.name = "p_brand[]";
 	            	element2.className = "return_item_brand";
 	            	element2.innerHTML = json_data.product_brands[i];
-
 	            	newdiv.appendChild(element2);
 					
 	            	var element3 = document.createElement("img");
 	            	element3.className = "return_item_image";
 	            	element3.src = json_data.product_imgs[i];                  
-
 	            	newdiv.appendChild(element3);
-
 					parentdiv.appendChild(newdiv); 
 				}
-		
+					if(json_data.message){
+	            	alert(json_data.message);
+					}
 			} //end of if
 			else     // This will be called in all cases where return is not possible
 			{
@@ -251,9 +273,7 @@ function order_return_allow_check()
 		//}
 	}
 	});
-
 }
-
 /********************* Validate numeric entry in form field*********************/
 function validate(evt) 
 {
@@ -279,4 +299,6 @@ function isJson(str) {
 	
 </script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+  
+ 
