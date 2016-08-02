@@ -37,8 +37,7 @@ if ($numresult > 0)
 		$arraytaxes = explode(",", $alltaxes);
 		$arrayproductnames = explode(",", $allproductnames);
 		$arraysubtotals = explode(",", $allsubtotals);
-		//var_dump($arraysubtotals);
-
+		
 		$skucount = count($arrayskus);
 		//$pricecount = count($allprices);
 		//$taxcount = count($arraytaxes);
@@ -68,12 +67,14 @@ if ($numresult > 0)
 		 		<br/>
 		 		<br/>
 		   		<div class="rekinza-info">    
+					M/s SCREVN ENTERPRISES LIMITED LIABILITY PARTNERSHIP<br/>
 					43 Community Center<br/>
 					New Friends Colony<br/>
-					New Delhi<br/>
+					New Delhi-110065<br/>
 					9810691177<br/>
 					www.rekinza.com<br/>
 					hello@rekinza.com<br/>
+					TIN No. 07926957550<br/>
 				</div>
 				<div class="info">    
 					First Name : <?php echo $firstname ?><br/>

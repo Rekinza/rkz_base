@@ -85,7 +85,7 @@ $num = count($_POST);
       $product->load($id);
       $price = $product->getSpecialPrice();
       $productname = urlencode($product->getName());
-      mage::log($productname);
+      //echo $productname;
       $taxClassId = $product->getData("tax_class_id");
       $taxClasses = Mage::helper("core")->jsonDecode(Mage::helper("tax")->getAllRatesByProductClass());
       $taxRate = $taxClasses["value_".$taxClassId];
@@ -100,6 +100,7 @@ $num = count($_POST);
       array_push($allsubtotals, $productsubtotal);
  }
  $parsedskus = implode(",", $allskus);
+ $parsedskus = urlencode($parsedskus);
  $parsedprices = implode(",", $allprices);
  $parsedtaxes = implode(",", $alltaxes);
  $parsedproductnames = implode(",", $allproductnames);
@@ -149,9 +150,10 @@ function create_customers_with_order($qty, $aa, $nn, $email, $phone, $itemarray,
 {
     $orderGenerator = new OrderGenerator();
     $customerGenerator = new CustomerGenerator();
-
+	
     for ($i = 0; $i < $qty; $i++)
     {
+	
         $customer = $customerGenerator->createCustomer(array(
                 'account' => array(
                     'firstname' => $aa,
@@ -186,7 +188,7 @@ function create_customers_with_order($qty, $aa, $nn, $email, $phone, $itemarray,
         //exit(0);
         $orderGenerator->setPaymentMethod($payment_method);
         $orderGenerator->setCustomer($customer);
-
+	
         $orderGenerator->createOrder($itemarray, $street0, $street1, $city, $region, $region_id, $postcode, $ordercomments );
     }
 
