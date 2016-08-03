@@ -1,4 +1,7 @@
 .htaccess
+backend/backend_home.php
+backend/offline/order_created.php
+backend/utils/access_block.php
 app/etc/modules/Msg_Msg91.xml
 app/etc/local.xml
 var/
