@@ -79,17 +79,15 @@ if($numresult >0)
 			{
 				$list_of_items = explode(", ", $items);	
 				$items_name = '';
-				echo var_dump($list_of_items);
+				
 				if($list_of_items)
 				{
-					foreach($list_of_items as $i)
+					foreach($list_of_items as $item)
 					{
-						$_sku = $i;
-						echo $_sku;
+						$_sku = $item;
 						$_product = Mage::getModel('catalog/product')->loadByAttribute('sku',$_sku);
 						$items_name .= $_product->getName();
 						$items_name .= ", ";
-						echo var_dump($_product);
 					}
 				}
 				
@@ -105,32 +103,31 @@ if($numresult >0)
 
 			$items = $items_name;
 			
-			
-			$response_pickrr = request_pickrr_for_reverse_pickup($order_id, $mobile_no, $address1, $address2, $city, $state, $pincode, $first_name, $last_name, $items, $item_count);
-		
-			if($response_pickrr['request_status'] == 'FALSE')
+			$response_nuvoex = request_nuvoex_for_reverse_pickup($return_id, $order_id, $mobile_no, $address1, $address2, $city, $state, $pincode, $first_name, $last_name, $items, $item_count);			
+
+			if($response_nuvoex['request_status'] == 'FALSE')
 			{
 				//Save the error
 				
-				echo "<br>Updating Pickrr error";
+				echo "<br>Updating Nuvo Ex error";
 				
-				$error_response = $response_pickrr['error'];
+				$error_response = $response_nuvoex['error'];
 				
 				$query_update_waybill_error = "UPDATE thredshare_returns SET waybill_number = '$error_response' WHERE id = '$return_id'";
 				
 				$result_update_waybill_error = mysql_query($query_update_waybill_error);
 				
-				//Schedule with NuvoEx
+				//Schedule with Pickrr
 				
-				$response_nuvoex = request_nuvoex_for_reverse_pickup($return_id, $order_id, $mobile_no, $address1, $address2, $city, $state, $pincode, $first_name, $last_name, $items, $item_count);
+				$response_pickrr = request_pickrr_for_reverse_pickup($order_id, $mobile_no, $address1, $address2, $city, $state, $pincode, $first_name, $last_name, $items, $item_count);
 
-				if($response_nuvoex['request_status'] == 'FALSE')
+				if($response_pickrr['request_status'] == 'FALSE')
 				{
 					//Save the error
 					
-					echo "<br>Updating Nuvo Ex error";
+					echo "<br>Updating Pickrr error";
 					
-					$error_response = $response_nuvoex['error'];
+					$error_response = $response_pickrr['error'];
 					
 					$query_update_waybill_error = "UPDATE thredshare_returns SET waybill_number = '$error_response' WHERE id = '$return_id'";
 					
@@ -144,12 +141,12 @@ if($numresult >0)
 				}
 				else
 				{
-					echo "<br>Updating Nuvo Ex success";
+					echo "<br>Updating Pickrr success";
 					
 					$awb = $response_nuvoex['awb'];
 					
 					//Save the AWB, update status and logistics partner
-					$query_update_pickup_status_and_awb_and_partner = "UPDATE thredshare_returns SET status = 'scheduled', logistics_partner = 'NuvoEx', waybill_number = '$awb' WHERE id = '$return_id'";
+					$query_update_pickup_status_and_awb_and_partner = "UPDATE thredshare_returns SET status = 'scheduled', logistics_partner = 'Pickrr', waybill_number = '$awb' WHERE id = '$return_id'";
 				
 					$result_update_pickup_status_and_awb_and_partner = mysql_query($query_update_pickup_status_and_awb_and_partner);
 					
@@ -157,12 +154,12 @@ if($numresult >0)
 			}
 			else
 			{
-				echo "<br>Updating Pickrr success";
+				echo "<br>Updating NuvoEx success";
 				
-				$awb = $response_pickrr['awb'];
+				$awb = $response_nuvoex['awb'];
 				
 				//Save the AWB, update status and logistics partner
-				$query_update_pickup_status_and_awb_and_partner = "UPDATE thredshare_returns SET status = 'scheduled', logistics_partner = 'Pickrr', waybill_number = '$awb' WHERE id = '$return_id'";
+				$query_update_pickup_status_and_awb_and_partner = "UPDATE thredshare_returns SET status = 'scheduled', logistics_partner = 'NuvoEx', waybill_number = '$awb' WHERE id = '$return_id'";
 			
 				$result_update_pickup_status_and_awb_and_partner = mysql_query($query_update_pickup_status_and_awb_and_partner);
 			} 

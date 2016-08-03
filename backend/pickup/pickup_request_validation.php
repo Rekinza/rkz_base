@@ -11,7 +11,7 @@ $id_found = mysql_result($result, 0, 'id');
 $numrow = mysql_numrows($result);
 if($id_found)
 {
-	echo "You have already placed a request for pickup from this email address and on this particular date. If you wish you make an modification, please email us at blahblah";
+	echo "We already have a pickup request from this email address for this particular date. If you wish you make an chnages, please email us at hello@rekinza.com";
 }
 else
 {
