@@ -25,7 +25,7 @@ if ($collection->count())   //Check if order ID entered is valid
 			if ($order_status  == 'return' )
 			{
 				
-				include '/db_config.php';
+				include 'db_config.php';
 				$query = "SELECT status, items, pickup_date from thredshare_returns where order_id = '$order_number' ORDER BY id DESC LIMIT 1";
 				$result = mysql_query($query);
 				//$result_set = mysqli_fetch_all($result,MYSQLI_ASSOC);
@@ -95,9 +95,10 @@ if ($collection->count())   //Check if order ID entered is valid
 				else
 				{
 					//do nothing
+					echo "the order is in return state without products";
 				}	
 			}
-			else if( ($order_status == 'complete') || ($order_status == 'in_transit') || ($order_status == 'delivered') || ($order_status == 'processing') || ($order_status == 'undelivered') || 1)
+			else if( ($order_status == 'complete') || ($order_status == 'in_transit') || ($order_status == 'delivered') || ($order_status == 'processing') || ($order_status == 'undelivered'))
 			{
 					$product_brands = array();
 					$product_skus = array();

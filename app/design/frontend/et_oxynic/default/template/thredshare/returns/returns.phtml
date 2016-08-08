@@ -52,15 +52,13 @@
 <input class="required" type="text" name="email_id" id="email_id" placeholder="Email ID" onchange ="show_order_id_field();"/>
 <input class="required" type="text" name ="order_number" id ="order_number" placeholder="Order ID" onkeypress='validate(event)' onchange="order_return_allow_check()" />
 </div>
-<!--<input class="required" type="text" name="items" id="items" placeholder="Item(s) to return"/> commented by nik--> 
-<input class="required" type="text" name="mobile" placeholder="Mobile Phone Number" onkeypress='validate(event)'/>
 </div>
 <div class="pickup-box">
 <h3 class="pickup-h3"> When & Where Can We Get The Item/s Picked </h3>
 <input class="required number" type="text" name="date" id="datepicker" placeholder="Pickup Date"/>
 <input class="required" type="text" name="mobile" placeholder="Mobile Phone Number" onkeypress='validate(event)'/>
 <input class="required" type="text" name="address1" placeholder="Address Line 1"/>
-<input class="required" type="text" name="address2" placeholder="Address Line 2"/>
+<input type="text" name="address2" placeholder="Address Line 2"/>
 <input class="required" type="text" name="city" placeholder="City"/>
 <input class="required" type="text" name="state" placeholder="State"/>
 <input class="required number" type="text" name="pincode" placeholder="Pin Code"/>
@@ -261,8 +259,19 @@ function order_return_allow_check()
 	            	newdiv.appendChild(element3);
 					parentdiv.appendChild(newdiv); 
 				}
-					if(json_data.message){
-	            	alert(json_data.message);
+					if(json_data.message)
+					{
+						var str = json_data.message;	
+		            	alert(str);
+		            	var str_hide = str.search("merged and done on ");
+		            	if(str_hide != "-1")
+		            	{
+		            		var return_date= str.substring(str.indexOf("'") + 1, str.lastIndexOf("'"));
+		            		var formatted_date = formatDate(return_date);
+
+		            		$("#datepicker").val(formatted_date);
+		            		$("#datepicker").prop('disabled', true);
+		            	}
 					}
 			} //end of if
 			else     // This will be called in all cases where return is not possible
@@ -274,6 +283,18 @@ function order_return_allow_check()
 	}
 	});
 }
+
+/********************* Format Date ************/
+
+function formatDate (input) {
+  var datePart = input.match(/\d+/g),
+  year = datePart[0].substring(2), // get only two digits
+  month = datePart[1], day = datePart[2];
+
+  return day+'/'+month+'/'+year;
+}
+
+
 /********************* Validate numeric entry in form field*********************/
 function validate(evt) 
 {
