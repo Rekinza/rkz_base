@@ -123,13 +123,23 @@ class Thredshare_Returns_ReturnsController extends Mage_Core_Controller_Front_Ac
 			}
             if ($status == 'scheduled' && ($today < $return_pickup_date)) {
                 //email to logistic
+                $logistics_partner = mysql_result($result_check,0,'logistics_partner');
+                if($logistics_partner == "NuvoEx"){
+                    $email = "ops@nuvoex.com";
+                }
+                elseif($logistics_partner == "Pickrr"){
+                    $email = "info@pickrr.com";
+                }
+                elseif($logistics_partner == "Pyck"){
+                    $email = "help@pyck.in";
+                }
                 foreach ($itemsarray as $i) {
                     $_product = Mage::getModel('catalog/product')->loadByAttribute('sku', $i);
                     $items_name .= $_product->getName();
                     $items_name .= ', ';  //getting names of each sku product
                 }
                 $item_count = count($itemsarray);
-                $logistics_partner = mysql_result($result_check,0,'logistics_partner');
+                
                 $waybill = mysql_result($result_check,0,'waybill_number');
                 $email = '';	//add nuvoex or pyck email
                 $cc_email = 'stuti@rekinza.com';

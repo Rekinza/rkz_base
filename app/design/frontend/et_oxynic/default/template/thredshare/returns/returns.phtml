@@ -205,7 +205,7 @@ function order_return_allow_check()
 	jQuery.ajax({
 	type:'POST',
 	
-	url:"http://localhost/rekinza/backend/returns/returns_order_id_validate.php",
+	url:"/backend/returns/returns_order_id_validate.php",
 	data:
 	{
 		'order_number':jQuery('#order_number').val(),
