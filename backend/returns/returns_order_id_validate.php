@@ -77,7 +77,7 @@ if ($collection->count())   //Check if order ID entered is valid
 						$today = date("Y-m-d");
 						if($status == "requested" || ($status == "scheduled" and ($today < $return_pickup_date)))
 						{
-						$message = "Your return requests will be merged and done on '$return_pickup_date', if you wish to modify an existing return request, kindly email us at blahblah";
+						$message = "Your return request will be combined and done on '$return_pickup_date', if you wish to modify an existing return request, kindly email us at hello@rekinza.com";
 						}
 						else
 						{
