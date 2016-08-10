@@ -70,19 +70,20 @@ if(strpos($material_string, ',') != false)
 
 	$material_query = "(material LIKE 'Primary Material: $material_string%' OR material LIKE '$material_string' OR material LIKE 'Primary Material: $material_array2%'  OR material LIKE '$material_array2')" ;
 
-	$query2 =  "Select * from inventory where brand = '$brand' and $material_query $product_query and type = '$type' and sub_type = '$subtype' and category = '$category' and sub_category = '$sub_category' and sku_name != '$sku' and qc_status = 'accepted' ORDER BY creation_date LIMIT 24";
+	//$query2 =  "Select * from inventory where brand = '$brand' and $material_query $product_query and type = '$type' and sub_type = '$subtype' and category = '$category' and sub_category = '$sub_category' and sku_name != '$sku' and qc_status = 'accepted' ORDER BY creation_date LIMIT 24";
+	$query2 =  "Select * from inventory where brand = '$brand' and $material_query and type = '$type' and sub_type = '$subtype' and category = '$category' and sub_category = '$sub_category' and sku_name != '$sku' and qc_status = 'accepted' ORDER BY creation_date LIMIT 24";
 }
-
 else
 {
 	trim($material_string);
 
 	$material_query = "(material LIKE 'Primary Material: $material_string%' OR material LIKE '______$material_string%' OR material LIKE '_____$material_string%' OR material LIKE '____$material_string%' OR material LIKE '___$material_string%' OR material LIKE '__$material_string%' OR material LIKE '_$material_string%' OR material LIKE '$material_string%')" ;
 
-	$query2 =  "Select * from inventory where brand = '$brand' and $material_query $product_query and type = '$type' and sub_type = '$subtype' and category = '$category' and sub_category = '$sub_category' and sku_name != '$sku' and qc_status = 'accepted' ORDER BY creation_date LIMIT 24";
+	// $query2 =  "Select * from inventory where brand = '$brand' and $material_query $product_query and type = '$type' and sub_type = '$subtype' and category = '$category' and sub_category = '$sub_category' and sku_name != '$sku' and qc_status = 'accepted' ORDER BY creation_date LIMIT 24";
+	$query2 =  "Select * from inventory where brand = '$brand' and $material_query and type = '$type' and sub_type = '$subtype' and category = '$category' and sub_category = '$sub_category' and sku_name != '$sku' and qc_status = 'accepted' ORDER BY creation_date LIMIT 24";
 }
 
-mage::log($query2);
+//mage::log($query2);
 $result2 = mysql_query($query2);
 $count = mysql_numrows($result2);
 //$result_set2 = mysqli_fetch_all($result2, MYSQLI_ASSOC);
