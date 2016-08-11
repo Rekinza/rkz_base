@@ -90,7 +90,7 @@ while ($result_set = mysql_fetch_assoc($result)) {
 
 if (!empty($live_email_send_error_list)) {
     $email = 'stuti@rekinza.com';
-    $subject = 'UPLOAD ITEMS ERROR -- live email';
+    $subject = 'CRON JOB ERROR -- live email';
     $fault_string = implode('<br>', $live_email_send_error_list);
     $body = $fault_string;
     sendmail($subject, $body, $email);
