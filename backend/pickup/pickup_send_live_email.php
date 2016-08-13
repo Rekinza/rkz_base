@@ -25,7 +25,24 @@ while ($result_set = mysql_fetch_assoc($result)) {
     $pickup_total_result = mysql_query($pickup_total_query);
     $pickup_total_count = mysql_numrows($pickup_total_result);
 
-    if ($pickup_total_count > 0 && ($pickup_total_count == $pickup_count)) {
+    $reject_total_query = "SELECT * from inventory where pickup_id = '$pickup_id' and qc_status = 'rejected' ";
+    $reject_total_result = mysql_query($reject_total_query);
+    $reject_total_count = mysql_numrows($reject_total_result);
+
+    if ($pickup_total_count > 0 && ($pickup_total_count == $reject_total_count) && ($pickup_total_count == $pickup_count)){
+
+        $query_rejects = "UPDATE thredshare_pickup SET live_date = '$today' , status = 'live'  WHERE id = '$pickup_id' ";
+        echo $query_rejects.'<br>';
+        $result_rejects = mysql_query($query_rejects);
+        if ($result_rejects == 'TRUE') {
+            //do nothing;
+            echo 'Updated rejected only '.$result_set['email'];
+        } else {
+            $fault = 'id: '.$result_set['id'].' Email: '.$result_set['email'].' table-status: '.$result_set['status']." query failed.\n";
+            array_push($live_email_send_error_list, $fault);
+        }
+    }
+    elseif ($pickup_total_count > 0 && ($pickup_total_count == $pickup_count)) {
         $customer_name = $result_set['first_name'];
         $customer_email_id = $result_set['email'];
 
@@ -67,6 +84,7 @@ while ($result_set = mysql_fetch_assoc($result)) {
         }
             // above copy-pasted
             //die("here");
+        $email = $customer_email_id;
         $flag = sendmail($subject, $body, $email);
 
         if ($flag) {
@@ -74,7 +92,7 @@ while ($result_set = mysql_fetch_assoc($result)) {
             echo $query1.'<br>';
             $result1 = mysql_query($query1);
             if ($result1 == 'TRUE') {
-                //do nothing;
+                echo 'Updated email live send '.$result_set['email'];
             } else {
                 $fault = 'id: '.$result_set['id'].' Email: '.$result_set['email'].' table-status: '.$result_set['status']." query failed.\n";
                 array_push($live_email_send_error_list, $fault);
@@ -83,7 +101,9 @@ while ($result_set = mysql_fetch_assoc($result)) {
             $fault = 'id: '.$result_set['id'].' Email: '.$result_set['email'].' table-status: '.$result_set['status']." email failed no query ran.\n";
             array_push($live_email_send_error_list, $fault);
         }
-    } else {
+    } 
+    else 
+    {
         //all items are not uploaded yet. Do nothing
     }
 }
