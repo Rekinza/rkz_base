@@ -1,5 +1,7 @@
 <?php
-
+$path = __DIR__;
+include $path.'/../../app/Mage.php';
+Mage::app();
 include 'db_config.php';
 
 $today = date("Y-m-d");
@@ -46,6 +48,79 @@ if($numresult >0)
 			$amount = mysql_result($result_pickup_details,0,'amount');
 			$items = mysql_result($result_pickup_details,0,'items');
 			$item_count = mysql_result($result_pickup_details,0,'item_count');
+
+			//Email for pickup reminder
+			$storeId = Mage::app()->getStore()->getStoreId();
+            $emailId = "hello@rekinza.com";
+            $mailTemplate = Mage::getModel('core/email_template');
+			$mailTemplate->addBcc('hello@rekinza.com');
+            $mailTemplate->setDesignConfig(array('area'=>'frontend', 'store'=>$storeId))
+                ->setReplyTo($emailId);
+			
+			$mailTemplate->sendTransactional( 18,
+            array('name'=>"REKINZA","email"=>$emailId),
+            $email_id,
+            $first_name,
+            array(
+            'customer'  =>$first_name,
+            'date' => $tomorrow,
+			'day'=>date('l',strtotime($tomorrow))
+            ));
+			
+			//SMS for pickup reminder
+			$authKey = "99008A9xcctkyRXr565fed78";
+
+			//Multiple mobiles numbers separated by comma	
+			$mobileNumber = "91{$mobile_no}";
+
+			//Sender ID,While using route4 sender id should be 6 characters long.
+			$senderId = "RKINZA";
+
+			//Your message to send, Add URL encoding here.
+			$message1 = urlencode("Hi {$first_name}. Your Rekinza pickup is tomorrow! Our logistics partner will get in touch with you to coordinate the pickup. It takes 4-10 days for your items to reach us. Tracking details will be emailed after pickup. Thank you for trusting us. Have any questions? Contact us at +91-9810961177/hello@rekinza.com. Team Rekinza");
+
+				//Define route 
+				$route = "4";
+				//Prepare you post parameters
+				$postData1 = array(
+				    'authkey' => $authKey,
+				    'mobiles' => $mobileNumber,
+				    'message' => $message1,
+				    'sender' => $senderId,
+				    'route' => $route
+				);
+
+				//API URL
+				$url="http://api.msg91.com/sendhttp.php";
+
+				// init the resource
+				$ch = curl_init();
+				curl_setopt_array($ch, array(
+				    CURLOPT_URL => $url,
+				    CURLOPT_RETURNTRANSFER => true,
+				    CURLOPT_POST => true,
+				    CURLOPT_POSTFIELDS => $postData1
+				    //,CURLOPT_FOLLOWLOCATION => true
+				));
+
+
+				//Ignore SSL certificate verification
+				curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+
+
+				//get response
+				$output = curl_exec($ch);
+
+				//Print error if any
+				if(curl_errno($ch))
+				{
+				    echo 'error:' . curl_error($ch);
+				}
+
+				curl_close($ch);
+
+				echo $output;
 			
 			$response_nuvoex = request_nuvoex_for_reverse_pickup($pickup_id, $mobile_no, $address1, $address2, $city, $state, $pincode, $first_name, $last_name, $items, $item_count);
 			
