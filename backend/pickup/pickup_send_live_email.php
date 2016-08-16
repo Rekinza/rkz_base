@@ -179,7 +179,7 @@ if (!empty($live_email_send_error_list)) {
     sendmail($subject, $body, $email);
 }
 
-function sendmail($subject, $body, $email1)
+function sendmail($subject, $body, $email)
 {
 
     if (!class_exists('PHPMailer')) {
@@ -214,7 +214,7 @@ function sendmail($subject, $body, $email1)
         $mail->IsHTML(true); // send as HTML	
 
             if ($mail->Send() == true) {
-                echo 'Message has been sent.';
+                echo 'Email has been sent.';
 
                 return 1;
             } else {
@@ -281,13 +281,13 @@ function sendSMS($sms_content, $mobile){
                 //Print error if any
                 if(curl_errno($ch))
                 {
-                    echo 'error:' . curl_error($ch);
+                    echo "error:".curl_error($ch);
                     return 0;
                 }
 
                 curl_close($ch);
 
-                echo $output;
+                echo "SMS send".$output;
                 return 1;
 
                 //ENDING SMS
