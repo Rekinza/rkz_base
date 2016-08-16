@@ -15,6 +15,7 @@ Mage::app();
 
 while ($result_set = mysql_fetch_assoc($result)) {
     $pickup_id = $result_set['id'];
+    $mobile = $result_set['mobile'];
 
     //AND query to ensure every accepted item is priced.
     $pickup_query = "SELECT * from inventory where pickup_id = '$pickup_id' and upload_status = 'uploaded' ";
@@ -87,18 +88,80 @@ while ($result_set = mysql_fetch_assoc($result)) {
         $email = $customer_email_id;
         $flag = sendmail($subject, $body, $email);
 
-        if ($flag) {
+        $accepted_total_count = $pickup_total_count - $reject_total_count;
+        $acceptance_ratio = $accepted_total_count/$pickup_total_count;
+
+                if ($acceptance_ratio >= 0.75  && $pickup_total_count > 3)
+                {
+                    $powerpacket = 1;
+                }
+                else
+                {
+                    $powerpacket = 0;
+                }
+
+
+        $sms_content = "Hi {$customer_name}. Your closet is now online! Check it out at {$shop_url}. Share the link with your family and friends now! (hello@rekinza.com /+91-9810961177)";
+
+        $flag1 = sendSMS($sms_content, $mobile);
+
+        if ($flag || $flag1) {
             $query1 = "UPDATE thredshare_pickup SET live_date = '$today' , status = 'live'  WHERE id = '$pickup_id' ";
             echo $query1.'<br>';
             $result1 = mysql_query($query1);
             if ($result1 == 'TRUE') {
                 echo 'Updated email live send '.$result_set['email'];
+                //Add power packet reward to customer Kinza Cash - Stuti
+                if($powerpacket == 1)
+                {
+                    $powerpoints = 100;
+                    
+                    $customer=Mage::getModel("customer/customer")->setWebsiteId(1)->loadByEmail($customer_email_id);
+
+                    if ($customer && $customer->getId()){
+
+                        $vendorRewardPoint=Mage::getModel('rewardpoints/customer')->load($customer->getId());
+
+                    }
+                    
+                    $vendorRewardPoint->addRewardPoint($powerpoints);
+
+                    $store_id = Mage::getModel('customer/customer')->load($customer_id)->getStoreId();
+                    
+                    $oldPoints = $vendorRewardPoint->getMwRewardPoint();
+                    $newPoints = $oldPoints + $powerpoints;
+                    
+                    $results = Mage::helper('rewardpoints/data')->getTransactionExpiredPoints($powerpoints,$store_id);
+                    $expired_day = $results[0];
+                    $expired_time = $results[1] ;
+                    $point_remaining = $results[2];
+
+                    
+                    $expired_day = (int)Mage::helper('rewardpoints/data')->getExpirationDaysPoint($store_id);
+                    $details = "Power Packet Reward";
+                    $historyData = array('type_of_transaction'=>MW_RewardPoints_Model_Type::ADMIN_ADDITION,
+                                                     'amount'=>(int)$powerpoints, 
+                                                     'balance'=>$vendorRewardPoint->getMwRewardPoint(), 
+                                                     'transaction_detail'=>$details, 
+                                                     'transaction_time'=>now(),
+                                                     'expired_day'=>$expired_day,
+                                                     'expired_time'=>$expired_time,
+                                                     'point_remaining'=>$point_remaining,
+                                                     'history_order_id'=>null,
+                                                     'status'=>MW_RewardPoints_Model_Status::COMPLETE);
+                    
+                    
+                    $vendorRewardPoint->saveTransactionHistory($historyData);
+                }
+
+
+
             } else {
                 $fault = 'id: '.$result_set['id'].' Email: '.$result_set['email'].' table-status: '.$result_set['status']." query failed.\n";
                 array_push($live_email_send_error_list, $fault);
             }
         } else {
-            $fault = 'id: '.$result_set['id'].' Email: '.$result_set['email'].' table-status: '.$result_set['status']." email failed no query ran.\n";
+            $fault = 'id: '.$result_set['id'].' Email: '.$result_set['email'].' table-status: '.$result_set['status']." either email or sms failed no query ran.\n";
             array_push($live_email_send_error_list, $fault);
         }
     } 
@@ -116,7 +179,7 @@ if (!empty($live_email_send_error_list)) {
     sendmail($subject, $body, $email);
 }
 
-function sendmail($subject, $body, $email)
+function sendmail($subject, $body, $email1)
 {
 
     if (!class_exists('PHPMailer')) {
@@ -165,4 +228,67 @@ function sendmail($subject, $body, $email)
 
         return 0;
     }
+}
+
+
+function sendSMS($sms_content, $mobile){
+                //starting SMS
+                $authKey = "99008A9xcctkyRXr565fed78";
+
+                //Multiple mobiles numbers separated by comma
+                $mobileNumber = "91{$mobile}";
+                echo $mobileNumber;
+
+                //Sender ID,While using route4 sender id should be 6 characters long.
+                $senderId = "RKINZA";
+
+                //Your message to send, Add URL encoding here.
+                $message = urlencode($sms_content);
+
+                //Define route 
+                $route = "4";
+                //Prepare you post parameters
+                $postData = array(
+                    'authkey' => $authKey,
+                    'mobiles' => $mobileNumber,
+                    'message' => $message,
+                    'sender' => $senderId,
+                    'route' => $route
+                );
+
+                //API URL
+                $url="http://api.msg91.com/sendhttp.php";
+
+                // init the resource
+                $ch = curl_init();
+                curl_setopt_array($ch, array(
+                    CURLOPT_URL => $url,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_POST => true,
+                    CURLOPT_POSTFIELDS => $postData
+                    //,CURLOPT_FOLLOWLOCATION => true
+                ));
+
+
+                //Ignore SSL certificate verification
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+
+
+                //get response
+                $output = curl_exec($ch);
+
+                //Print error if any
+                if(curl_errno($ch))
+                {
+                    echo 'error:' . curl_error($ch);
+                    return 0;
+                }
+
+                curl_close($ch);
+
+                echo $output;
+                return 1;
+
+                //ENDING SMS
 }
