@@ -71,7 +71,7 @@ if ($numresult > 0)
 		$fields = array(
 						"pickup_name" => "REKINZA-KOMAL",
 						"pickup_phone" => "9871291261",
-						"pickup_pincode" => "110001",
+						"pickup_pincode" => "110017",
 						"pickup_address" => "B1- Basement, Square One Mall, Saket District Center, Saket, New Delhi - 110017",
 						"drop_name" => "$fullname",
 						"drop_pincode" => "$zipcode",

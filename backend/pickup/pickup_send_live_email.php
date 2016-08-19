@@ -101,7 +101,7 @@ while ($result_set = mysql_fetch_assoc($result)) {
                 }
 
 
-        $sms_content = "Hi {$customer_name}. Your closet is now online! Check it out at {$shop_url}. Share the link with your family and friends now! (hello@rekinza.com /+91-9810961177)";
+        $sms_content = "Hi {$customer_name}. Your closet is now online! Check it out at {$account_url}. (hello@rekinza.com /+91-9810961177)";
 
         $flag1 = sendSMS($sms_content, $mobile);
 
@@ -237,7 +237,7 @@ function sendSMS($sms_content, $mobile){
 
                 //Multiple mobiles numbers separated by comma
                 $mobileNumber = "91{$mobile}";
-                echo $mobileNumber;
+                echo "<br>".$mobileNumber;
 
                 //Sender ID,While using route4 sender id should be 6 characters long.
                 $senderId = "RKINZA";
@@ -287,7 +287,7 @@ function sendSMS($sms_content, $mobile){
 
                 curl_close($ch);
 
-                echo "SMS send".$output;
+                echo "<br>SMS sent".$output;
                 return 1;
 
                 //ENDING SMS
