@@ -8846,10 +8846,7 @@ lavel{
     font-weight: 600;
     text-transform: uppercase;
   }
-/*Stuti - Homepage width*/
-/*.cms-home .main .container{
-  width:100%;
-}*/
+
 button.button.btn-continue{
   background-color: #ffffff;
   color: #323232;
@@ -8922,6 +8919,8 @@ color:#ffffff;
   right: 0;
   position: absolute;
   }
+
+
 
 @media screen and (min-width: 0px) and (max-width: 991px) {
   .new-mobile-logo{
@@ -9200,6 +9199,8 @@ display:inline-block;
     }
 
 }
+
+
 
 
 
