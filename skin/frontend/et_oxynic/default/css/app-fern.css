@@ -5664,6 +5664,34 @@ border-left:0px;
   background-image:url("http://www.rekinza.com/images/account/myshop.jpg");
   }
 
+/* KinzaCash - My Account Page */
+.kinzacash-table{
+  width:100%;
+  display: inline-block;
+  padding: 10px;
+}
+
+.kinzacash-table thead{
+  width: 100%;
+  border-bottom: 2px solid #adadad;
+}
+
+.kinzacash-table tbody{
+  width: 100%;
+}
+
+.kinzacash-table th{
+  padding: 10px;
+  text-align: center;
+  font-size:12px;
+  font-weight: bold;
+}
+
+.kinzacash-table td{
+  padding: 10px;
+  font-size:12px;
+}
+
 .dropdown-menu{
   display: block;
 }
