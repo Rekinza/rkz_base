@@ -15,6 +15,10 @@ p.pickup-h3{
 	font-weight: 400;
 }
 </style>
+
+<?php 
+$email_val = $_SESSION['email_val'];
+?>
 <div class="pickup">
 <div class="col-lg-9">
   <div class="pickup-title">
@@ -27,17 +31,17 @@ p.pickup-h3{
 <div class="col-lg-9">
 <div class="pickup-box">
 <h3 class="pickup-h3"> Tell us a little about yourself </h3>
-<input class="required" type="text" name="first_name" placeholder="First Name"/>
-<input class="required" type="text" name="last_name" placeholder="Last Name"/>
-<input class="required" type="text" name="email" id ="email" onchange="validatemail(this.value)" placeholder="Email ID"/>
-<input class="required mobile" type="text" name="mobile_no" placeholder="Mobile Number"/>
+<input class="required" type="text" name="email" id ="email" value="<?php echo $email_val ?>" onchange="validatemail(this.value)" placeholder="Email ID"/>
+<input class="required" type="text" name="first_name" id="first_name" placeholder="First Name"/>
+<input class="required" type="text" name="last_name" id="last_name" placeholder="Last Name"/>
+<input class="required mobile" type="text" name="mobile_no" id="mobile" placeholder="Mobile Number"/>
 </div>
 <div class="pickup-box">
 <h3 class="pickup-h3"> The pick-up address </h3>
-<input class="required" type="text" name="address1" placeholder="Address Line 1"/>
-<input type="text" name="address2" placeholder="Address Line 2"/>
-<input class="required" type="text" name="city" placeholder="City"/>
-<input class="required" type="text" name="state" placeholder="State"/>
+<input class="required" type="text" name="address1" id="address1" placeholder="Address Line 1"/>
+<input type="text" name="address2" id="address2" placeholder="Address Line 2"/>
+<input class="required" type="text" name="city" id="city" placeholder="City"/>
+<input class="required" type="text" name="state" id="state" placeholder="State"/>
 <input class="required number" type="text" name="pincode" id = "pincode" placeholder="Pincode"/>
 </div>
 <img src="http://www.rekinza.com/images/power-packet1.png" width="100%"/>
@@ -91,8 +95,8 @@ function validatemail(mail)
   }  
     alert("You have entered an invalid email address!")  
     return (false)  
+    
 } 
-
 
 function submitPickUpForm(){
 isSuc=true;
@@ -243,10 +247,58 @@ $(document).ready(
 				});
 			
 			}
-		);		
+		);	
+		//end1
+		var email = jQuery('#email').val();
+		if(email)
+		{
+			pre_fill_from_email(email);
+		}
+
 	}
+
+	//end2
 );
 })(jQuery);
+
+
+function pre_fill_from_email(email) {
+	jQuery.ajax({
+		type: 'POST',
+		url: "/backend/pickup/pickup_prefill.php",
+		data: { 'mail': email} ,
+		async: false,
+		success: function(message) {
+			if(message)
+			{
+			var json_data = JSON.parse(message);
+			document.getElementById('first_name').value = json_data.first_name;
+			document.getElementById('last_name').value = json_data.last_name;
+			document.getElementById('mobile').value = json_data.mobile;
+			document.getElementById('address1').value = json_data.address1;
+			document.getElementById('address2').value = json_data.address2;
+			document.getElementById('city').value = json_data.city;
+			document.getElementById('state').value = json_data.state;
+			document.getElementById('pincode').value = json_data.pincode;
+		}
+		else
+		{
+			
+			document.getElementById('first_name').value = "";
+			document.getElementById('last_name').value = "";
+			document.getElementById('mobile').value = "";
+			document.getElementById('address1').value = "";
+			document.getElementById('address2').value = "";
+			document.getElementById('city').value = "";
+			document.getElementById('state').value = "";
+			document.getElementById('pincode').value = "";
+		}
+		}
+	});
+}
+
+
+
 function validate_pickup() 
 {
 	var email = document.getElementById('email').value;

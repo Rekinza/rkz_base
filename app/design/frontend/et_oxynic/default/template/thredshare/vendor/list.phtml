@@ -7,6 +7,10 @@ Mage::app()->getFrontController()->getResponse()->setRedirect(Mage::getBaseUrl()
 return;
 }
 
+$customer=Mage::getSingleton('customer/session')->getCustomer();
+$email=$customer->getEmail();
+
+$_SESSION['email_val'] = $email;
 ?>
 <div class="account-heading shop-img">
         Your Shop
@@ -244,10 +248,6 @@ echo $i;$i++;
 <?php else:?>
 <div class="empty">You have not listed any products</div>
 <?php endif;?>
-
-
-
-
 
 <script>
 function changePrice(button){
