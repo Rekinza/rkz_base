@@ -31,7 +31,89 @@ width:44%">
 <div id="pick_up_button">Schedule A New Pick Up</div>
 </span>
 </div>
+<?php
 
+include 'C:\xampp\htdocs\rekinza\backend\db_config.php';
+$query1 = "SELECT id, pick_up_date, status from thredshare_pickup where email = '$email' ";
+$result1 = mysql_query($query1);
+$numresult = mysql_numrows($result1);
+if($numresult > 0)
+{
+	?>
+	<div class="list">You have made <?php echo $numresult;?> pickups till now</div>	
+<div class="table_heading">Previous Pickups</div>
+<table class="data-table myshop">
+<thead>
+
+<tr class="first last">
+<th rowspan="1" class="a-center hidden-xs">Serial No.</th>
+<th rowspan="1" class="a-center">Pickup Date</th>
+<th rowspan="1" class="a-center hidden-xs">Pickup Status</th>
+<th rowspan="1" class="a-center">Accepted</th>
+<th rowspan="1" class="a-center hidden-xs">Rejected</th>
+<th rowspan="1" class="a-center">Total Items</th>
+</tr>
+
+</thead>
+
+<tbody>
+<?php $i = 1;
+while($row = mysql_fetch_assoc($result1))
+{
+	$pickup_id = $row['id'];
+	$pickup_total_query = "SELECT * from inventory where pickup_id = '$pickup_id'";
+    $pickup_total_result = mysql_query($pickup_total_query);
+    $pickup_total_count = mysql_numrows($pickup_total_result);
+
+    $reject_total_query = "SELECT * from inventory where pickup_id = '$pickup_id' and qc_status = 'rejected' ";
+    $reject_total_result = mysql_query($reject_total_query);
+    $reject_total_count = mysql_numrows($reject_total_result);
+
+    $accept_total_count = $pickup_total_count - $reject_total_count;
+	?>
+	<tr>
+	<td class="a-center hidden-xs">
+	<?php 
+	echo $i;
+	$i++;
+	?>
+
+	</td>
+	<td>
+	<?php echo $row['pick_up_date'];?>
+	</td>
+
+	<td class="hidden-xs">
+	<?php 
+	echo $row['status'];?>
+	</td>
+
+	<td>
+	<?php 
+	echo $accept_total_count;?>
+	</td>
+
+	<td class="hidden-xs">
+	<?php 
+	echo $reject_total_count;
+	?>
+	</td>
+
+	<td >
+	<?php
+	echo $pickup_total_count;?>
+	</td>
+	</tr>
+<?php 
+} 
+?>
+</tbody>
+</table>
+<?php
+}
+?>
+
+<!--the table begins from here -->
 <?php
 
 $collection=$this->getVendorProductCollection();
