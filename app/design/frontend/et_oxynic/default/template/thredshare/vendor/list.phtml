@@ -33,7 +33,7 @@ width:44%">
 </div>
 <?php
 
-include 'C:\xampp\htdocs\rekinza\backend\db_config.php';
+include 'db_config.php';
 $query1 = "SELECT id, pick_up_date, status from thredshare_pickup where email = '$email' ";
 $result1 = mysql_query($query1);
 $numresult = mysql_numrows($result1);
