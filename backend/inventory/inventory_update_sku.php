@@ -1,20 +1,22 @@
 <?php
 include 'db_config.php';
-include_once("../../login-with-google-using-php/config.php");
-include_once("../../login-with-google-using-php/includes/functions.php");
-include '../utils/access_block.php';
+	include '../../app/Mage.php';
+	Mage::init();
+// include_once("../../login-with-google-using-php/config.php");
+// include_once("../../login-with-google-using-php/includes/functions.php");
+// include '../utils/access_block.php';
 
-$email_logged_in = $_SESSION['google_data']['email'];
-$query = "SELECT * from user_access where email LIKE '$email_logged_in'";
-$result = mysql_query($query);
-$numresult =  mysql_numrows($result);
-if ($numresult > 0)
+// $email_logged_in = $_SESSION['google_data']['email'];
+// $query = "SELECT * from user_access where email LIKE '$email_logged_in'";
+// $result = mysql_query($query);
+//$numresult =  mysql_numrows($result);
+if (1)//$numresult > 0)
 {
-	$email = mysql_result($result,0,'email');
-	$access_level = mysql_result($result,0,'access_level');
-	$blockname = "inventory panel";
-	$panel_access = ac_level($blockname);
-	if($access_level <= $panel_access)
+	// $email = mysql_result($result,0,'email');
+	// $access_level = mysql_result($result,0,'access_level');
+	// $blockname = "inventory panel";
+	// $panel_access = ac_level($blockname);
+	if(1)//$access_level <= $panel_access)
 	{
 
 		$sku_name =$_POST['sku_name'];
@@ -87,6 +89,48 @@ if ($numresult > 0)
 
 	if ($result == 'TRUE')
 	{
+		//start magento querying
+		$product = Mage::getModel('catalog/product');
+		$id = Mage::getModel('catalog/product')->getResource()->getIdBySku($sku_code_final);
+		if ($id) 
+		{
+			$product->load($id);
+
+			//logic for msrp	
+			if($suggested_price >0 && $suggested_price < 750)
+			{
+				$msrp = $suggested_price - 200;
+			}
+			elseif ($suggested_price <= 5000) 
+			{
+				$msrp = 0.7*$suggested_price;
+			}
+			elseif ($suggested_price <= 50000)
+			{
+				$msrp = 0.8*$suggested_price;	
+			}
+			else
+			{
+				$msrp = 0.85*$suggested_price;
+			}
+
+			$product->setMsrp($msrp)
+		      ->setPrice($retail_value)
+	    	  ->setSpecialPrice($suggested_price);
+
+			 try 
+			 {
+			    $product->save();
+			        echo "Saved and Updated on Magento."."\r\n";
+			  }
+			  catch (Exception $ex) {
+			        echo "<pre>".$ex."</pre>";
+			  }
+		}
+		else
+		{
+			echo "Not updated on magento because id was not found.";
+		}
 		echo 'Record updated successfully';
 	}
 	else
@@ -96,12 +140,12 @@ if ($numresult > 0)
 	mysql_close();
 
 
-	/********************************Utility Functions**************************/
+	/********************************Utility Functions*************************
 
 
 	function get_sku_code($type,$sub_type,$brand)
 	{
-			/***************Get product type ********************/
+			/***************Get product type *******************
 
 		$query = "SELECT code from sku_code_mapping WHERE entity_name = '".$type."' ";
 		$result = mysql_query($query); 
@@ -109,14 +153,14 @@ if ($numresult > 0)
 		$type_code = mysql_result($result,0,'code');
 
 
-		/***************Get product sub-type ********************/
+		/***************Get product sub-type *******************
 
 		$query = "SELECT code from sku_code_mapping WHERE entity_name = '".$sub_type."' ";
 		$result = mysql_query($query); 
 
 		$sub_type_code = mysql_result($result,0,'code');
 
-		/***************Get product brand ********************/
+		/***************Get product brand *******************
 
 		$query = "SELECT code from sku_code_mapping WHERE entity_name = '".$brand."' ";
 		$result = mysql_query($query); 
@@ -128,7 +172,7 @@ if ($numresult > 0)
 
 
 
-		/****************Search last added item with same type, sub type and brand combination******************/
+		/****************Search last added item with same type, sub type and brand combination*****************
 
 		$query = "SELECT sku_name from inventory WHERE sku_name LIKE '".$sku_code."%' ";
 
@@ -188,7 +232,7 @@ if ($numresult > 0)
 		}
 		$arr = substr($string,0,$i);
 		return $arr;
-	}
+	} */
 
 
 	?>
@@ -300,7 +344,7 @@ function get_sku_code($type,$sub_type,$brand)
 		}
 		$arr = substr($string,0,$i);
 		return $arr;
-	}
+	} 
 
 ?>
 
