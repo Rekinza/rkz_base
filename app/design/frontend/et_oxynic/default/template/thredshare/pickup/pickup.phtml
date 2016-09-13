@@ -48,7 +48,7 @@ $email_val = $_SESSION['email_val'];
 <div class="pickup-box">
 <h3 class="pickup-h3"> A little about the pickup </h3>
 <input class="required number" type="text" name="date" id="datepicker" placeholder="Pickup Date" onchange="validate_pickup()"/>
-<!--p class="pickup-h3">Why is my pickup date so delayed?</p><p class="pickup-h3">Due to an overwhelming number of sell requests, we will only be able to organise pickups after 10 days.</p-->
+<p class="pickup-h3" style="font-size:12px; color:#50c7c2;">Why is my pickup date so delayed?</p><p class="pickup-h3" style="font-size:12px; color:#50c7c2;">Due to an overwhelming number of sell requests, we will only be able to organise pickups after 20 days.</p>
 <!--<br>Pickup Start Time
 <input class="required number" type="time" name="start_time" id="start_time"/>
 <br>Pickup End Time
@@ -195,7 +195,7 @@ jQuery('#pick_out_form').submit();
 jQuery(document).ready(function(){
 	jQuery('#datepicker').datepicker({
 	beforeShowDay: DisableSunday,
-	minDate:new Date((new Date()).getTime()+2*86400000)
+	minDate:new Date((new Date()).getTime()+20*86400000)
 	});
 });
  
