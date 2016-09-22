@@ -6,7 +6,7 @@ include '../utils/access_block.php';
 include '../../app/Mage.php';
 Mage::app();
 
-$email_logged_in = $_SESSION['google_data']['email'];
+$email_logged_in =$_SESSION['google_data']['email'];
 $query = "SELECT * from user_access where email LIKE '$email_logged_in'";
 $result = mysql_query($query);
 $numresult =  mysql_numrows($result);
@@ -35,128 +35,11 @@ if ($numresult > 0)
 		{
 			if ($status== 'requested')
 				$status = 'scheduled';
+		
 		}
 		
 		$query = "UPDATE thredshare_returns SET logistics_partner = '$logistics_partner', waybill_number = '$waybill_number', pickup_date = '$pickup_date', refund_mode = '$refund_mode', status = '$status', comments = '$comments' WHERE id = '$id' ";
 		
-
-		//updating in magento
-		$query2 = "SELECT order_id, items, email from thredshare_returns where id = '$id' ";
-		$result2 = mysql_query($query2);
-		$numresult = mysql_num_rows($result2);
-		if($numresult > 0)
-		{
-			$order_id = mysql_result($result2,0,'order_id');
-			$email_id = mysql_result($result2,0,'email');
-			echo $order_id;
-			echo "??";
-			$order = Mage::getModel('sales/order')->loadByIncrementId($order_id);
-
-			//check if credit memo can be made for the particular order
-	        if (!$order->canCreditmemo()) {
-	            echo "cannot_create_creditmemo: check if already made or if not shipped/invoiced";
-	            exit(0);
-	        }
-
-
-			$items = mysql_result($result2,0,'items');
-			$return_skus = explode(", ", $items);
-			var_dump($return_skus);
-
-			//setting quantity to one for every product
-			$qtys = array();
-			foreach($return_skus as $item_sku)
-			{
-				$orderItem = $order->getItemsCollection()->getItemByColumnValue('sku', $item_sku);
-				$orderItemId = $orderItem->getId();
-				$qtys[$orderItemId] = 1;
-
-				$service = Mage::getModel('sales/service_order', $order);
-				$data['qtys'] = $qtys;
-
-				//Set product qty
-				$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$item_sku); 
-			 
-			 	if($product) 
-			 	{
-				 
-					 $productId = $product->getIdBySku($item_sku);
-					 $stockItem = Mage::getModel('cataloginventory/stock_item')->loadByProduct($productId);
-					 $stockItemId = $stockItem->getId();
-					 $stock = array();
-				 
-				 if (!$stockItemId) 
-				 {
-					 $stockItem->setData('product_id', $product->getId());
-					 $stockItem->setData('stock_id', 1); 
-				 } 
-				 else 
-				 {
-				 	$stock = $stockItem->getData();
-				 }
-
-				$stockItem->assignProduct($product);
-				$stockItem->setData('is_in_stock', 1);
-				$stockItem->setData('qty', 1);
-				$product->setStockItem($stockItem);
-
-				 $stockItem->save();
-
-				 unset($stockItem);
-				 unset($product); 
-
-				}
-
-				else
-				{
-					echo "Product by sku $item_sku is not found";
-					exit(0);
-				}
-
-			} //foreach ends
-
-
-			$creditmemo = $service->prepareCreditmemo($data)->register()->save(); 
-			$order->save();
-			//now to get the points which are to be refunded
-			$creditnotes = $order->getCreditmemosCollection();
-            foreach ($creditnotes as $creditnote)
-            {
-	            $rewardpointsnew = $creditnote->getGrandTotal();
-			}
-
-			$customer = Mage::getModel("customer/customer");
-			$customer->setWebsiteId(Mage::app()->getWebsite()->getId());
-			$customer->loadByEmail($email_id);
-			$customer_id = $customer->getId();
-
-			$customer_group_id = Mage::getModel('customer/customer')->load($customer_id)->getGroupId();
-    		$store_id = Mage::app()->getStore()->getId();
-	       
-			$resultsforrewards = Mage::getModel('rewardpoints/activerules')->getResultActiveRulesExpiredPoints($type_of_transaction,$customer_group_id,$store_id);
-			$rewardpoints = $resultsforrewards[0];
-		 	$expired_day = $resultsforrewards[1];
-			$expired_time = $resultsforrewards[2];
-		 	$point_remaining = $resultsforrewards[3];
-		 	//test this line:
-    		Mage::helper('rewardpoints/data')->checkAndInsertCustomerId($customer_id, 0);
-			$_customer = Mage::getModel('rewardpoints/customer')->load($customer_id);
-		
-
-			$_customer->addRewardPoint($rewardpointsnew);
-			$rewardpointsfinal = $rewardpointsnew + $rewardpoints;
-			$historyData = array('type_of_transaction'=>MW_RewardPoints_Model_Type::ADMIN_ADDITION, 
-									 'amount'=>(int)$rewardpointsnew, 
-									 'balance'=>$_customer->getMwRewardPoint(), 
-									 'transaction_detail'=>'', 
-									 'transaction_time'=>now(), 
-									 'expired_day'=>$expired_day,
-						    		 'expired_time'=>$expired_time,
-						    		 'point_remaining'=>$point_remaining,
-									 'status'=>MW_RewardPoints_Model_Status::COMPLETE);
-				$_customer->saveTransactionHistory($historyData);
-
-
 
 		//updating in table
 		$result = mysql_query($query);
@@ -169,16 +52,6 @@ if ($numresult > 0)
 		{
 			echo 'Record Update Failed for panel only';
 		}
-
-
-		} //if ends
-
-		else
-		{
-			echo "ID not found. Check if data entered in magento is consistent";
-		}
-		
-
 
 
 		mysql_close();
@@ -233,6 +106,8 @@ if ($numresult > 0)
 		<head>
 			<script src="jquery-1.11.1.js"></script>
 			<script src="FileSaver.js"></script>
+			<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+			<script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>
 		<head>
 		
 		<body>
@@ -398,6 +273,7 @@ if ($numresult > 0)
 				<td><textarea name="comments" style ="width:50px;" ><?php echo $comments; ?></textarea></td>
 				<td><a href = '<?php echo "returns_prepare_email.php?email_type=picked-up&waybill_number=".$waybill_number."&email_id=".$customer_email_id."&returns_id=".$id?>'>Picked-up Email</a>
 					<a href = '<?php echo "returns_prepare_email.php?email_type=received&email_id=".$customer_email_id."&returns_id=".$id?>'>Received Email</a>
+					<button type="button" onclick="refund('<?php echo $id ?>')"> REFUND </button>
 				<!--parameters to be passed for mailing -->
 				</td>
 				<td><input type = "Submit" value = "Update!"></td>
@@ -549,5 +425,26 @@ function validate(evt)
 		theEvent.returnValue = false;
 		if(theEvent.preventDefault) theEvent.preventDefault();
 	}
+}
+
+function refund(id) 
+{
+	
+	jQuery.ajax({
+		type: 'POST',
+		url: 'return_issue_creditmemo.php',
+		data: 
+		{
+			'id' : id
+		},
+		async: false,
+		success:function(message) {
+
+			alert(message);
+			
+		}
+	});
+    
+      
 }
 </script>
