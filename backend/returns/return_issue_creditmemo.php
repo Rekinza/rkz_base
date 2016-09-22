@@ -112,7 +112,7 @@ Mage::app();
 			$historyData = array('type_of_transaction'=>MW_RewardPoints_Model_Type::ADMIN_ADDITION, 
 									 'amount'=>(int)$rewardpointsnew, 
 									 'balance'=>$_customer->getMwRewardPoint(), 
-									 'transaction_detail'=>'', 
+									 'transaction_detail'=>$details, 
 									 'transaction_time'=>now(), 
 									 'expired_day'=>$expired_day,
 						    		 'expired_time'=>$expired_time,
