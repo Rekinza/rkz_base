@@ -22,7 +22,7 @@ include 'db_config.php';
 
 $query = "SELECT * FROM inventory WHERE creation_date BETWEEN '$start_date' AND '$end_date' and qc_status = 'accepted' ORDER BY brand ASC";
 
-//$query = "SELECT * FROM inventory WHERE sku_name IN ('C-D-ASOS-36','C-B-AU-01', 'C-B-TEMT-01', 'C-B-MSN-09', 'C-B-TH-13', 'C-B-2XTZ-01','C-B-MDE-01')";
+//$query = "SELECT * FROM inventory WHERE sku_name IN ('A-B-C&K-01','S-H-V-02')";
 $result = mysql_query($query);
 
 $numresult = mysql_numrows($result);
