@@ -24,7 +24,6 @@ Mage::app();
 
 			$items = mysql_result($result2,0,'items');
 			$return_skus = explode(", ", $items);
-			var_dump($return_skus);
 
 			//setting quantity to one for every product
 			$qtys = array();
@@ -120,7 +119,21 @@ Mage::app();
 									 'status'=>MW_RewardPoints_Model_Status::COMPLETE);
 				$_customer->saveTransactionHistory($historyData);
 
-				echo "DONE DONE DONE";
+				$querynew = "UPDATE thredshare_returns SET status = 'refunded' WHERE id = '$id' ";
+				$resultnew = mysql_query($querynew);
+
+				if ($resultnew == 'TRUE')
+				{
+					echo "DONE DONE DONE";
+				}
+				else
+				{
+					echo "creditmemo made, panel not updated. Please check";
+				}
+
+
+
+				
 
 
 
