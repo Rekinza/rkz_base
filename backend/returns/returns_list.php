@@ -6,7 +6,7 @@ include '../utils/access_block.php';
 include '../../app/Mage.php';
 Mage::app();
 
-$email_logged_in =$_SESSION['google_data']['email'];
+$email_logged_in ="nikita.sahai@gmail.com";//$_SESSION['google_data']['email'];
 $query = "SELECT * from user_access where email LIKE '$email_logged_in'";
 $result = mysql_query($query);
 $numresult =  mysql_numrows($result);
@@ -175,7 +175,7 @@ if ($numresult > 0)
 				<td hidden = "true"><input type = "text" value = '<?php echo $id ?>' name = "id" hidden = "true"> </td>		
 				<td style ="width:200px;"><input type = "number" value = '<?php echo $order_id; ?>' name = "order_id" readonly = true>	</td>
 				<td ><input type = "text" value = '<?php echo $customer_email_id  ?>' name = "customer_email_id" readonly = true> </td>		
-				<td ><input type = "text" value = '<?php echo $items ?>' name = "items" readonly = true> </td>		
+				<td ><input type = "text" value = '<?php echo $items ?>' name = "items"> </td>		
 				<td ><?php echo $reason ?></td>		
 				<td><?php echo $city ;?></td>
 				<td ><?php echo $state;?></td>

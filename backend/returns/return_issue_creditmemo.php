@@ -20,7 +20,7 @@ Mage::app();
 	            echo "cannot_create_creditmemo: check if already made or if not shipped/invoiced";
 	            exit(0);
 	        }
-
+	        
 
 			$items = mysql_result($result2,0,'items');
 			$return_skus = explode(", ", $items);
@@ -80,6 +80,20 @@ Mage::app();
 
 			$creditmemo = $service->prepareCreditmemo($data)->register()->save(); 
 			$order->save();
+
+
+
+	        $statusname = $order->getStatusLabel();
+	        if($statusname == "Closed")
+	        {
+	        	$order->setData(Mage_Sales_Model_Order::STATE_CLOSED);
+				$order->setStatus("closed_return");
+				$order->addStatusHistoryComment("Closed return");
+	        }
+
+			$order->save();
+
+
 			//now to get the points which are to be refunded
 			$creditnotes = $order->getCreditmemosCollection();
             foreach ($creditnotes as $creditnote)
@@ -135,6 +149,7 @@ Mage::app();
 
 				
 
+				echo "over";
 
 
 		} //if ends
