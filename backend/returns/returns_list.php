@@ -6,7 +6,7 @@ include '../utils/access_block.php';
 include '../../app/Mage.php';
 Mage::app();
 
-$email_logged_in ="nikita.sahai@gmail.com";//$_SESSION['google_data']['email'];
+$email_logged_in =$_SESSION['google_data']['email'];
 $query = "SELECT * from user_access where email LIKE '$email_logged_in'";
 $result = mysql_query($query);
 $numresult =  mysql_numrows($result);
