@@ -98,7 +98,7 @@ if ($collection->count())   //Check if order ID entered is valid
 					echo "the order is in return state without products";
 				}	
 			}
-			else if( ($order_status == 'complete') || ($order_status == 'in_transit') || ($order_status == 'delivered') || ($order_status == 'processing') || ($order_status == 'undelivered'))
+			else if( (($order_status == 'complete') || ($order_status == 'in_transit') || ($order_status == 'delivered') || ($order_status == 'processing') || ($order_status == 'undelivered')) && ($order_number<100004185))
 			{
 					$product_brands = array();
 					$product_skus = array();
@@ -124,7 +124,7 @@ if ($collection->count())   //Check if order ID entered is valid
 			
 			else
 			{
-				echo 'Sorry ! You cannot place a return request for this order';
+				echo 'Sorry ! You cannot place a return request for this order. Please email at hello@rekinza.com for any queries.';
 			}
 		//}
 		}//for really_confirmed

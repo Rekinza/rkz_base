@@ -1,33 +1,24 @@
 <?php
-
 include 'db_config.php';
 $path = __DIR__;
 require_once $path.'/../../app/Mage.php';
 Mage::app();
-
-
 $today = date("Y-m-d");
-
 $today = date('Y-m-d H:i:s', strtotime($today));
-
 $tomorrow = strtotime ( '+24 hours' , strtotime ($today )) ;  //Find tomorrow's date;
-
 $tomorrow = date('Y-m-d', $tomorrow);
-
 $query = "SELECT id FROM thredshare_returns WHERE pickup_date = '$tomorrow' AND waybill_number = '' AND status = 'requested'";
-
 $result = mysql_query($query);
-
 $numresult = mysql_numrows($result);
-
 $return_schedule_error_list = array();
-
-if($numresult >0)
+echo $numresult;
+if($numresult > 0)
 {
 	$i = 0;
 	while ( $i < $numresult )
 	{
 		$return_id = mysql_result($result,$i,'id');
+		echo $return_id;
 		
 		$query_fetch_returns_details = "SELECT * FROM thredshare_returns WHERE id = '$return_id'";
 			
@@ -37,7 +28,6 @@ if($numresult >0)
 		
 		if (mysql_numrows($result_fetch_returns_details) != 0)
 		{
-			
 			$mobile_no = mysql_result($result_fetch_returns_details,0,'mobile');
 			$address1 = mysql_result($result_fetch_returns_details,0,'address1');
 			$address2 = mysql_result($result_fetch_returns_details,0,'address2');
@@ -49,11 +39,10 @@ if($numresult >0)
 			$amount = mysql_result($result_fetch_returns_details,0,'amount');
 			$items = mysql_result($result_fetch_returns_details,0,'items');
 			
-			
+			echo $items;
 			//get firstname and lastname
 			
 			$collection = Mage::getModel('sales/order')->getCollection()->addFieldToFilter('increment_id', $order_id);
-
 			if ($collection->count() ==0)   //Check if order ID entered is valid
 			{
 				$order_id = $order_id."-1";
@@ -67,7 +56,6 @@ if($numresult >0)
 					continue;
 				}				
 			}
-
 			
 			$order = Mage::getModel('sales/order')->loadByIncrementId($order_id);
 			
@@ -100,11 +88,9 @@ if($numresult >0)
 			{
 				$items_name = "1 Apparel";
 			}
-
 			$items = $items_name;
 			
 			$response_nuvoex = request_nuvoex_for_reverse_pickup($return_id, $order_id, $mobile_no, $address1, $address2, $city, $state, $pincode, $first_name, $last_name, $items, $item_count);			
-
 			if($response_nuvoex['request_status'] == 'FALSE')
 			{
 				//Save the error
@@ -120,7 +106,6 @@ if($numresult >0)
 				//Schedule with Pickrr
 				
 				$response_pickrr = request_pickrr_for_reverse_pickup($order_id, $mobile_no, $address1, $address2, $city, $state, $pincode, $first_name, $last_name, $items, $item_count);
-
 				if($response_pickrr['request_status'] == 'FALSE')
 				{
 					//Save the error
@@ -167,7 +152,6 @@ if($numresult >0)
 		}
 		else
 		{
-
 			//Add to error list
 			$fault = "Return ID :".$return_id." Unable to fetch details. Not scheduled<br>";
 			array_push($return_schedule_error_list, $fault);
@@ -187,15 +171,11 @@ if($numresult >0)
 	}
 	
 	
-
 }
-
 else
 {
 	echo "No data to process";
 }
-
-
 function request_pickrr_for_reverse_pickup($order_id, $mobile_no, $address1, $address2, $city, $state, $pincode, $first_name, $last_name, $items, $item_count)
 {
 	
@@ -204,7 +184,6 @@ function request_pickrr_for_reverse_pickup($order_id, $mobile_no, $address1, $ad
 	$fullname = $first_name." ".$last_name;
 	
 	$fulladdress = $address1." ".$address2." ".$city." ".$state;
-
 	$time = date("Y-m-d h:i:s", strtotime($currdate));
 	
 	$is_reverse = TRUE;
@@ -227,10 +206,7 @@ function request_pickrr_for_reverse_pickup($order_id, $mobile_no, $address1, $ad
 		'is_reverse' => "$is_reverse",
 		'client_order_id' => "$order_id",
 	);
-
-
 	$content = json_encode($fields);
-
 	$curl = curl_init($url);
 	curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 	curl_setopt($curl,CURLOPT_SSL_VERIFYPEER, false);
@@ -240,20 +216,14 @@ function request_pickrr_for_reverse_pickup($order_id, $mobile_no, $address1, $ad
 			array("Content-type: application/json"));
 	curl_setopt($curl, CURLOPT_POST, true);
 	curl_setopt($curl, CURLOPT_POSTFIELDS, $content);
-
 	$json_response = curl_exec($curl);
-
 	$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 	$err     = curl_errno( $curl );
 	$errmsg  = curl_error( $curl );
 	$header  = curl_getinfo( $curl );
-
-
 	/*if ( $status != 201 || $status != 200 ) {
 		die("Error: call to URL $url failed with status $status, response $json_response, curl_error " . curl_error($curl) . ", curl_errno " . curl_errno($curl));
 	}*/
-
-
 	curl_close($curl);
 	$response = json_decode($json_response, true);
 	$trackid = $response['tracking_id'];
@@ -281,7 +251,6 @@ function request_pickrr_for_reverse_pickup($order_id, $mobile_no, $address1, $ad
 	
 	
 }
-
 function request_nuvoex_for_reverse_pickup($return_id, $order_id, $mobile_no, $address1, $address2, $city, $state, $pincode, $first_name, $last_name, $items, $item_count)
 {
 	// Currently some pincodes are not operational for NuvoEX
@@ -337,16 +306,12 @@ function request_nuvoex_for_reverse_pickup($return_id, $order_id, $mobile_no, $a
 	return $return_array;
 	
 }
-
 function get_and_reserve_first_available_nuvoex_waybill()
 {
 	$type = 0;
 	$query = 'SELECT waybill FROM nuvoex_waybills WHERE used_flag = 0 LIMIT 1';
-
 	$result = mysql_query($query);
-
 	$numresult = mysql_numrows($result);
-
 	if( $numresult >0 )
 	{
 		$awb = mysql_result($result,0,'waybill');
@@ -385,12 +350,10 @@ function send_reverse_pickup_request_to_nuvoex($awb, $return_id, $mobile_no, $ad
 							"dto center" => "abcd",
 							"quantity" => $item_count
 					);
-
 	//add set of data in the encoded array
 	$post_param = array('data' => json_encode(array($fields1)));
 	//var_dump($post_param);
 	echo "\n";
-
 	$curl = curl_init($url);
 	curl_setopt($curl,CURLOPT_URL, $url);
 	curl_setopt($curl,CURLOPT_CUSTOMREQUEST, "POST");
@@ -398,34 +361,25 @@ function send_reverse_pickup_request_to_nuvoex($awb, $return_id, $mobile_no, $ad
 	curl_setopt($curl,CURLOPT_POSTFIELDS, $post_param);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
 	curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept: application/json'));
-
-
 	$json_response = curl_exec($curl);
 	curl_close($curl);
-
 	$res = json_decode($json_response, true);
-
 	$status = $res['status'];
 	if($status != 'true')
 	{
-
 		$a = $res['error_data'][$awb];
 		$res_error = $a['type'];
 		echo "Error is ".$res_error;
 		return $res_error;
-
 	}
-
 	else
 	{
 		echo "Requested in Nuvo Ex successfully<br>";
 		return 200;
 	}
 }//setwaybill function ends
-
 function sendmail($subject, $body, $email, $cc)
 {
-
 	if (!class_exists("PHPMailer")){
 	$path = __DIR__;
     require($path.'/../PHPMailer/class.phpmailer.php');
@@ -433,7 +387,6 @@ function sendmail($subject, $body, $email, $cc)
 	$path = __DIR__;
 	require_once($path.'/../PHPMailer/class.smtp.php');
 	$exc = new phpmailerException();
-
 	try
 	{
 		echo "Preparing email<br>";
@@ -476,7 +429,5 @@ function sendmail($subject, $body, $email, $cc)
 		echo "Oh no";
 		return 0;
 	}
-
 }
-
 ?>
