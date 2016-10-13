@@ -115,18 +115,25 @@ if ($numresult > 0)
 					<td> <?php echo $arraytaxes[$i]."%" ?> </td>
 					<td> <?php echo "Rs. ".number_format($arraysubtotals[$i]) ?> </td>
 					</tr>
-					<?php $totaltax = $grandtotal - $totalsubtotal;
+					<?php 
+					$discount = 0.1*$totalsubtotal;
+					$discountedtotal = $totalsubtotal - $discount;
+					$totaltax = $grandtotal - ($totalsubtotal - $discount);
 					} ?>
 				</table>
 				<div class="totals">
 					Subtotal: Rs. <input type = "number" name="subtotal" value = "<?php echo round($totalsubtotal) ?>"> 
+					<br>
+					Discount : Rs. <input type = "number" name="discount" value = "<?php echo round($discount) ?>">
+					<br>
+					Grand Total (excl. tax) : Rs. <input type = "number" name="tax" value = "<?php echo round($discountedtotal) ?>">
 					<br>
 					Sales Tax : Rs. <input type = "number" name="tax" value = "<?php echo round($totaltax) ?>">
 					<br>
 					Grand Total (incl. tax): Rs. <input type = "number" name="grandtotal" id = "grandtotal" value= "<?php echo round($grandtotal) ?>">
 					<button onclick = "add_discount();">-</button>
 					<div id = "discount_block" hidden>
-						Discount: Rs. <input type = "number" name="discount" id ="discount" onchange = "update_grand_total_after_discount();">
+						Additional Discount: Rs. <input type = "number" name="discount" id ="discount" onchange = "update_grand_total_after_discount();">
 						<br>
 						Grand Total (after discount): Rs. <input type = "number" name="gtwithdiscount" id = "gtwithdiscount">
 					</div>
