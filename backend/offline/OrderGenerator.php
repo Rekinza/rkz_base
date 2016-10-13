@@ -140,13 +140,18 @@ class OrderGenerator
 
         $this->_addProducts($products);
 
+        $this->_order->setCouponCode('BLOG10'); 
+
+        $discount = 0.1 * $this->_subTotal;
+
         $this->_order->setSubtotal($this->_subTotal)
             ->setBaseSubtotal($this->_subTotal)
             ->setBaseTaxAmount($GLOBALS['totaltax'])    
-            ->setTaxAmount($GLOBALS['totaltax']) 
-            ->setGrandTotal($this->_subTotal + $GLOBALS['totaltax'])                          //new 2694.75
-          ->setBaseGrandTotal($this->_subTotal + $GLOBALS['totaltax']) 
-          ->setTotalPaid($this->_subTotal + $GLOBALS['totaltax'])       //to make the amount paid instead of due
+            ->setTaxAmount($GLOBALS['totaltax'])
+            ->setDiscountAmount($discount) 
+            ->setGrandTotal($this->_subTotal + $GLOBALS['totaltax']-$discount)                          //new 2694.75
+          ->setBaseGrandTotal($this->_subTotal + $GLOBALS['totaltax']-$discount) 
+          ->setTotalPaid($this->_subTotal + $GLOBALS['totaltax']- $discount)       //to make the amount paid instead of due
           ->setShippingTaxAmount(0)                   //new 0
           ->setBaseShippingTaxAmount(0)      //new 0
           ->setBaseToGlobalRate(0)                        //new 0
@@ -161,6 +166,7 @@ class OrderGenerator
         $transaction->save();  
       
     }
+
 
     protected function _addProducts($products)
     {
@@ -251,7 +257,7 @@ class OrderGenerator
 
     function _productToOrderItem(Mage_Catalog_Model_Product $product, $qty = 1) //adding tax here
     {
-        $rowTotal = $product->getFinalPrice() * $qty;
+        $rowTotal = $product->getFinalPrice() * $qty; 
 
         $options = $product->getCustomOptions();
 
@@ -326,6 +332,7 @@ class OrderGenerator
             ->setBaseWeeeTaxAppliedRowAmount(0)
             ->setWeeeTaxAppliedAmount(0)
             ->setWeeeTaxAppliedRowAmount(0)
+            ->setDiscountAmount(0.1*$specialprice)
 
             ->setProductOptions($options);
 

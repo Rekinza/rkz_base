@@ -72,6 +72,8 @@ Mage::app();
                     {
                         alert("SKU NOT FOUND");
                     }
+
+                    getdiscount();
                     getgrandtotal();        //getgrandtotal
                 }
                 });
@@ -185,7 +187,7 @@ Mage::app();
                     id = parseInt(newid);
                     var i = 0;
 
-                    for(i=id; i<rowcount; i++  )
+                    for(i=id; i<rowcount; i++ )
                     {
 
                         var nextid = i + 1;
@@ -204,8 +206,28 @@ Mage::app();
                         //console.log("in deleterow: "+skuid);
                     }
 
+                    getdiscount();
+
                     getgrandtotal();
                 
+            }
+
+            //10% discount calculated
+            function getdiscount(){
+
+                var priceclass = document.getElementsByClassName("price");
+                var count = priceclass.length;
+                var pricetotal = 0;
+                for(var i = 0; i<count; i++){
+                    pricetotal = pricetotal + parseFloat(priceclass[i].value);
+                    //console.log(subtotalclass[i].value);
+                }
+
+                console.log(pricetotal);
+
+                var discount = 0.1 * pricetotal;
+               // window.grandtotal = subtotal;
+                $('#discount').val(discount);
             }
 
             function getgrandtotal(){
@@ -219,7 +241,8 @@ Mage::app();
                 }
 
                 console.log(subtotal);
-                window.grandtotal = subtotal;
+                var discount = $('#discount').val();
+                window.grandtotal = subtotal - discount;
                 $('#grandtotal').val(grandtotal);
             }
 
@@ -359,6 +382,10 @@ Mage::app();
 			<legend>Order Summary</legend>
 				Add comments: <input type= "text" name="comments" id="comments">
 				<br>
+
+                Discount in Rs: <input type="text" name="discount" id="discount">
+                <br><br>
+
 				Grand Total in Rs: <input type="text" name="grandtotal" id="grandtotal">
 				<br><br>
 				
